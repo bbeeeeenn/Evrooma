@@ -20,9 +20,12 @@ export const metadata: Metadata = {
         },
     ],
     openGraph: {
+        title: "EVROOMA - Find Available Classrooms Instantly",
         images: [
             {
                 url: "/display.png",
+                width: 1200,
+                height: 630,
             },
         ],
     },
