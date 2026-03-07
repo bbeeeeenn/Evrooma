@@ -46,7 +46,7 @@ export default function Home() {
                         <BookText /> Instructor
                     </button>
                     <div className="relative my-5 flex h-10 items-center justify-center">
-                        <div className="bg-black-100 absolute inset-0 m-auto h-0.5"></div>
+                        <div className="bg-black-100 absolute inset-0 m-auto h-0.5 rounded-full"></div>
                         <p className="text-black-100 bg-black-400 absolute w-fit px-2 text-center tracking-widest">
                             OR
                         </p>
