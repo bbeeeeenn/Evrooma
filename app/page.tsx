@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function Home() {
     return (
         <>
-            <section className="font-inter relative flex h-dvh flex-col items-center bg-black/5 pt-40">
+            <section className="font-inter relative flex h-dvh flex-col items-center pt-40">
                 <h1 className="text-5xl font-bold tracking-widest sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
                     EVROOMA
                 </h1>
@@ -22,14 +22,14 @@ export default function Home() {
                     Continue <ArrowDown />
                 </button>
             </section>
-            <section id="roles" className="relative h-dvh bg-black">
+            <section id="roles" className="bg-black-400 relative h-dvh">
                 <Image
                     src={"/wave.svg"}
                     alt={""}
                     width={200}
                     height={200}
                     loading="eager"
-                    className="pointer-events-none absolute bottom-full w-full md:translate-y-1/8 lg:translate-y-1/7"
+                    className="pointer-events-none absolute bottom-full w-full sm:translate-y-1/12 md:translate-y-1/8 lg:translate-y-1/7"
                 />
             </section>
         </>
