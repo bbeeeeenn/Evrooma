@@ -1,17 +1,11 @@
 "use client";
-import {
-    ArrowDown,
-    BookOpenText,
-    BookText,
-    GraduationCap,
-    ShieldUser,
-} from "lucide-react";
+import { ArrowDown, BookText, GraduationCap, ShieldUser } from "lucide-react";
 import Image from "next/image";
 
 export default function Home() {
     return (
         <>
-            <section className="font-inter relative flex h-svh flex-col items-center pt-40">
+            <section className="font-inter relative flex h-svh min-h-[650px] flex-col items-center pt-40">
                 <h1 className="text-5xl font-bold tracking-widest sm:text-7xl lg:text-8xl xl:text-9xl">
                     EVROOMA
                 </h1>
