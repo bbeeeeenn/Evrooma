@@ -17,7 +17,9 @@ export default function AdminLoginForm({
             className="text-md font-poppins w-[80%] max-w-sm space-y-10 rounded-xl p-12 shadow-lg"
         >
             <div className="flex items-center gap-3">
-                <User />
+                <label htmlFor="username">
+                    <User />
+                </label>
                 <div className="relative w-full">
                     <input
                         type="text"
@@ -39,9 +41,10 @@ export default function AdminLoginForm({
                     </label>
                 </div>
             </div>
-
             <div className="flex items-center gap-3">
-                <Lock />
+                <label htmlFor="password">
+                    <Lock />
+                </label>
                 <div className="relative w-full">
                     <input
                         type="password"
