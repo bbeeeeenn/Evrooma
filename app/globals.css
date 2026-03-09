@@ -8,6 +8,7 @@
 @theme inline {
     --font-inter: var(--font-inter);
     --font-inria-sans: var(--font-inria-sans);
+    --font-poppins: var(--font-poppins);
 
     --color-black-100: #F2F2F2;
     --color-black-200: #666;

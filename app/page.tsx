@@ -35,25 +35,25 @@ export default function Home() {
             </section>
             <section id="roles" className="bg-black-400 relative h-svh pt-20">
                 <div className="font-inter text-black-100 absolute inset-0 m-auto flex w-[80%] max-w-sm flex-col justify-center">
-                    <h1 className="text-center text-3xl font-bold tracking-wide">
+                    <h1 className="text-center text-2xl font-bold tracking-wide sm:text-3xl">
                         Continue as
                     </h1>
                     <Link
                         href={"/admin"}
-                        className="bg-black-100 font-inria-sans mt-8 flex cursor-pointer items-center justify-center gap-2 rounded-full py-2 text-xl text-black"
+                        className="bg-black-100 font-inria-sans mt-8 flex cursor-pointer items-center justify-center gap-2 rounded-full py-2 text-lg text-black sm:text-xl"
                     >
                         <ShieldUser /> Administrator
                     </Link>
-                    <button className="bg-black-100 font-inria-sans mt-5 flex cursor-pointer items-center justify-center gap-2 rounded-full py-2 text-xl text-black">
+                    <button className="bg-black-100 font-inria-sans mt-5 flex cursor-pointer items-center justify-center gap-2 rounded-full py-2 text-lg text-black sm:text-xl">
                         <BookText /> Instructor
                     </button>
                     <div className="relative my-5 flex h-10 items-center justify-center">
                         <div className="bg-black-100 absolute inset-0 m-auto h-0.5 rounded-full"></div>
-                        <p className="text-black-100 bg-black-400 absolute w-fit px-2 text-center tracking-widest">
+                        <p className="text-black-100 bg-black-400 absolute w-fit px-2 text-center text-sm tracking-widest sm:text-lg">
                             OR
                         </p>
                     </div>
-                    <button className="bg-black-100 font-inria-sans flex cursor-pointer items-center justify-center gap-2 rounded-full py-2 text-xl text-black">
+                    <button className="bg-black-100 font-inria-sans flex cursor-pointer items-center justify-center gap-2 rounded-full py-2 text-lg text-black sm:text-xl">
                         <GraduationCap /> Student
                     </button>
                 </div>

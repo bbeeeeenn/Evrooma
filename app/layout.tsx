@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, Inria_Sans } from "next/font/google";
+import { Inter, Inria_Sans, Poppins } from "next/font/google";
 import "./globals.css";
 import clsx from "clsx";
 
 export const metadata: Metadata = {
+    metadataBase: "https://evrooma.vercel.app",
     title: "EVROOMA",
     description:
         "Helps quickly identify available classrooms through a centralized monitoring system designed for CCIS.",
@@ -31,14 +32,19 @@ export const metadata: Metadata = {
     },
 };
 
-export const inter = Inter({
+const inter = Inter({
     subsets: ["latin"],
     variable: "--font-inter",
 });
-export const inriaSans = Inria_Sans({
+const inriaSans = Inria_Sans({
     subsets: ["latin"],
-    weight: "400",
     variable: "--font-inria-sans",
+    weight: ["300", "400", "700"],
+});
+const poppins = Poppins({
+    subsets: ["latin"],
+    variable: "--font-poppins",
+    weight: ["300", "400", "900", "600"],
 });
 
 export default function RootLayout({
@@ -52,6 +58,7 @@ export default function RootLayout({
                 className={clsx(
                     inter.variable,
                     inriaSans.variable,
+                    poppins.variable,
                     "min-h-svh antialiased select-none",
                 )}
             >
