@@ -2,14 +2,7 @@
 
 import { AdminAuthAction } from "@/app/actions/AdminAuth";
 import clsx from "clsx";
-import {
-    Eye,
-    EyeClosed,
-    Flashlight,
-    FlashlightOff,
-    Lock,
-    User,
-} from "lucide-react";
+import { Flashlight, FlashlightOff, Lock, User } from "lucide-react";
 import { ChangeEvent, useActionState, useState } from "react";
 
 export default function AdminLoginForm({
@@ -26,8 +19,11 @@ export default function AdminLoginForm({
     return (
         <form
             action={formAction}
-            className="text-md font-poppins w-full max-w-md space-y-10 rounded-xl p-8 py-10 sm:shadow-lg"
+            className="text-md font-poppins w-full max-w-md space-y-10 rounded-xl p-8 py-10 outline-2 outline-gray-300 sm:shadow-lg"
         >
+            <h1 className="mb-12 text-center text-2xl font-bold tracking-widest">
+                Administrator
+            </h1>
             <div className="flex items-center gap-3">
                 <label htmlFor="username">
                     <User />
