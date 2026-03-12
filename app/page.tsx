@@ -51,9 +51,12 @@ export default function Home() {
                     >
                         <ShieldUser /> Administrator
                     </Link>
-                    <button className="bg-black-100 font-inria-sans mt-5 flex cursor-pointer items-center justify-center gap-2 rounded-full py-2 text-lg text-black sm:text-xl">
+                    <Link
+                        href={"/instructor/login"}
+                        className="bg-black-100 font-inria-sans mt-5 flex cursor-pointer items-center justify-center gap-2 rounded-full py-2 text-lg text-black sm:text-xl"
+                    >
                         <BookText /> Instructor
-                    </button>
+                    </Link>
                     <div className="relative my-5 flex h-10 items-center justify-center">
                         <div className="bg-black-100 absolute inset-0 m-auto h-0.5 rounded-full"></div>
                         <p className="text-black-100 bg-black-400 absolute w-fit px-2 text-center text-sm tracking-widest sm:text-lg">
