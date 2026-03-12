@@ -1,9 +1,9 @@
-import { AdminAuth } from "../../actions/AdminAuth";
-import AdminLoginForm from "./(components)/LoginForm";
+import { AdminAuth } from "@/app/actions/AdminAuth";
+import AdminLoginForm from "./LoginForm";
 
 export default function Page() {
     return (
-        <section className="flex h-svh flex-col items-center justify-center gap-12">
+        <section className="flex h-svh flex-col items-center justify-center bg-white sm:bg-transparent">
             <AdminLoginForm action={AdminAuth} />
         </section>
     );

@@ -15,6 +15,11 @@
     --color-black-400: #1d1d1d;
 }
 
+::selection {
+    background-color: rgb(58, 58, 58);
+    color: #F2F2F2;
+}
+
 
 @media (prefers-color-scheme: dark) {
     :root {
