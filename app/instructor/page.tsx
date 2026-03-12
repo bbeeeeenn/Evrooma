@@ -1,3 +1,3 @@
-export default function Page() {
-    return <>Instructor Dashboard</>;
+export default function InstructorPage() {
+    return <>Instructor</>;
 }
