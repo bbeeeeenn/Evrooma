@@ -1,7 +1,7 @@
 "use client";
 
 import { FormActionResponse } from "@/actions/_";
-import { instructorDashboardPage } from "@/constants";
+import { adminDashboardPage, instructorDashboardPage } from "@/constants";
 import clsx from "clsx";
 import {
     BookText,
@@ -16,10 +16,10 @@ import { useRouter } from "next/navigation";
 import { useActionState, useState } from "react";
 
 export default function LoginForm({
-    type,
+    formType,
     action,
 }: {
-    type: "admin" | "instructor";
+    formType: "admin" | "instructor";
     action: (formData: FormData) => Promise<FormActionResponse>;
 }) {
     const router = useRouter();
@@ -30,7 +30,11 @@ export default function LoginForm({
     ): Promise<FormActionResponse> => {
         const res = await action(formData);
         if (res.status === "success") {
-            router.replace(instructorDashboardPage);
+            router.replace(
+                formType === "admin"
+                    ? adminDashboardPage
+                    : instructorDashboardPage,
+            );
         }
         return res;
     };
@@ -54,8 +58,15 @@ export default function LoginForm({
     return (
         <>
             <h1 className="text-black-400 font-poppins mb-7 flex items-center gap-2 text-center text-2xl font-bold tracking-widest">
-                {type === "instructor" ? <BookText /> : <ShieldUser />}{" "}
-                {type === "instructor" ? "Instructor" : "Administrator"}
+                {formType === "instructor" ? (
+                    <>
+                        <BookText /> Instructor
+                    </>
+                ) : (
+                    <>
+                        <ShieldUser /> Administrator
+                    </>
+                )}
             </h1>
             <form
                 action={formAction}
@@ -63,7 +74,7 @@ export default function LoginForm({
             >
                 <div className="flex items-center gap-3">
                     <label htmlFor="username">
-                        {type === "admin" ? <ShieldUser /> : <User />}
+                        {formType === "admin" ? <ShieldUser /> : <User />}
                     </label>
                     <div className="relative w-full">
                         <input

@@ -3,34 +3,65 @@ import { Inter, Inria_Sans, Poppins } from "next/font/google";
 import "./globals.css";
 import clsx from "clsx";
 
-export const metadata: Metadata = {
-    metadataBase: "https://evrooma.vercel.app",
-    title: "EVROOMA",
-    description:
-        "Helps quickly identify available classrooms through a centralized monitoring system designed for CCIS.",
-    icons: [
-        {
-            rel: "icon",
-            url: "/favicon_light.svg",
-            media: "(prefers-color-scheme: light)",
-        },
-        {
-            rel: "icon",
-            url: "/favicon_dark.svg",
-            media: "(prefers-color-scheme: dark)",
-        },
-    ],
-    openGraph: {
-        title: "EVROOMA - Find Available Classrooms Instantly",
-        images: [
+export async function generateMetadata() {
+    return {
+        metadataBase: "https://evrooma.vercel.app",
+        title: "EVROOMA",
+        description:
+            "Helps quickly identify available classrooms through a centralized monitoring system designed for CCIS.",
+        icons: [
             {
-                url: "/display.png",
-                width: 1200,
-                height: 630,
+                rel: "icon",
+                url: "/favicon_light.svg",
+                media: "(prefers-color-scheme: light)",
+            },
+            {
+                rel: "icon",
+                url: "/favicon_dark.svg",
+                media: "(prefers-color-scheme: dark)",
             },
         ],
-    },
-};
+        openGraph: {
+            title: "EVROOMA - Find Available Classrooms Instantly",
+            images: [
+                {
+                    url: "/display.png",
+                    width: 1200,
+                    height: 630,
+                },
+            ],
+        },
+    };
+}
+
+// export const metadata: Metadata = {
+//     metadataBase: "https://evrooma.vercel.app",
+//     title: "EVROOMA",
+//     description:
+//         "Helps quickly identify available classrooms through a centralized monitoring system designed for CCIS.",
+//     icons: [
+//         {
+//             rel: "icon",
+//             url: "/favicon_light.svg",
+//             media: "(prefers-color-scheme: light)",
+//         },
+//         {
+//             rel: "icon",
+//             url: "/favicon_dark.svg",
+//             media: "(prefers-color-scheme: dark)",
+//         },
+//     ],
+//     openGraph: {
+//         title: "EVROOMA - Find Available Classrooms Instantly",
+//         images: [
+//             {
+//                 url: "/display.png",
+//                 width: 1200,
+//                 height: 630,
+//             },
+//         ],
+//     },
+// };
 
 const inter = Inter({
     subsets: ["latin"],
