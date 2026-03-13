@@ -18,6 +18,7 @@ const instructorSessionOptions: SessionOptions = {
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
     },
+    ttl: 60 * 60 * 24 * 7,
 };
 
 interface InstructorSessionData {
