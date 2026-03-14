@@ -30,8 +30,8 @@ export default function LoginForm({
         remember: true,
     });
 
-    const updateAuth = useAuthUpdate();
     const user = useAuth();
+    const updateAuth = useAuthUpdate();
 
     useEffect(() => {
         if (user) {
