@@ -2,7 +2,7 @@
 
 import { LoginFormActionResponse } from "@/app/actions/_";
 import { adminDashboardPage, instructorDashboardPage } from "@/constants";
-import { useAuth, useAuthUpdate } from "@/app/context_providers/AuthProvider";
+import { useAuth, useAuthUpdate } from "@/app/contexts/AuthProvider";
 import clsx from "clsx";
 import {
     BookText,
@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useState } from "react";
+import Loading from "../(site)/loading";
 
 export default function LoginForm({
     formType,
@@ -180,11 +181,11 @@ export default function LoginForm({
                     <SquareArrowRightEnter /> Login
                 </button>
                 <p className="m-auto w-fit cursor-pointer text-center text-sm underline">
-                    Forgot User ID or Password?
+                    Forgot Username or Password?
                 </p>
             </form>
         </>
     ) : (
-        <></>
+        <Loading />
     );
 }

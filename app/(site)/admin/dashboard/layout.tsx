@@ -1,12 +1,13 @@
 import CheckAuthentication from "@/app/components/CheckAuthentication";
 import { adminLoginPage } from "@/constants";
+import { AdminNavBar } from "./(components)/AdminNavBar";
 
 export default async function AdminLayout({
     children,
 }: Readonly<{ children: React.ReactNode }>) {
     return (
         <CheckAuthentication fallbackRoute={adminLoginPage}>
-            {children}
+            <AdminNavBar>{children}</AdminNavBar>
         </CheckAuthentication>
     );
 }

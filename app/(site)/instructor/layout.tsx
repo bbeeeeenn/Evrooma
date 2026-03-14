@@ -1,5 +1,5 @@
 import { AuthenticateInstructor } from "@/app/actions/InstructorAuth";
-import { AuthProvider } from "@/app/context_providers/AuthProvider";
+import { AuthProvider } from "@/app/contexts/AuthProvider";
 
 export default function Layout({
     children,

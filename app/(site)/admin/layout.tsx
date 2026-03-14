@@ -1,5 +1,5 @@
 import { AuthenticateAdmin } from "@/app/actions/AdminAuth";
-import { AuthProvider } from "@/app/context_providers/AuthProvider";
+import { AuthProvider } from "@/app/contexts/AuthProvider";
 
 export default function AdminLayout({
     children,

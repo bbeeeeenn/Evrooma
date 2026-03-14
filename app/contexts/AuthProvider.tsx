@@ -1,11 +1,15 @@
 "use client";
+import { LoaderCircle } from "lucide-react";
 import React, { useContext, useEffect, useState } from "react";
+import Loading from "../(site)/loading";
 
+// CONTEXTS ITSELF
 const AuthContext = React.createContext<string | null>(null);
 const AuthUpdateContext = React.createContext<(id: string | null) => void>(
     () => null,
 );
 
+// PROVIDER
 export function AuthProvider({
     children,
     authAction,
@@ -30,9 +34,7 @@ export function AuthProvider({
     return (
         <>
             {isPending ? (
-                <div className="fixed inset-0 m-auto size-fit text-4xl font-bold">
-                    Authenticating
-                </div>
+                <Loading />
             ) : (
                 <AuthUpdateContext.Provider value={updateUser}>
                     <AuthContext.Provider value={user}>
@@ -44,6 +46,7 @@ export function AuthProvider({
     );
 }
 
+// HOOKS
 export function useAuth() {
     return useContext(AuthContext);
 }
