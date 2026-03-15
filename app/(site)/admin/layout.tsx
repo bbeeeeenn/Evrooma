@@ -4,11 +4,9 @@ import { AuthProvider } from "@/app/contexts/AuthProvider";
 export default async function AdminLayout({
     children,
 }: Readonly<{ children: React.ReactNode }>) {
-    const initialUser = await AuthenticateAdmin();
+    // const initialUser = await AuthenticateAdmin();
 
     return (
-        <AuthProvider authAction={AuthenticateAdmin} initialUser={initialUser}>
-            {children}
-        </AuthProvider>
+        <AuthProvider authAction={AuthenticateAdmin}>{children}</AuthProvider>
     );
 }
