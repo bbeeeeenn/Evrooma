@@ -214,13 +214,15 @@ export default function LoginForm({
                 <p className="m-auto w-fit cursor-pointer text-center text-sm underline">
                     Forgot Username or Password?
                 </p>
-                <Link
-                    href={homePage}
-                    type="button"
-                    className="absolute inset-x-0 top-full m-auto size-fit translate-y-1/2 cursor-pointer rounded-full bg-white p-2 shadow-md hover:scale-105 focus-visible:scale-105"
-                >
-                    <Undo2 />
-                </Link>
+                {!isPending && (
+                    <Link
+                        href={homePage}
+                        type="button"
+                        className="absolute inset-x-0 top-full m-auto size-fit translate-y-1/2 cursor-pointer rounded-full bg-white p-2 shadow-md hover:scale-105 focus-visible:scale-105"
+                    >
+                        <Undo2 />
+                    </Link>
+                )}
             </form>
         </>
     ) : (
