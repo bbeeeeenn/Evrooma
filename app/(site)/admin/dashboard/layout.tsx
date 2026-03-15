@@ -7,7 +7,8 @@ export default async function AdminLayout({
 }: Readonly<{ children: React.ReactNode }>) {
     return (
         <CheckAuthentication fallbackRoute={adminLoginPage}>
-            <AdminNavBar>{children}</AdminNavBar>
+            <AdminNavBar />
+            {children}
         </CheckAuthentication>
     );
 }

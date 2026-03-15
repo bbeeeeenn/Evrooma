@@ -10,14 +10,12 @@ import { useAuth, useAuthUpdate } from "@/app/contexts/AuthProvider";
 import clsx from "clsx";
 import {
     BookText,
-    ChevronLeft,
     Flashlight,
     FlashlightOff,
     LoaderCircle,
     Lock,
     ShieldUser,
     SquareArrowRightEnter,
-    Undo,
     Undo2,
     User,
 } from "lucide-react";

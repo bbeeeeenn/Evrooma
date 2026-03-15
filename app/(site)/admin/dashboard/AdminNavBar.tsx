@@ -15,18 +15,15 @@ import {
     UsersRound,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-export function AdminNavBar({
-    children,
-}: Readonly<{ children: React.ReactNode }>) {
+export function AdminNavBar() {
     const [shown, setShown] = useState(true);
+    const pathname = usePathname();
 
     return (
         <>
-            <div className={clsx("mt-10 transition-all", shown && "mt-28")}>
-                {children}
-            </div>
             <nav
                 className={clsx(
                     "bg-black-400 text-black-100 divide-black-100 fixed inset-x-0 bottom-0 m-auto flex justify-evenly divide-x pt-3 pb-2 font-bold tracking-wide transition-transform sm:inset-x-1/12 sm:bottom-4 sm:max-w-2xl sm:rounded-full sm:py-4",
@@ -46,33 +43,49 @@ export function AdminNavBar({
                 <div className="flex grow">
                     <Link
                         href={adminRoomsPage}
-                        className="m-auto flex cursor-pointer flex-col items-center gap-2 text-xs hover:underline sm:flex-row sm:gap-3 sm:text-base"
+                        className={clsx(
+                            "group m-auto flex cursor-pointer flex-col items-center gap-2 text-xs decoration-2 underline-offset-4 sm:flex-row sm:gap-3 sm:text-base",
+                            pathname.includes(adminRoomsPage) &&
+                                "pointer-events-none underline",
+                        )}
                     >
-                        <DoorClosed /> Rooms
+                        <DoorClosed className="transition-transform group-hover:scale-110" />{" "}
+                        Rooms
                     </Link>
                 </div>
                 <div className="flex grow">
                     <Link
                         href={adminAccountsPage}
-                        className="m-auto flex cursor-pointer flex-col items-center gap-2 text-xs hover:underline sm:flex-row sm:gap-3 sm:text-base"
+                        className={clsx(
+                            "group m-auto flex cursor-pointer flex-col items-center gap-2 text-xs decoration-2 underline-offset-4 sm:flex-row sm:gap-3 sm:text-base",
+                            pathname.includes(adminAccountsPage) &&
+                                "pointer-events-none underline",
+                        )}
                     >
-                        <UsersRound /> Accounts
+                        <UsersRound className="transition-transform group-hover:scale-110" />{" "}
+                        Accounts
                     </Link>
                 </div>
                 <div className="flex grow">
                     <Link
                         href={adminChartsPage}
-                        className="m-auto flex cursor-pointer flex-col items-center gap-2 text-xs hover:underline sm:flex-row sm:gap-3 sm:text-base"
+                        className={clsx(
+                            "group m-auto flex cursor-pointer flex-col items-center gap-2 text-xs decoration-2 underline-offset-4 sm:flex-row sm:gap-3 sm:text-base",
+                            pathname.includes(adminChartsPage) &&
+                                "pointer-events-none underline",
+                        )}
                     >
-                        <ChartNoAxesColumn /> Charts
+                        <ChartNoAxesColumn className="transition-transform group-hover:scale-110" />{" "}
+                        Charts
                     </Link>
                 </div>
                 <div className="flex grow">
                     <Link
                         href={adminLogoutPage}
-                        className="m-auto flex cursor-pointer flex-col items-center gap-2 text-xs hover:underline sm:flex-row sm:gap-3 sm:text-base"
+                        className="group m-auto flex cursor-pointer flex-col items-center gap-2 text-xs decoration-2 sm:flex-row sm:gap-3 sm:text-base"
                     >
-                        <SquareArrowRightExit /> Logout
+                        <SquareArrowRightExit className="transition-transform group-hover:scale-110" />{" "}
+                        Logout
                     </Link>
                 </div>
             </nav>
