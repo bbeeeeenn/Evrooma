@@ -60,7 +60,7 @@ export default function RootLayout({
                     inter.variable,
                     inriaSans.variable,
                     poppins.variable,
-                    "min-h-svh antialiased select-none",
+                    "antialiased select-none",
                 )}
             >
                 {children}

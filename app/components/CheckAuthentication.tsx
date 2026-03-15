@@ -18,5 +18,5 @@ export default function CheckAuthentication({
         }
     }, [fallbackRoute, router, user]);
 
-    return user ? children : <Loading />;
+    return user ? <>{children}</> : <Loading />;
 }

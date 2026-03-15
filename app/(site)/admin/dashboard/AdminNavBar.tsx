@@ -24,16 +24,20 @@ export function AdminNavBar({
 
     return (
         <>
+            <div className={clsx("mt-10 transition-all", shown && "mt-28")}>
+                {children}
+            </div>
             <nav
                 className={clsx(
-                    "bg-black-400 text-black-100 fixed inset-x-0 top-0 flex justify-evenly divide-x divide-white py-3 font-bold tracking-wide transition-transform sm:py-4",
-                    !shown && "-translate-y-full",
+                    "bg-black-400 text-black-100 divide-black-100 fixed inset-x-0 bottom-0 m-auto flex justify-evenly divide-x pt-3 pb-2 font-bold tracking-wide transition-transform sm:inset-x-1/12 sm:bottom-4 sm:max-w-2xl sm:rounded-full sm:py-4",
+                    !shown &&
+                        "translate-y-full sm:translate-y-[calc(100%+1rem)]",
                 )}
             >
                 <button
                     className={clsx(
-                        "from-black-100 absolute top-full mt-1 cursor-pointer rounded-full border-0 bg-radial to-transparent p-1 transition-transform",
-                        !shown && "rotate-180",
+                        "from-black-100 absolute bottom-full mb-1 cursor-pointer rounded-full border-0 bg-radial to-transparent p-1 transition-transform",
+                        shown ? "rotate-180" : "animate-bounce",
                     )}
                     onClick={() => setShown((prev) => !prev)}
                 >
@@ -72,9 +76,6 @@ export function AdminNavBar({
                     </Link>
                 </div>
             </nav>
-            <div className={clsx("mt-10 transition-all", shown && "mt-28")}>
-                {children}
-            </div>
         </>
     );
 }
