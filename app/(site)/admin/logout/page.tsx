@@ -9,7 +9,7 @@ export default function AdminLogoutPage() {
         <CheckAuthentication fallbackRoute={adminLoginPage}>
             <div className="fixed inset-0 m-auto flex size-fit items-center gap-2 text-3xl font-bold">
                 <AdminLogout action={LogoutAdmin} />
-                <Loading />
+                <Loading text="Logging Out..." />
             </div>
         </CheckAuthentication>
     );

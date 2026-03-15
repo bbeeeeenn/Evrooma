@@ -1,6 +1,8 @@
 import Image from "next/image";
 
-export default function Loading() {
+export default function Loading({
+    text = "EVROOMA",
+}: Readonly<{ text?: string }>) {
     return (
         <div className="bg-black-100 dark:bg-black-400 dark:text-black-100 font-inter fixed inset-0 m-auto flex flex-col items-center justify-center gap-3 text-3xl font-semibold tracking-widest">
             <Image
@@ -19,7 +21,7 @@ export default function Loading() {
                 alt="logo"
                 className="hidden animate-bounce dark:block"
             />
-            EVROOMA
+            {text}
         </div>
     );
 }

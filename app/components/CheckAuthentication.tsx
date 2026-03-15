@@ -16,5 +16,9 @@ export default function CheckAuthentication({
         if (!user) router.replace(fallbackRoute);
     }, [fallbackRoute, router, user]);
 
-    return user ? <>{children}</> : <Loading />;
+    return user ? (
+        <>{children}</>
+    ) : (
+        <Loading text={"Navigating back to " + fallbackRoute} />
+    );
 }

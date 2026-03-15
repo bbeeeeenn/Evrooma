@@ -39,7 +39,7 @@ export function AuthProvider({
     return (
         <>
             {isPending ? (
-                <Loading />
+                <Loading text="Authenticating..." />
             ) : (
                 <AuthUpdateContext.Provider value={updateUser}>
                     <AuthContext.Provider value={user}>
