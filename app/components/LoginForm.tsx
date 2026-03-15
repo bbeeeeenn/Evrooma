@@ -8,6 +8,7 @@ import {
     BookText,
     Flashlight,
     FlashlightOff,
+    LoaderCircle,
     Lock,
     ShieldUser,
     SquareArrowRightEnter,
@@ -186,7 +187,13 @@ export default function LoginForm({
                     disabled={isPending}
                     type="submit"
                 >
-                    <SquareArrowRightEnter /> Login
+                    {isPending ? (
+                        <LoaderCircle className="animate-spin" />
+                    ) : (
+                        <>
+                            <SquareArrowRightEnter /> Login
+                        </>
+                    )}
                 </button>
                 <p className="m-auto w-fit cursor-pointer text-center text-sm underline">
                     Forgot Username or Password?
