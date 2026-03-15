@@ -35,6 +35,8 @@ export default function LoginForm({
     const updateAuth = useAuthUpdate();
 
     useEffect(() => {
+        // Checks if the client is authenticated
+        // redirect to dashboard if so
         if (user) {
             router.replace(
                 formType === "admin"

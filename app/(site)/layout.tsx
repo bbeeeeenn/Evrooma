@@ -1,6 +1,7 @@
 import { Inter, Inria_Sans, Poppins } from "next/font/google";
 import "./globals.css";
 import clsx from "clsx";
+import BackgroundAudio from "../components/Ambient";
 
 export async function generateMetadata() {
     return {
@@ -54,7 +55,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className="scroll-smooth">
+        <html lang="en" className="scroll-smooth" data-scroll-behavior="smooth">
             <body
                 className={clsx(
                     inter.variable,
@@ -63,6 +64,7 @@ export default function RootLayout({
                     "antialiased select-none",
                 )}
             >
+                <BackgroundAudio />
                 {children}
             </body>
         </html>
