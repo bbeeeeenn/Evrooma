@@ -12,19 +12,25 @@ const AuthUpdateContext = React.createContext<(id: string | null) => void>(
 export function AuthProvider({
     children,
     authAction,
+    initialUser,
 }: Readonly<{
     children: React.ReactNode;
     authAction: () => Promise<string | null>;
+    initialUser?: string | null;
 }>) {
-    const [user, setUser] = useState<string | null>(null);
-    const [isPending, setIsPending] = useState(true);
+    const [user, setUser] = useState<string | null>(initialUser ?? null);
+    const [isPending, setIsPending] = useState(initialUser === undefined);
 
     useEffect(() => {
+        if (initialUser !== undefined) {
+            return;
+        }
+
         authAction().then((user) => {
             setUser(user);
             setIsPending(false);
         });
-    }, [authAction]);
+    }, [authAction, initialUser]);
 
     const updateUser = (id: string | null) => {
         setUser(id);
