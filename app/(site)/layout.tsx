@@ -2,6 +2,8 @@ import { Inter, Inria_Sans, Poppins } from "next/font/google";
 import "./globals.css";
 import clsx from "clsx";
 import VineSounds from "../components/VineSounds";
+import { connection } from "next/server";
+import { Suspense } from "react";
 
 export async function generateMetadata() {
     return {
@@ -49,7 +51,13 @@ const poppins = Poppins({
     weight: ["300", "400", "900", "600"],
 });
 
-export default function RootLayout({
+async function VineSFX() {
+    await connection();
+    const date = new Date();
+    return date.getDate() === 3 && date.getDay() === 1 && <VineSounds />;
+}
+
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
@@ -64,7 +72,9 @@ export default function RootLayout({
                     "antialiased select-none",
                 )}
             >
-                <VineSounds />
+                <Suspense>
+                    <VineSFX />
+                </Suspense>
                 {children}
             </body>
         </html>
