@@ -1,6 +1,7 @@
 import { AuthenticateInstructor } from "@/app/actions/InstructorActions";
 import { instructorLoginPage } from "@/constants";
 import { redirect } from "next/navigation";
+import { InstructorNavBar } from "./NavBar";
 
 export default async function AdminLayout({
     children,
@@ -11,5 +12,10 @@ export default async function AdminLayout({
         redirect(instructorLoginPage);
     }
 
-    return <>{children}</>;
+    return (
+        <>
+            <InstructorNavBar />
+            {children}
+        </>
+    );
 }

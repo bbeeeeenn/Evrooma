@@ -2,7 +2,7 @@
 import { getIronSession, SessionOptions } from "iron-session";
 import { LoginFormActionResponse, ServerActionResponse } from "./_";
 import { connectDB } from "@/app/mongoDb/mongodb";
-import { PlainUserDocument, User } from "@/app/mongoDb/models/user";
+import { Instructor, PlainUserDocument } from "@/app/mongoDb/models/user";
 import { cookies } from "next/headers";
 import { compare } from "@/app/lib/bcrypt";
 
@@ -37,9 +37,8 @@ export async function InstructorAuth(
     try {
         await connectDB();
 
-        const user = await User.findOne({
+        const user = await Instructor.findOne({
             username: username,
-            role: "instructor",
         }).lean<PlainUserDocument>();
 
         if (!user || !(await compare(password, user.password))) {
@@ -81,4 +80,12 @@ export async function AuthenticateInstructor(): Promise<string | null> {
     );
 
     return session.data?.userId ?? null;
+}
+
+export async function LogoutInstructor(): Promise<void> {
+    const session = await getIronSession(
+        await cookies(),
+        instructorSessionOptions,
+    );
+    session.destroy();
 }

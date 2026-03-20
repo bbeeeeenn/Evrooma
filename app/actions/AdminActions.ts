@@ -2,7 +2,7 @@
 import { getIronSession, SessionOptions } from "iron-session";
 import { LoginFormActionResponse, ServerActionResponse } from "./_";
 import { connectDB } from "@/app/mongoDb/mongodb";
-import { PlainUserDocument, User } from "@/app/mongoDb/models/user";
+import { Admin, PlainUserDocument } from "@/app/mongoDb/models/user";
 import { cookies } from "next/headers";
 import { compare } from "@/app/lib/bcrypt";
 
@@ -36,10 +36,8 @@ export async function AdminAuth(
 
     try {
         await connectDB();
-
-        const user = await User.findOne({
+        const user = await Admin.findOne({
             username: username,
-            role: "admin",
         }).lean<PlainUserDocument>();
 
         if (!user || !(await compare(password, user.password))) {
@@ -83,7 +81,7 @@ export async function AuthenticateAdmin(): Promise<string | null> {
     return session.data?.userId ?? null;
 }
 
-export async function LogoutAdmin() {
+export async function LogoutAdmin(): Promise<void> {
     const session = await getIronSession(await cookies(), adminSessionOptions);
     session.destroy();
 }

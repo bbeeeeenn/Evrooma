@@ -37,8 +37,13 @@ const scheduleSchema = new Schema({
     },
     instructor: {
         type: SchemaTypes.ObjectId,
-        ref: "Instructor",
+        ref: "User",
         required: true,
+    },
+    subject: {
+        type: String,
+        default: "Undefined",
+        required: false,
     },
     slot: [slotSchema],
 });

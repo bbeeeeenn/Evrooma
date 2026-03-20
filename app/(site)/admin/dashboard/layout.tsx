@@ -1,7 +1,7 @@
 import { AuthenticateAdmin } from "@/app/actions/AdminActions";
 import { adminLoginPage } from "@/constants";
 import { redirect } from "next/navigation";
-import { AdminNavBar } from "./AdminNavBar";
+import { AdminNavBar } from "./NavBar";
 
 export default async function AdminLayout({
     children,
