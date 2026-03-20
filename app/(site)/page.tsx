@@ -9,7 +9,7 @@ export default function Home() {
     const roleRef = useRef<HTMLElement>(null);
     return (
         <>
-            <section className="font-inter relative flex h-svh min-h-142.5 flex-col items-center justify-center overflow-hidden">
+            <section className="font-inter relative flex h-svh min-h-142.5 snap-start flex-col items-center justify-center overflow-hidden">
                 <h1
                     className={
                         "text-5xl font-bold tracking-widest sm:text-7xl lg:text-8xl xl:text-9xl"
@@ -40,7 +40,7 @@ export default function Home() {
             </section>
             <section
                 ref={roleRef}
-                className="bg-black-400 relative h-svh pt-20"
+                className="bg-black-400 relative h-svh snap-start pt-20"
             >
                 <div className="font-inter text-black-100 absolute inset-0 m-auto flex w-[80%] max-w-sm flex-col justify-center">
                     <h1 className="text-center text-2xl font-bold tracking-wide sm:text-3xl">
@@ -69,7 +69,7 @@ export default function Home() {
                     </button>
                 </div>
             </section>
-            <p className="font-inter bg-black-400 border-t py-1 text-center text-xs text-gray-400">
+            <p className="font-inter bg-black-400 snap-start border-t py-1 text-center text-xs text-gray-400">
                 © 2026 EVROOMA. All rights reserved.
             </p>
         </>

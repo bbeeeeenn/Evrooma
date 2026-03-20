@@ -63,7 +63,11 @@ export default async function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className="scroll-smooth" data-scroll-behavior="smooth">
+        <html
+            lang="en"
+            className="snap-y snap-mandatory scroll-smooth"
+            data-scroll-behavior="smooth"
+        >
             <body
                 className={clsx(
                     inter.variable,
