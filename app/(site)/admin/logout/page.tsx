@@ -12,7 +12,7 @@ export default async function AdminLogoutPage() {
     return (
         <div className="fixed inset-0 m-auto flex size-fit items-center gap-2 text-3xl font-bold">
             <AdminLogout action={LogoutAdmin} />
-            <Loading text="Logging Out..." />
+            <Loading />
         </div>
     );
 }

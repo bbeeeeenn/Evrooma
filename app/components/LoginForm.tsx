@@ -10,8 +10,8 @@ import { useAuth, useAuthUpdate } from "@/app/contexts/AuthProvider";
 import clsx from "clsx";
 import {
     BookText,
-    Flashlight,
-    FlashlightOff,
+    Eye,
+    EyeClosed,
     LoaderCircle,
     Lock,
     ShieldUser,
@@ -168,9 +168,9 @@ export default function LoginForm({
                             type="button"
                         >
                             {formState.showPassword ? (
-                                <Flashlight className="-rotate-90 text-gray-600 transition-all duration-200 peer-placeholder-shown:text-gray-400 peer-focus:text-gray-600" />
+                                <Eye className="text-gray-600 transition-all duration-200 peer-placeholder-shown:text-gray-400 peer-focus:text-gray-600" />
                             ) : (
-                                <FlashlightOff className="-rotate-90 text-gray-600 transition-all duration-200 peer-placeholder-shown:text-gray-400 peer-focus:text-gray-600" />
+                                <EyeClosed className="text-gray-600 transition-all duration-200 peer-placeholder-shown:text-gray-400 peer-focus:text-gray-600" />
                             )}
                         </button>
                     </div>
