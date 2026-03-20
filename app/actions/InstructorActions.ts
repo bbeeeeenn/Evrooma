@@ -89,3 +89,19 @@ export async function LogoutInstructor(): Promise<void> {
     );
     session.destroy();
 }
+export async function GetInstructorInfo(): Promise<PlainUserDocument | null> {
+    try {
+        const session = await getIronSession<AuthSessionData>(
+            await cookies(),
+            instructorSessionOptions,
+        );
+        await connectDB();
+        const admin = await Instructor.findById(
+            session.data?.userId,
+        ).lean<PlainUserDocument>({ virtuals: true });
+        return admin;
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}

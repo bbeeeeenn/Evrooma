@@ -27,10 +27,13 @@ const adminSchema = new Schema({
 adminSchema.virtual("fullName").get(function () {
     return `${this.firstName} ${this.lastName}`;
 });
+instructorSchema.virtual("fullName").get(function () {
+    return `${this.firstName} ${this.lastName}`;
+});
+
 adminSchema.plugin(mongooseLeanVirtuals);
 instructorSchema.plugin(mongooseLeanVirtuals);
 
 export const Instructor =
     models.Instructor || model("Instructor", instructorSchema);
-
 export const Admin = models.Admin || model("Admin", adminSchema);
