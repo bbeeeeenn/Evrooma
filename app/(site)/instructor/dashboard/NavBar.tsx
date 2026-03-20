@@ -7,10 +7,10 @@ import {
 } from "@/constants";
 import clsx from "clsx";
 import {
+    CalendarCheck,
     ChevronUp,
     DoorClosed,
     SquareArrowRightExit,
-    UsersRound,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -24,7 +24,7 @@ export function InstructorNavBar() {
         <>
             <nav
                 className={clsx(
-                    "bg-black-400 text-black-100 divide-black-100 fixed inset-x-0 bottom-0 m-auto flex justify-evenly divide-x pt-3 pb-2 font-bold tracking-wide transition-transform sm:inset-x-1/12 sm:bottom-4 sm:max-w-2xl sm:rounded-full sm:py-4",
+                    "bg-black-400 text-black-100 divide-black-100 fixed inset-x-0 bottom-0 m-auto flex justify-evenly divide-x pt-3 pb-2 font-bold tracking-wide transition-transform sm:inset-x-1/12 sm:bottom-4 sm:max-w-xl sm:rounded-full sm:py-4",
                     !shown &&
                         "translate-y-full sm:translate-y-[calc(100%+1rem)]",
                 )}
@@ -48,7 +48,7 @@ export function InstructorNavBar() {
                                 "pointer-events-none underline",
                         )}
                     >
-                        <UsersRound className="transition-transform group-hover:scale-110" />{" "}
+                        <CalendarCheck className="transition-transform group-hover:scale-110" />{" "}
                         Schedules
                     </Link>
                 </div>
