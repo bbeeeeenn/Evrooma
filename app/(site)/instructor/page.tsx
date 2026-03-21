@@ -1,7 +1,17 @@
-import { InstructorAuth } from "@/app/actions/InstructorActions";
+import {
+    AuthenticateInstructor,
+    InstructorAuth,
+} from "@/app/actions/InstructorActions";
 import LoginForm from "@/app/components/LoginForm";
+import { instructorDashboardPage } from "@/constants";
+import { redirect } from "next/navigation";
 
-export default function InstructorLoginPage() {
+export default async function InstructorLoginPage() {
+    const instructor = await AuthenticateInstructor();
+    if (instructor) {
+        redirect(instructorDashboardPage);
+    }
+
     return (
         <section className="flex h-svh flex-col items-center justify-center bg-white sm:bg-transparent">
             <LoginForm formType="instructor" action={InstructorAuth} />

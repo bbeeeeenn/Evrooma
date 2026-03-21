@@ -69,9 +69,9 @@ export default function Home() {
                     </button>
                 </div>
             </section>
-            <p className="font-inter bg-black-400 snap-start border-t py-1 text-center text-xs text-gray-400">
+            <footer className="font-inter bg-black-400 snap-start border-t py-1 text-center text-xs text-gray-400">
                 © 2026 EVROOMA. All rights reserved.
-            </p>
+            </footer>
         </>
     );
 }

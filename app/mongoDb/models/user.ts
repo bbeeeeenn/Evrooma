@@ -10,22 +10,21 @@ export interface PlainUserDocument {
     fullName: string;
 }
 
-const instructorSchema = new Schema({
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    username: { type: String, required: true },
-    password: { type: String, required: true },
-});
-
 const adminSchema = new Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     username: { type: String, required: true },
     password: { type: String, required: true },
 });
-
 adminSchema.virtual("fullName").get(function () {
     return `${this.firstName} ${this.lastName}`;
+});
+
+const instructorSchema = new Schema({
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    username: { type: String, required: true },
+    password: { type: String, required: true },
 });
 instructorSchema.virtual("fullName").get(function () {
     return `${this.firstName} ${this.lastName}`;

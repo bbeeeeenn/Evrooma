@@ -20,8 +20,8 @@ async function Profile() {
 
 export default function AdminPage() {
     return (
-        <main className="font-inter p-3 px-5">
+        <>
             <Profile />
-        </main>
+        </>
     );
 }

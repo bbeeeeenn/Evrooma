@@ -1,7 +1,14 @@
-import { AdminAuth } from "@/app/actions/AdminActions";
+import { AdminAuth, AuthenticateAdmin } from "@/app/actions/AdminActions";
 import LoginForm from "@/app/components/LoginForm";
+import { adminDashboardPage } from "@/constants";
+import { redirect } from "next/navigation";
 
-export default function AdminLoginPage() {
+export default async function AdminLoginPage() {
+    const user = await AuthenticateAdmin();
+    if (user) {
+        redirect(adminDashboardPage);
+    }
+
     return (
         <section className="flex h-svh flex-col items-center justify-center bg-white sm:bg-transparent">
             <LoginForm formType="admin" action={AdminAuth} />

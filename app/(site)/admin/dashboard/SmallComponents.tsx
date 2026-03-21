@@ -7,10 +7,12 @@ import { useState } from "react";
 import {
     adminAccountsPage,
     adminChartsPage,
+    adminDashboardPage,
     adminLogoutPage,
     adminRoomsPage,
 } from "@/constants";
 import {
+    ArrowLeft,
     ChartNoAxesColumn,
     ChevronUp,
     DoorClosed,
@@ -90,5 +92,16 @@ export function AdminNavBar() {
                 </div>
             </nav>
         </>
+    );
+}
+
+export function BackButton() {
+    return (
+        <Link
+            href={adminDashboardPage}
+            className="hover:bg-black-400 hover:text-black-100 mt-2 mb-7 flex w-fit cursor-pointer items-center gap-1 rounded-md bg-white px-3 py-1 text-sm font-semibold shadow-md transition-colors active:scale-105"
+        >
+            <ArrowLeft size={15} /> Back
+        </Link>
     );
 }

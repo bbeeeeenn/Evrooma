@@ -1,7 +1,7 @@
 import { AuthenticateAdmin } from "@/app/actions/AdminActions";
 import { adminLoginPage } from "@/constants";
 import { redirect } from "next/navigation";
-import { AdminNavBar } from "./NavBar";
+import { AdminNavBar } from "./SmallComponents";
 
 export default async function AdminLayout({
     children,
@@ -15,7 +15,9 @@ export default async function AdminLayout({
     return (
         <>
             <AdminNavBar />
-            {children}
+            <main className="font-inter m-auto max-w-5xl p-3 px-5">
+                {children}
+            </main>
         </>
     );
 }
