@@ -28,7 +28,7 @@ export default async function AdminLayout({
     children,
 }: Readonly<{ children: React.ReactNode }>) {
     return (
-        <Suspense fallback={<Loading />}>
+        <Suspense>
             <Authenticate>{children}</Authenticate>
         </Suspense>
     );
