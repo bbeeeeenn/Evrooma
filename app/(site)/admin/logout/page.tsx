@@ -1,5 +1,5 @@
 import AdminLogout from "./_";
-import { AuthenticateAdmin, LogoutAdmin } from "@/app/actions/AdminActions";
+import { AuthenticateAdmin, LogoutAdmin } from "@/app/actions/AdminAuthActions";
 import Loading from "../../loading";
 import { redirect } from "next/navigation";
 import { adminLoginPage } from "@/constants";

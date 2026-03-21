@@ -1,4 +1,4 @@
-import { GetAdminInfo } from "@/app/actions/AdminActions";
+import { GetAdminInfo } from "@/app/actions/AdminAuthActions";
 import { adminLoginPage } from "@/constants";
 import { ShieldUser } from "lucide-react";
 import { redirect } from "next/navigation";

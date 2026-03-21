@@ -1,4 +1,4 @@
-import { AuthenticateAdmin } from "@/app/actions/AdminActions";
+import { AuthenticateAdmin } from "@/app/actions/AdminAuthActions";
 import { adminLoginPage } from "@/constants";
 import { redirect } from "next/navigation";
 import { AdminNavBar } from "./SmallComponents";

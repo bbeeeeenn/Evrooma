@@ -1,4 +1,4 @@
-import { GetInstructorInfo } from "@/app/actions/InstructorActions";
+import { GetInstructorInfo } from "@/app/actions/InstructorAuthActions";
 import { instructorLoginPage } from "@/constants";
 import { BookText } from "lucide-react";
 import { redirect } from "next/navigation";

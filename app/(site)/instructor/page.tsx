@@ -1,7 +1,7 @@
 import {
     AuthenticateInstructor,
     InstructorAuth,
-} from "@/app/actions/InstructorActions";
+} from "@/app/actions/InstructorAuthActions";
 import LoginForm from "@/app/components/LoginForm";
 import { instructorDashboardPage } from "@/constants";
 import { redirect } from "next/navigation";

@@ -5,7 +5,7 @@ import { instructorLoginPage } from "@/constants";
 import {
     AuthenticateInstructor,
     LogoutInstructor,
-} from "@/app/actions/InstructorActions";
+} from "@/app/actions/InstructorAuthActions";
 
 export default async function AdminLogoutPage() {
     if (!(await AuthenticateInstructor())) {

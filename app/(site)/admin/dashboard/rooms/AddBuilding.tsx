@@ -33,11 +33,13 @@ export default function AddBuilding() {
                     )}
                     onClick={(e) => e.stopPropagation()}
                 >
-                    <h1 className="absolute inset-x-0 bottom-full -translate-y-1/2 text-center text-xl font-bold">
+                    <h1 className="absolute inset-x-0 bottom-full m-auto w-fit -translate-y-1/2 text-xl font-bold tracking-wide">
                         New Building
                     </h1>
                     <div className="flex items-center gap-3">
-                        <Castle size={35} />
+                        <label htmlFor="newbuilding">
+                            <Castle size={35} />
+                        </label>
                         <div className="relative grow">
                             <input
                                 spellCheck={false}

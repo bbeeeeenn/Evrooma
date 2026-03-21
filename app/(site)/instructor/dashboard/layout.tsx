@@ -1,4 +1,4 @@
-import { AuthenticateInstructor } from "@/app/actions/InstructorActions";
+import { AuthenticateInstructor } from "@/app/actions/InstructorAuthActions";
 import { instructorLoginPage } from "@/constants";
 import { redirect } from "next/navigation";
 import { InstructorNavBar } from "./NavBar";

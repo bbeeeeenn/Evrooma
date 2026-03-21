@@ -1,4 +1,4 @@
-import { AdminAuth, AuthenticateAdmin } from "@/app/actions/AdminActions";
+import { AdminAuth, AuthenticateAdmin } from "@/app/actions/AdminAuthActions";
 import LoginForm from "@/app/components/LoginForm";
 import { adminDashboardPage } from "@/constants";
 import { redirect } from "next/navigation";
