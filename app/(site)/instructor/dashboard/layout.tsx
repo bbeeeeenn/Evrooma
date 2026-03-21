@@ -2,8 +2,9 @@ import { AuthenticateInstructor } from "@/app/actions/InstructorAuthActions";
 import { instructorLoginPage } from "@/constants";
 import { redirect } from "next/navigation";
 import { InstructorNavBar } from "./NavBar";
+import { Suspense } from "react";
 
-export default async function AdminLayout({
+async function Authenticate({
     children,
 }: Readonly<{ children: React.ReactNode }>) {
     const user = await AuthenticateInstructor();
@@ -19,5 +20,15 @@ export default async function AdminLayout({
                 {children}
             </main>
         </>
+    );
+}
+
+export default async function AdminLayout({
+    children,
+}: Readonly<{ children: React.ReactNode }>) {
+    return (
+        <Suspense>
+            <Authenticate>{children}</Authenticate>
+        </Suspense>
     );
 }

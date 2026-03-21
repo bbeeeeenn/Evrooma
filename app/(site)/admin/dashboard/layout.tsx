@@ -2,8 +2,10 @@ import { AuthenticateAdmin } from "@/app/actions/AdminAuthActions";
 import { adminLoginPage } from "@/constants";
 import { redirect } from "next/navigation";
 import { AdminNavBar } from "./SmallComponents";
+import { Suspense } from "react";
+import Loading from "../../loading";
 
-export default async function AdminLayout({
+async function Authenticate({
     children,
 }: Readonly<{ children: React.ReactNode }>) {
     const user = await AuthenticateAdmin();
@@ -19,5 +21,15 @@ export default async function AdminLayout({
                 {children}
             </main>
         </>
+    );
+}
+
+export default async function AdminLayout({
+    children,
+}: Readonly<{ children: React.ReactNode }>) {
+    return (
+        <Suspense fallback={<Loading />}>
+            <Authenticate>{children}</Authenticate>
+        </Suspense>
     );
 }

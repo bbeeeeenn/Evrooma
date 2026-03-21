@@ -6,7 +6,6 @@ import { connection } from "next/server";
 import { Suspense } from "react";
 
 async function BuildingsList() {
-    await new Promise((res) => setTimeout(res, 3000));
     let buildings: PlainBuildingDocument[] = [];
     try {
         await connection();
@@ -39,7 +38,7 @@ export default function AdminRoomsPage() {
                 Buildings
             </h1>
             <AddBuilding />
-            <Suspense>
+            <Suspense fallback={"Loading..."}>
                 <BuildingsList />
             </Suspense>
         </>
