@@ -3,7 +3,6 @@ import { adminLoginPage } from "@/constants";
 import { ShieldUser } from "lucide-react";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
-import Loading from "../../loading";
 
 async function Profile() {
     const admin = await GetAdminInfo();
@@ -22,7 +21,7 @@ async function Profile() {
 
 export default function AdminPage() {
     return (
-        <Suspense fallback={<Loading />}>
+        <Suspense>
             <Profile />
         </Suspense>
     );

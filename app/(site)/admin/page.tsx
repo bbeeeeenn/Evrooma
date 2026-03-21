@@ -3,7 +3,6 @@ import LoginForm from "@/app/components/LoginForm";
 import { adminDashboardPage } from "@/constants";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
-import Loading from "../loading";
 
 async function Login() {
     const user = await AuthenticateAdmin();
