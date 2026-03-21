@@ -2,6 +2,8 @@ import { GetInstructorInfo } from "@/app/actions/InstructorAuthActions";
 import { instructorLoginPage } from "@/constants";
 import { BookText } from "lucide-react";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
+import Loading from "../../loading";
 
 async function Profile() {
     const instructor = await GetInstructorInfo();
@@ -20,8 +22,8 @@ async function Profile() {
 
 export default function InstructorPage() {
     return (
-        <main className="font-inter p-3 px-5">
+        <Suspense fallback={<Loading />}>
             <Profile />
-        </main>
+        </Suspense>
     );
 }

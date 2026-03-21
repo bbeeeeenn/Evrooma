@@ -15,7 +15,9 @@ export default async function AdminLayout({
     return (
         <>
             <InstructorNavBar />
-            {children}
+            <main className="font-inter m-auto max-w-5xl p-3 px-5">
+                {children}
+            </main>
         </>
     );
 }

@@ -2,8 +2,10 @@ import { AuthenticateInstructor } from "@/app/actions/InstructorAuthActions";
 import LoginForm from "@/app/components/LoginForm";
 import { instructorDashboardPage } from "@/constants";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
+import Loading from "../loading";
 
-export default async function InstructorLoginPage() {
+async function Login() {
     const instructor = await AuthenticateInstructor();
     if (instructor) {
         redirect(instructorDashboardPage);
@@ -13,5 +15,13 @@ export default async function InstructorLoginPage() {
         <section className="flex h-svh flex-col items-center justify-center bg-white sm:bg-transparent">
             <LoginForm formType="instructor" />
         </section>
+    );
+}
+
+export default async function InstructorLoginPage() {
+    return (
+        <Suspense fallback={<Loading />}>
+            <Login />
+        </Suspense>
     );
 }

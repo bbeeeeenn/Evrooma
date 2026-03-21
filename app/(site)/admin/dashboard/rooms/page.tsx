@@ -3,8 +3,10 @@ import { BackButton } from "../SmallComponents";
 import AddBuilding from "./AddBuilding";
 import { Building, PlainBuildingDocument } from "@/app/mongoDb/models/building";
 import { connection } from "next/server";
+import { Suspense } from "react";
 
 async function BuildingsList() {
+    await new Promise((res) => setTimeout(res, 3000));
     let buildings: PlainBuildingDocument[] = [];
     try {
         await connection();
@@ -37,7 +39,9 @@ export default function AdminRoomsPage() {
                 Buildings
             </h1>
             <AddBuilding />
-            <BuildingsList />
+            <Suspense>
+                <BuildingsList />
+            </Suspense>
         </>
     );
 }
