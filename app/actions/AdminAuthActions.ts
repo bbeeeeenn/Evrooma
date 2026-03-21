@@ -1,20 +1,12 @@
+"use server";
 import { getIronSession, SessionOptions } from "iron-session";
-import {
-    AuthSessionData,
-    LoginFormActionResponse,
-    ServerActionResponse,
-} from "./_";
+import { AuthSessionData, LoginFormActionResponse } from "./_";
 import { connectDB } from "@/app/mongoDb/mongodb";
 import { Admin, PlainUserDocument } from "@/app/mongoDb/models/user";
 import { cookies } from "next/headers";
 import { compare } from "@/app/lib/bcrypt";
 
-export type AdminAuthAction = (
-    _: unknown,
-    formData: FormData,
-) => Promise<ServerActionResponse>;
-
-export const adminSessionOptions: SessionOptions = {
+const adminSessionOptions: SessionOptions = {
     cookieName: "adminSession",
     password: process.env.ADMIN_SESSION_SECRET!,
     cookieOptions: {
@@ -28,7 +20,6 @@ export const adminSessionOptions: SessionOptions = {
 export async function AdminAuth(
     formData: FormData,
 ): Promise<LoginFormActionResponse> {
-    "use server";
     const username = (formData.get("username") as string).trim();
     const password = (formData.get("password") as string).trim();
 
@@ -71,7 +62,6 @@ export async function AdminAuth(
 }
 
 export async function AuthenticateAdmin(): Promise<string | null> {
-    "use server";
     const session = await getIronSession<AuthSessionData>(
         await cookies(),
         adminSessionOptions,
@@ -81,7 +71,6 @@ export async function AuthenticateAdmin(): Promise<string | null> {
 }
 
 export async function LogoutAdmin(): Promise<void> {
-    "use server";
     const session = await getIronSession(await cookies(), adminSessionOptions);
     session.destroy();
 }

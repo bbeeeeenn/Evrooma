@@ -1,10 +1,35 @@
 "use client";
+import { AddBuilding as addBuildingAction } from "@/app/actions/RoomsActions";
+import { ServerActionResponse } from "@/app/actions/_";
 import clsx from "clsx";
-import { Building, Castle, House, Plus, X } from "lucide-react";
-import { useState } from "react";
+import { Building, LoaderCircle, Plus, X } from "lucide-react";
+import { useActionState, useState } from "react";
 
 export default function AddBuilding() {
     const [showModal, setShowModal] = useState(false);
+    const [name, setName] = useState("");
+
+    const onAction = async (
+        _: ServerActionResponse,
+        formData: FormData,
+    ): Promise<ServerActionResponse> => {
+        const result = await addBuildingAction(_, formData);
+
+        if (result.status === "success") {
+            setName("");
+            setShowModal(false);
+        }
+
+        return result;
+    };
+
+    const [state, formAction, isPending] = useActionState<
+        ServerActionResponse,
+        FormData
+    >(onAction, {
+        status: "initial",
+        message: "",
+    });
 
     return (
         <>
@@ -26,43 +51,54 @@ export default function AddBuilding() {
                 onClick={() => setShowModal(false)}
             >
                 <form
-                    action=""
+                    action={formAction}
                     className={clsx(
                         "relative w-full max-w-md rounded-md bg-white px-6 py-10 shadow-md transition-all",
-                        !showModal && "scale-0 opacity-0",
+                        !showModal && "scale-x-0 opacity-0",
                     )}
                     onClick={(e) => e.stopPropagation()}
                 >
-                    <h1 className="absolute inset-x-0 bottom-full m-auto w-fit -translate-y-1/2 text-xl font-bold tracking-wide">
-                        New Building
+                    <h1 className="absolute inset-x-0 bottom-full m-auto flex w-fit -translate-y-1/2 items-center gap-1.5 text-xl font-bold tracking-wide">
+                        <Building /> New Building
                     </h1>
-                    <div className="flex items-center gap-3">
-                        <label htmlFor="newbuilding">
-                            <Castle size={35} />
+                    <div className="relative">
+                        <input
+                            spellCheck={false}
+                            autoComplete="off"
+                            type="text"
+                            id="newbuilding"
+                            name="name"
+                            className="peer w-full border-b-2 border-gray-300 py-1 text-xl font-semibold tracking-wide outline-none placeholder:text-transparent focus:border-gray-600"
+                            disabled={!showModal}
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="Building Name"
+                        />
+                        <label
+                            htmlFor="newbuilding"
+                            className="pointer-events-none absolute -top-5 left-0 text-sm text-gray-600 transition-all peer-placeholder-shown:top-1 peer-placeholder-shown:text-xl peer-placeholder-shown:text-gray-300 peer-focus:-top-5 peer-focus:text-sm peer-focus:text-gray-600"
+                        >
+                            Building Name
                         </label>
-                        <div className="relative grow">
-                            <input
-                                spellCheck={false}
-                                type="text"
-                                id="newbuilding"
-                                className="peer w-full border-b-2 border-gray-300 py-1 text-xl font-semibold tracking-wide outline-none placeholder:text-transparent focus:border-gray-600"
-                                disabled={!showModal}
-                                placeholder="Building Name"
-                            />
-                            <label
-                                htmlFor="newbuilding"
-                                className="pointer-events-none absolute -top-5 left-0 text-sm text-gray-600 transition-all peer-placeholder-shown:top-1 peer-placeholder-shown:text-xl peer-placeholder-shown:text-gray-300 peer-focus:-top-5 peer-focus:text-sm peer-focus:text-gray-600"
-                            >
-                                Building Name
-                            </label>
-                        </div>
                     </div>
                     <button
-                        // type="submit"
-                        type="button"
-                        className="bg-black-400 text-black-100 mt-5 flex w-full cursor-pointer items-center justify-center gap-1 rounded-md px-3 py-2"
+                        type="submit"
+                        disabled={!showModal || isPending || name.length === 0}
+                        className={clsx(
+                            "bg-black-400 text-black-100 mt-5 flex w-full cursor-pointer items-center justify-center gap-1 rounded-md px-3 py-2",
+                            (isPending || name.length === 0) && "opacity-50",
+                        )}
                     >
-                        <Plus /> Add
+                        {isPending ? (
+                            <>
+                                <LoaderCircle className="animate-spin" />{" "}
+                                Adding...
+                            </>
+                        ) : (
+                            <>
+                                <Plus /> Add
+                            </>
+                        )}
                     </button>
                     <button
                         type="button"

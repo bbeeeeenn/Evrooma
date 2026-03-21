@@ -23,13 +23,13 @@ import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useState } from "react";
 import Loading from "../(site)/loading";
 import Link from "next/link";
+import { AdminAuth } from "../actions/AdminAuthActions";
+import { InstructorAuth } from "../actions/InstructorAuthActions";
 
 export default function LoginForm({
     formType,
-    action,
 }: {
     formType: "admin" | "instructor";
-    action: (formData: FormData) => Promise<LoginFormActionResponse>;
 }) {
     const router = useRouter();
     const [formState, setFormState] = useState({
@@ -56,7 +56,10 @@ export default function LoginForm({
         _: unknown,
         formData: FormData,
     ): Promise<LoginFormActionResponse> => {
-        const res = await action(formData);
+        const res =
+            formType === "admin"
+                ? await AdminAuth(formData)
+                : await InstructorAuth(formData);
         if (res.status === "success") {
             updateAuth(res.user);
             router.replace(
