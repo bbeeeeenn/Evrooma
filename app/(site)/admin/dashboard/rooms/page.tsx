@@ -11,7 +11,6 @@ import { adminDashboardPage, adminRoomsPage } from "@/constants";
 async function ClassroomCount({
     buildingId,
 }: Readonly<{ buildingId: string }>) {
-    // await new Promise((res) => setTimeout(res, 3000));
     let count: number = -1;
     try {
         await connectDB();
@@ -28,7 +27,28 @@ async function ClassroomCount({
     );
 }
 
+function BuildingListSkeleton() {
+    return (
+        <ul className="my-5 flex flex-wrap gap-x-6 gap-y-4 opacity-70">
+            {Array.from({ length: 5 }).map((_, i) => (
+                <li
+                    key={i}
+                    className="font-poppins min-w-3xs grow rounded-lg border-b-4 border-gray-200 bg-white p-5 font-semibold shadow-md transition-transform sm:max-w-sm"
+                >
+                    <p className="mb-1 w-5/6 animate-pulse truncate bg-gray-200 text-2xl text-gray-200">
+                        I Love Spaghetti
+                    </p>
+                    <p className="w-1/2 animate-pulse truncate bg-gray-200 text-sm tracking-wide text-gray-200">
+                        Hell yeah... Fuck the cops...
+                    </p>
+                </li>
+            ))}
+        </ul>
+    );
+}
+
 async function BuildingsList() {
+    // await new Promise((res) => setTimeout(res, 3000));
     let buildings: PlainBuildingDocument[] = [];
     try {
         await connection();
@@ -44,22 +64,14 @@ async function BuildingsList() {
             {buildings.map((b) => (
                 <li
                     key={b._id}
-                    className="font-poppins max-w-sm min-w-3xs grow rounded-lg border-b-4 bg-white text-3xl font-semibold shadow-md transition-transform hover:-translate-y-0.5"
+                    className="font-poppins min-w-3xs grow rounded-lg border-b-4 bg-white text-3xl font-semibold shadow-md transition-transform hover:-translate-y-0.5 sm:max-w-sm"
                 >
                     <Link
                         href={adminRoomsPage + "/" + b._id}
                         className="block cursor-pointer p-5"
                     >
                         <p className="truncate">{b.name}</p>
-                        <Suspense
-                            fallback={
-                                <p className="text-sm tracking-wide">
-                                    Counting...
-                                </p>
-                            }
-                        >
-                            <ClassroomCount buildingId={b._id} />
-                        </Suspense>
+                        <ClassroomCount buildingId={b._id} />
                     </Link>
                 </li>
             ))}
@@ -75,7 +87,7 @@ export default function AdminRoomsPage() {
                 Buildings
             </h1>
             <AddBuilding />
-            <Suspense fallback={"Loading..."}>
+            <Suspense fallback={<BuildingListSkeleton />}>
                 <BuildingsList />
             </Suspense>
         </>
