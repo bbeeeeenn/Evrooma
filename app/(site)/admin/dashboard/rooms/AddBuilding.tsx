@@ -3,7 +3,7 @@ import { AddBuilding as addBuildingAction } from "@/app/actions/RoomsActions";
 import { ServerActionResponse } from "@/app/actions/_";
 import clsx from "clsx";
 import { Building, LoaderCircle, Plus, X } from "lucide-react";
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function AddBuilding() {
@@ -35,6 +35,14 @@ export default function AddBuilding() {
         message: "",
     });
 
+    useEffect(() => {
+        const func = (e: KeyboardEvent) => {
+            if (showModal && e.key === "Escape") setShowModal(false);
+        };
+        window.addEventListener("keydown", func);
+        return () => window.removeEventListener("keydown", func);
+    }, [showModal]);
+
     return (
         <>
             <button
@@ -42,22 +50,27 @@ export default function AddBuilding() {
                     "my-4 flex cursor-pointer items-center gap-1 rounded-md bg-white p-2 font-semibold shadow-md",
                     "hover:bg-black-400 hover:text-black-100 transition-colors active:scale-105",
                 )}
-                onClick={() => setShowModal(true)}
+                onClick={() => {
+                    setShowModal(true);
+                }}
             >
                 <Plus /> Add Building
             </button>
             <div
                 className={clsx(
-                    "fixed inset-0 flex flex-col items-center justify-center blur-none transition-all",
+                    "fixed inset-0 z-40 flex flex-col items-center justify-center blur-none transition-all",
                     !showModal && "pointer-events-none bg-transparent",
-                    showModal && "bg-white/20 backdrop-blur-xs",
+                    showModal && "bg-black/20 backdrop-blur-xs",
                 )}
                 onClick={() => setShowModal(false)}
             >
                 <form
                     action={formAction}
+                    onSubmit={(e) => {
+                        if (name.length === 0) e.preventDefault();
+                    }}
                     className={clsx(
-                        "relative w-full max-w-md rounded-md bg-white px-6 py-10 shadow-md transition-all",
+                        "relative w-full max-w-md rounded-md bg-white px-6 pt-10 pb-7 shadow-md transition-all",
                         !showModal && "scale-x-0 opacity-0",
                     )}
                     onClick={(e) => e.stopPropagation()}
@@ -65,52 +78,64 @@ export default function AddBuilding() {
                     <h1 className="absolute inset-x-0 bottom-full m-auto flex w-fit -translate-y-1/2 items-center gap-1.5 text-xl font-bold tracking-wide">
                         <Building /> New Building
                     </h1>
-                    <div className="relative">
-                        <input
-                            spellCheck={false}
-                            autoComplete="off"
-                            type="text"
-                            id="newbuilding"
-                            name="name"
-                            className="peer w-full border-b-2 border-gray-300 py-1 text-xl font-semibold tracking-wide outline-none placeholder:text-transparent focus:border-gray-600"
-                            disabled={!showModal}
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            placeholder="Building Name"
-                        />
-                        <label
-                            htmlFor="newbuilding"
-                            className="pointer-events-none absolute -top-5 left-0 text-sm text-gray-600 transition-all peer-placeholder-shown:top-1 peer-placeholder-shown:text-xl peer-placeholder-shown:text-gray-300 peer-focus:-top-5 peer-focus:text-sm peer-focus:text-gray-600"
-                        >
-                            Building Name
-                        </label>
+                    <div className="flex items-center gap-2">
+                        <Building />
+                        <div className="relative grow">
+                            <input
+                                spellCheck={false}
+                                autoComplete="off"
+                                type="text"
+                                id="newbuilding"
+                                name="name"
+                                className="peer w-full border-b-2 border-gray-700/50 py-1 text-xl font-semibold tracking-wide outline-none placeholder:text-transparent focus:border-gray-700"
+                                disabled={!showModal}
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                placeholder="Building Name"
+                            />
+                            <label
+                                htmlFor="newbuilding"
+                                className="pointer-events-none absolute -top-5 left-0 text-sm text-gray-700 transition-all peer-placeholder-shown:top-1 peer-placeholder-shown:text-xl peer-placeholder-shown:text-gray-700/50 peer-focus:-top-5 peer-focus:text-sm peer-focus:text-gray-700"
+                            >
+                                Building Name
+                            </label>
+                        </div>
                     </div>
-                    <button
-                        type="submit"
-                        disabled={!showModal || isPending || name.length === 0}
-                        className={clsx(
-                            "bg-black-400 text-black-100 mt-5 flex w-full cursor-pointer items-center justify-center gap-1 rounded-md px-3 py-2",
-                            (isPending || name.length === 0) && "opacity-50",
-                        )}
-                    >
-                        {isPending ? (
-                            <>
-                                <LoaderCircle className="animate-spin" />{" "}
-                                Adding...
-                            </>
-                        ) : (
-                            <>
-                                <Plus /> Add
-                            </>
-                        )}
-                    </button>
-                    <button
-                        type="button"
-                        className="absolute inset-x-0 top-full m-auto w-fit translate-y-1/3 cursor-pointer rounded-full bg-white p-2 shadow-md"
-                        onClick={() => setShowModal(false)}
-                    >
-                        <X />
-                    </button>
+                    <div className="flex gap-2">
+                        <button
+                            type="button"
+                            className={clsx(
+                                "bg-black-400 text-black-100 mt-5 flex cursor-pointer items-center justify-center gap-1 rounded-md px-3 py-2",
+                            )}
+                            onClick={() => setShowModal(false)}
+                            disabled={!showModal}
+                        >
+                            <X /> Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            disabled={
+                                !showModal || isPending || name.length === 0
+                            }
+                            className={clsx(
+                                "bg-black-400 text-black-100 mt-5 flex grow items-center justify-center gap-1 rounded-md px-3 py-2",
+                                isPending || name.length === 0
+                                    ? "opacity-75"
+                                    : "cursor-pointer",
+                            )}
+                        >
+                            {isPending ? (
+                                <>
+                                    <LoaderCircle className="animate-spin" />{" "}
+                                    Adding...
+                                </>
+                            ) : (
+                                <>
+                                    <Plus /> Add
+                                </>
+                            )}
+                        </button>
+                    </div>
                 </form>
             </div>
         </>
