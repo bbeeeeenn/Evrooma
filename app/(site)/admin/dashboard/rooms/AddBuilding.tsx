@@ -70,7 +70,7 @@ export default function AddBuilding() {
                         if (name.length === 0) e.preventDefault();
                     }}
                     className={clsx(
-                        "relative w-full max-w-md rounded-md bg-white px-6 pt-10 pb-7 shadow-md transition-all",
+                        "relative w-full max-w-md rounded-xl border-b-8 bg-white px-6 pt-10 pb-7 shadow-md transition-all",
                         !showModal && "scale-x-0 opacity-0",
                     )}
                     onClick={(e) => e.stopPropagation()}

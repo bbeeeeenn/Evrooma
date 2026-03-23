@@ -13,6 +13,7 @@ export default async function Layout({
 }>) {
     const { building: buildingId } = await params;
     if (!isValidObjectId(buildingId)) {
+        // TODO: return a jsx saying building not found instead
         redirect(adminRoomsPage);
     }
 

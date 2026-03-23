@@ -44,6 +44,9 @@ export function AdminNavBar() {
                 <div className="flex grow">
                     <Link
                         href={adminRoomsPage}
+                        tabIndex={
+                            shown && !pathname.includes(adminRoomsPage) ? 0 : -1
+                        }
                         className={clsx(
                             "group m-auto flex cursor-pointer flex-col items-center gap-2 text-xs decoration-2 underline-offset-4 sm:flex-row sm:gap-3 sm:text-base",
                             pathname.includes(adminRoomsPage) &&
@@ -57,6 +60,11 @@ export function AdminNavBar() {
                 <div className="flex grow">
                     <Link
                         href={adminAccountsPage}
+                        tabIndex={
+                            shown && !pathname.includes(adminAccountsPage)
+                                ? 0
+                                : -1
+                        }
                         className={clsx(
                             "group m-auto flex cursor-pointer flex-col items-center gap-2 text-xs decoration-2 underline-offset-4 sm:flex-row sm:gap-3 sm:text-base",
                             pathname.includes(adminAccountsPage) &&
@@ -70,6 +78,11 @@ export function AdminNavBar() {
                 <div className="flex grow">
                     <Link
                         href={adminChartsPage}
+                        tabIndex={
+                            shown && !pathname.includes(adminChartsPage)
+                                ? 0
+                                : -1
+                        }
                         className={clsx(
                             "group m-auto flex cursor-pointer flex-col items-center gap-2 text-xs decoration-2 underline-offset-4 sm:flex-row sm:gap-3 sm:text-base",
                             pathname.includes(adminChartsPage) &&
@@ -83,6 +96,7 @@ export function AdminNavBar() {
                 <div className="flex grow">
                     <Link
                         href={adminLogoutPage}
+                        tabIndex={shown ? 0 : -1}
                         className="group m-auto flex cursor-pointer flex-col items-center gap-2 text-xs decoration-2 sm:flex-row sm:gap-3 sm:text-base"
                     >
                         <SquareArrowRightExit className="transition-transform group-hover:scale-110" />{" "}
