@@ -1,5 +1,5 @@
 import { connectDB } from "@/app/mongoDb/mongodb";
-import { BackButton } from "../SmallComponents";
+import { BackButton } from "../ClientComponents";
 import AddBuilding from "./AddBuilding";
 import { Building, PlainBuildingDocument } from "@/app/mongoDb/models/building";
 import { connection } from "next/server";

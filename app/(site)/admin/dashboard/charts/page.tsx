@@ -1,5 +1,5 @@
 import { adminDashboardPage } from "@/constants";
-import { BackButton } from "../SmallComponents";
+import { BackButton } from "../ClientComponents";
 
 export default function ChartsPage() {
     return (

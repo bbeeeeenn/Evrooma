@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { Plus } from "lucide-react";
-import { BackButton } from "../SmallComponents";
+import { BackButton } from "../ClientComponents";
 import { adminDashboardPage } from "@/constants";
 
 export default function AccountsPage() {

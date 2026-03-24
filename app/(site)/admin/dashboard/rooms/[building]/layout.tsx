@@ -1,8 +1,11 @@
 import Loading from "@/app/(site)/loading";
+import { Building, PlainBuildingDocument } from "@/app/mongoDb/models/building";
+import { connectDB } from "@/app/mongoDb/mongodb";
 import { adminRoomsPage } from "@/constants";
 import { isValidObjectId } from "mongoose";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
+import { BuildingNameProvider } from "@/app/contexts/BuildingNameProvider";
 
 export default async function Layout({
     children,
@@ -16,6 +19,25 @@ export default async function Layout({
         // TODO: return a jsx saying building not found instead
         redirect(adminRoomsPage);
     }
+    let building: PlainBuildingDocument;
+    try {
+        await connectDB();
+        building = await Building.findById(buildingId).lean();
+        if (!building) {
+            // TODO: return a jsx saying building not found instead
+            redirect(adminRoomsPage);
+        }
+    } catch (error) {
+        if (!(error instanceof Error) || error.message !== "NEXT_REDIRECT")
+            console.error(error);
+        redirect(adminRoomsPage);
+    }
 
-    return <Suspense fallback={<Loading />}>{children}</Suspense>;
+    return (
+        <Suspense fallback={<Loading />}>
+            <BuildingNameProvider name={building.name}>
+                {children}
+            </BuildingNameProvider>
+        </Suspense>
+    );
 }

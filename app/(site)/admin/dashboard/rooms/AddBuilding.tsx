@@ -1,19 +1,17 @@
 "use client";
-import { AddBuilding as addBuildingAction } from "@/app/actions/RoomsActions";
+import { AddBuilding as addBuildingAction } from "@/app/actions/BuildingsActions";
 import { ServerActionResponse } from "@/app/actions/_";
 import clsx from "clsx";
 import { Building, LoaderCircle, Plus, X } from "lucide-react";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function AddBuilding() {
     const [showModal, setShowModal] = useState(false);
     const [name, setName] = useState("");
+    const inputRef = useRef<HTMLInputElement>(null);
 
-    const onAction = async (
-        _: ServerActionResponse,
-        formData: FormData,
-    ): Promise<ServerActionResponse> => {
+    const onAction = async (_: unknown, formData: FormData): Promise<void> => {
         const result = await addBuildingAction(_, formData);
 
         if (result.status === "success") {
@@ -23,19 +21,12 @@ export default function AddBuilding() {
         } else if (result.status === "error") {
             toast.error(result.message);
         }
-
-        return result;
     };
 
-    const [state, formAction, isPending] = useActionState<
-        ServerActionResponse,
-        FormData
-    >(onAction, {
-        status: "initial",
-        message: "",
-    });
+    const [_, formAction, isPending] = useActionState(onAction, null);
 
     useEffect(() => {
+        if (showModal) inputRef.current?.focus();
         const func = (e: KeyboardEvent) => {
             if (showModal && e.key === "Escape") setShowModal(false);
         };
@@ -50,9 +41,7 @@ export default function AddBuilding() {
                     "my-4 flex cursor-pointer items-center gap-1 rounded-md bg-white p-2 font-semibold shadow-md",
                     "hover:bg-black-400 hover:text-black-100 transition-colors active:scale-105",
                 )}
-                onClick={() => {
-                    setShowModal(true);
-                }}
+                onClick={() => setShowModal(true)}
             >
                 <Plus /> Add Building
             </button>
@@ -70,7 +59,7 @@ export default function AddBuilding() {
                         if (name.length === 0) e.preventDefault();
                     }}
                     className={clsx(
-                        "relative w-full max-w-md rounded-xl border-b-8 bg-white px-6 pt-10 pb-7 shadow-md transition-all",
+                        "relative w-full max-w-md rounded-xl border-b-4 bg-white px-6 pt-10 pb-7 shadow-md transition-all",
                         !showModal && "scale-x-0 opacity-0",
                     )}
                     onClick={(e) => e.stopPropagation()}
@@ -82,6 +71,7 @@ export default function AddBuilding() {
                         <Building />
                         <div className="relative grow">
                             <input
+                                ref={inputRef}
                                 spellCheck={false}
                                 autoComplete="off"
                                 type="text"

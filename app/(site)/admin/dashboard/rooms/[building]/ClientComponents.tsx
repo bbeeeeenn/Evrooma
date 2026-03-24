@@ -1,0 +1,200 @@
+"use client";
+
+import { RenameBuilding } from "@/app/actions/BuildingsActions";
+import {
+    useBuildingName,
+    useUpdateBuildingName,
+} from "@/app/contexts/BuildingNameProvider";
+import clsx from "clsx";
+import {
+    Building,
+    BuildingIcon,
+    LoaderCircle,
+    Pencil,
+    Trash2,
+    X,
+} from "lucide-react";
+import { useActionState, useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
+
+export function BuildingNameHeader() {
+    return (
+        <h1 className="flex items-center gap-2 text-4xl font-bold">
+            <BuildingIcon size={30} />
+            {useBuildingName()}
+        </h1>
+    );
+}
+
+type Modals = "none" | "rename" | "remove";
+
+function RenameBuildingComponent({
+    buildingId,
+    showModal,
+    closeModal,
+}: {
+    buildingId: string;
+    showModal: boolean;
+    closeModal: () => void;
+}) {
+    const [name, setName] = useState(useBuildingName());
+    const updateBuildingName = useUpdateBuildingName();
+    const onAction = async (_: unknown, formData: FormData): Promise<void> => {
+        const loadingToast = toast.loading("Waiting...");
+        const newName =
+            (formData.get("newName") as string | null)?.trim() ?? "";
+        const res = await RenameBuilding(buildingId, newName);
+        if (res.status === "success") {
+            updateBuildingName(newName);
+            closeModal();
+            toast.update(loadingToast, {
+                type: "success",
+                render: res.message,
+                isLoading: false,
+                autoClose: 3000,
+            });
+        } else {
+            toast.update(loadingToast, {
+                type: "error",
+                render: res.message,
+                isLoading: false,
+                autoClose: 3000,
+            });
+        }
+    };
+    const [_, formAction, isPending] = useActionState(onAction, null);
+
+    const inputRef = useRef<HTMLInputElement>(null);
+    useEffect(() => {
+        if (showModal) {
+            inputRef.current?.focus();
+        }
+        const onKeyDown = (e: KeyboardEvent) => {
+            if (e.key === "Escape") closeModal();
+        };
+        window.addEventListener("keydown", onKeyDown);
+        return () => window.removeEventListener("keydown", onKeyDown);
+    }, [showModal]);
+
+    return (
+        <div
+            className={clsx(
+                "fixed inset-0 z-40 flex flex-col items-center justify-center blur-none transition-all",
+                !showModal && "pointer-events-none bg-transparent",
+                showModal && "bg-black/20 backdrop-blur-xs",
+            )}
+            onClick={() => closeModal()}
+        >
+            <form
+                action={formAction}
+                className={clsx(
+                    "relative w-full max-w-md rounded-xl border-b-4 bg-white px-6 pt-10 pb-7 shadow-md transition-all",
+                    !showModal && "scale-x-0 opacity-0",
+                )}
+                onSubmit={(e) => {
+                    if (name.length === 0) e.preventDefault();
+                }}
+                onClick={(e) => e.stopPropagation()}
+            >
+                <h1 className="absolute inset-x-0 bottom-full m-auto flex w-fit -translate-y-1/2 items-center gap-1.5 text-xl font-bold tracking-wide">
+                    <Building /> New Building
+                </h1>
+                <div className="flex items-center gap-2">
+                    <Building />
+                    <div className="relative grow">
+                        <input
+                            ref={inputRef}
+                            spellCheck={false}
+                            autoComplete="off"
+                            type="text"
+                            id="newbuilding"
+                            name="newName"
+                            className="peer w-full border-b-2 border-gray-700/50 py-1 text-xl font-semibold tracking-wide outline-none placeholder:text-transparent focus:border-gray-700"
+                            disabled={!showModal}
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="Building Name"
+                        />
+                        <label
+                            htmlFor="newbuilding"
+                            className="pointer-events-none absolute -top-5 left-0 text-sm text-gray-700 transition-all peer-placeholder-shown:top-1 peer-placeholder-shown:text-xl peer-placeholder-shown:text-gray-700/50 peer-focus:-top-5 peer-focus:text-sm peer-focus:text-gray-700"
+                        >
+                            Building Name
+                        </label>
+                    </div>
+                </div>
+                <div className="flex gap-2">
+                    <button
+                        type="button"
+                        className={clsx(
+                            "bg-black-400 text-black-100 mt-5 flex cursor-pointer items-center justify-center gap-1 rounded-md px-3 py-2",
+                        )}
+                        onClick={() => closeModal()}
+                        disabled={!showModal}
+                    >
+                        <X /> Cancel
+                    </button>
+                    <button
+                        type="submit"
+                        disabled={!showModal || isPending || name.length === 0}
+                        className={clsx(
+                            "bg-black-400 text-black-100 mt-5 flex grow items-center justify-center gap-1 rounded-md px-3 py-2",
+                            isPending ||
+                                name.length === 0 ||
+                                name === useBuildingName()
+                                ? "opacity-75"
+                                : "cursor-pointer",
+                        )}
+                    >
+                        {isPending ? (
+                            <>
+                                <LoaderCircle className="animate-spin" />{" "}
+                                Renaming...
+                            </>
+                        ) : (
+                            <>
+                                <Pencil /> Rename
+                            </>
+                        )}
+                    </button>
+                </div>
+            </form>
+        </div>
+    );
+}
+
+export function BuildingSettings({
+    buildingId,
+}: Readonly<{
+    buildingId: string;
+}>) {
+    const [openedModal, setOpenedModal] = useState<Modals>("none");
+
+    const closeModal = () => {
+        setOpenedModal("none");
+    };
+
+    return (
+        <>
+            <RenameBuildingComponent
+                buildingId={buildingId}
+                showModal={openedModal === "rename"}
+                closeModal={closeModal}
+            />
+            <div className="flex gap-4">
+                <button
+                    className="hover:bg-black-400 hover:text-black-100 flex min-w-0 grow cursor-pointer items-center justify-center gap-2 rounded-md bg-white px-5 py-2 font-semibold shadow-md transition-all active:scale-x-105 sm:max-w-3xs"
+                    onClick={() => setOpenedModal("rename")}
+                >
+                    <Pencil /> Rename
+                </button>
+                <button
+                    className="hover:bg-black-400 hover:text-black-100 flex min-w-0 grow cursor-pointer items-center justify-center gap-2 rounded-md bg-white px-5 py-2 font-semibold shadow-md transition-all active:scale-x-105 sm:max-w-3xs"
+                    onClick={() => setOpenedModal("remove")}
+                >
+                    <Trash2 /> Remove
+                </button>
+            </div>
+        </>
+    );
+}

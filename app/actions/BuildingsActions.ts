@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { connectDB } from "../mongoDb/mongodb";
 import { Building } from "../mongoDb/models/building";
 import { ServerActionResponse } from "./_";
+import { isValidObjectId } from "mongoose";
 
 export type AddBuildingAction = (
     _: unknown,
@@ -52,6 +53,58 @@ export async function AddBuilding(
         };
     } catch (e) {
         console.error("[AddBuilding]", e);
+        return {
+            status: "error",
+            message: "Something went wrong. Please try again later.",
+        };
+    }
+}
+
+export async function RenameBuilding(
+    buildingId: string,
+    newName: string,
+): Promise<ServerActionResponse> {
+    const sanitizedName = newName.trim();
+
+    if (!isValidObjectId(buildingId)) {
+        return { status: "error", message: "Invalid building id" };
+    }
+    if (!sanitizedName) {
+        return { status: "error", message: "Invalid new name" };
+    }
+
+    try {
+        await connectDB();
+        const existingBuilding = await Building.findOne({
+            _id: { $ne: buildingId },
+            name: { $regex: `^${escapeRegex(sanitizedName)}$`, $options: "i" },
+        }).lean();
+
+        if (existingBuilding) {
+            return {
+                status: "error",
+                message: "Building already exists.",
+            };
+        }
+
+        const building = await Building.findById(buildingId);
+        if (!building) {
+            return {
+                status: "error",
+                message: "Building with such id not found",
+            };
+        }
+
+        building.name = sanitizedName;
+        await building.save();
+
+        revalidatePath(`${adminRoomsPage}`);
+        return {
+            status: "success",
+            message: "Renamed successfully",
+        };
+    } catch (error) {
+        console.error("[RenameBuilding]", error);
         return {
             status: "error",
             message: "Something went wrong. Please try again later.",
