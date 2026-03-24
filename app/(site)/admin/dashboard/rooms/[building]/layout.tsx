@@ -7,13 +7,13 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { BuildingNameProvider } from "@/app/contexts/BuildingNameProvider";
 
-export default async function Layout({
+async function Suspended({
     children,
     params,
-}: Readonly<{
+}: {
     children: React.ReactNode;
     params: Promise<{ building: string }>;
-}>) {
+}) {
     const { building: buildingId } = await params;
     if (!isValidObjectId(buildingId)) {
         // TODO: return a jsx saying building not found instead
@@ -34,10 +34,22 @@ export default async function Layout({
     }
 
     return (
+        <BuildingNameProvider name={building.name}>
+            {children}
+        </BuildingNameProvider>
+    );
+}
+
+export default async function Layout({
+    children,
+    params,
+}: Readonly<{
+    children: React.ReactNode;
+    params: Promise<{ building: string }>;
+}>) {
+    return (
         <Suspense fallback={<Loading />}>
-            <BuildingNameProvider name={building.name}>
-                {children}
-            </BuildingNameProvider>
+            <Suspended params={params}>{children}</Suspended>
         </Suspense>
     );
 }
