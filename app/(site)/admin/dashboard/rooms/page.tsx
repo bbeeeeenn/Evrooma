@@ -50,10 +50,8 @@ function BuildingListSkeleton() {
 
 async function BuildingsList() {
     "use cache";
-    // await new Promise((res) => setTimeout(res, 3000));
     let buildings: PlainBuildingDocument[] = [];
     try {
-        await connection();
         await connectDB();
         buildings = await Building.find().lean<PlainBuildingDocument[]>();
     } catch (error) {
