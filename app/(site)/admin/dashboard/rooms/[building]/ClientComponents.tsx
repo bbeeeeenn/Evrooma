@@ -146,12 +146,12 @@ function RenameBuildingComponent({
                             name === originalName
                         }
                         className={clsx(
-                            "bg-black-400 text-black-100 mt-5 flex grow items-center justify-center gap-1 rounded-md px-3 py-2",
+                            "text-black-100 mt-5 flex grow items-center justify-center gap-1 rounded-md px-3 py-2",
                             isPending ||
                                 name.length === 0 ||
                                 name === originalName
-                                ? "opacity-75"
-                                : "cursor-pointer",
+                                ? "bg-black-400/75"
+                                : "cursor-pointer bg-blue-700",
                         )}
                     >
                         {isPending ? (
@@ -278,7 +278,7 @@ function RemoveBuildingComponent({
                         className={clsx(
                             "text-black-100 mt-5 flex grow items-center justify-center gap-1 rounded-md px-3 py-2",
                             isPending || name.length === 0
-                                ? "bg-black-400/50"
+                                ? "bg-black-400/75"
                                 : "cursor-pointer bg-red-700",
                         )}
                     >
@@ -326,12 +326,14 @@ export function BuildingSettings({
                 <button
                     className="hover:bg-black-400 hover:text-black-100 flex min-w-0 grow cursor-pointer items-center justify-center gap-2 rounded-md bg-white px-5 py-2 font-semibold shadow-md transition-all active:scale-x-105 sm:max-w-3xs"
                     onClick={() => setOpenedModal("rename")}
+                    disabled={openedModal === "rename"}
                 >
                     <Pencil /> Rename
                 </button>
                 <button
                     className="hover:bg-black-400 hover:text-black-100 flex min-w-0 grow cursor-pointer items-center justify-center gap-2 rounded-md bg-white px-5 py-2 font-semibold shadow-md transition-all active:scale-x-105 sm:max-w-3xs"
                     onClick={() => setOpenedModal("remove")}
+                    disabled={openedModal === "remove"}
                 >
                     <Trash2 /> Remove
                 </button>
