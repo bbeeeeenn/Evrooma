@@ -7,6 +7,7 @@ import { connectDB } from "../mongoDb/mongodb";
 import { Building } from "../mongoDb/models/building";
 import { ServerActionResponse } from "./_";
 import { isValidObjectId } from "mongoose";
+import { redirect } from "next/navigation";
 
 export type AddBuildingAction = (
     _: unknown,
@@ -98,14 +99,58 @@ export async function RenameBuilding(
         building.name = sanitizedName;
         await building.save();
 
-        revalidatePath(`${adminRoomsPage}`);
-        revalidatePath(`${adminRoomsPage}/${buildingId}`);
+        revalidatePath(adminRoomsPage);
         return {
             status: "success",
             message: "Renamed successfully",
         };
     } catch (error) {
         console.error("[RenameBuilding]", error);
+        return {
+            status: "error",
+            message: "Something went wrong. Please try again later.",
+        };
+    }
+}
+
+export async function RemoveBuilding(
+    buildingId: string,
+    nameConfirmation: string,
+): Promise<ServerActionResponse> {
+    if (!isValidObjectId(buildingId)) {
+        return { status: "error", message: "Invalid building ID" };
+    }
+    try {
+        await connectDB();
+        const building = await Building.findById(buildingId);
+        if (!building) {
+            return {
+                status: "error",
+                message: "Building with such ID not found",
+            };
+        }
+        if (building.name !== nameConfirmation) {
+            return {
+                status: "error",
+                message: "Invalid building name.",
+            };
+        }
+
+        const deleted = await building.deleteOne();
+        if (deleted.deletedCount >= 1) {
+            revalidatePath(adminRoomsPage);
+            return {
+                status: "success",
+                message: `Successfully removed [${building.name}]`,
+            };
+        } else {
+            return {
+                status: "error",
+                message: "Something went wrong. Please try again later.",
+            };
+        }
+    } catch (e) {
+        console.error("[RemoveBuilding]", e);
         return {
             status: "error",
             message: "Something went wrong. Please try again later.",

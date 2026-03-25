@@ -1,6 +1,8 @@
 "use client";
 
-import { RenameBuilding } from "@/app/actions/BuildingsActions";
+import { RemoveBuilding, RenameBuilding } from "@/app/actions/BuildingsActions";
+import { useActionState, useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 import {
     useBuildingName,
     useUpdateBuildingName,
@@ -14,8 +16,8 @@ import {
     Trash2,
     X,
 } from "lucide-react";
-import { useActionState, useEffect, useRef, useState } from "react";
-import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { adminRoomsPage } from "@/constants";
 
 export function BuildingNameHeader() {
     return (
@@ -37,7 +39,8 @@ function RenameBuildingComponent({
     showModal: boolean;
     closeModal: () => void;
 }) {
-    const [name, setName] = useState(useBuildingName());
+    const originalName = useBuildingName();
+    const [name, setName] = useState(originalName);
     const updateBuildingName = useUpdateBuildingName();
     const onAction = async (_: unknown, formData: FormData): Promise<void> => {
         const loadingToast = toast.loading("Waiting...");
@@ -97,7 +100,7 @@ function RenameBuildingComponent({
                 onClick={(e) => e.stopPropagation()}
             >
                 <h1 className="absolute inset-x-0 bottom-full m-auto flex w-fit -translate-y-1/2 items-center gap-1.5 text-xl font-bold tracking-wide">
-                    <Building /> New Building
+                    <Pencil /> Rename Building
                 </h1>
                 <div className="flex items-center gap-2">
                     <Building />
@@ -141,8 +144,8 @@ function RenameBuildingComponent({
                             "bg-black-400 text-black-100 mt-5 flex grow items-center justify-center gap-1 rounded-md px-3 py-2",
                             isPending ||
                                 name.length === 0 ||
-                                name === useBuildingName()
-                                ? "opacity-75"
+                                name === originalName
+                                ? "pointer-events-none opacity-75"
                                 : "cursor-pointer",
                         )}
                     >
@@ -154,6 +157,134 @@ function RenameBuildingComponent({
                         ) : (
                             <>
                                 <Pencil /> Rename
+                            </>
+                        )}
+                    </button>
+                </div>
+            </form>
+        </div>
+    );
+}
+
+function RemoveBuildingComponent({
+    buildingId,
+    showModal,
+    closeModal,
+}: {
+    buildingId: string;
+    showModal: boolean;
+    closeModal: () => void;
+}) {
+    const [name, setName] = useState("");
+    const inputRef = useRef<HTMLInputElement>(null);
+    const router = useRouter();
+
+    useEffect(() => {
+        if (showModal) {
+            inputRef.current?.focus();
+        }
+    }, [showModal]);
+
+    const onAction = async (_: unknown, formData: FormData): Promise<void> => {
+        const loadingToast = toast.loading("Waiting...");
+        const nameConfirmation =
+            (formData.get("nameConfirmation") as string | null) ?? "";
+        const res = await RemoveBuilding(buildingId, nameConfirmation);
+        if (res.status === "success") {
+            closeModal();
+            router.replace(adminRoomsPage);
+            toast.update(loadingToast, {
+                type: "success",
+                render: res.message,
+                isLoading: false,
+                autoClose: 3000,
+            });
+        } else {
+            toast.update(loadingToast, {
+                type: "error",
+                render: res.message,
+                isLoading: false,
+                autoClose: 3000,
+            });
+        }
+    };
+    const [_, formAction, isPending] = useActionState(onAction, null);
+    return (
+        <div
+            className={clsx(
+                "fixed inset-0 z-40 flex flex-col items-center justify-center blur-none transition-all",
+                !showModal && "pointer-events-none bg-transparent",
+                showModal && "bg-black/20 backdrop-blur-xs",
+            )}
+            onClick={() => closeModal()}
+        >
+            <form
+                action={formAction}
+                className={clsx(
+                    "relative w-full max-w-md rounded-xl border-b-4 bg-white px-6 pt-10 pb-7 shadow-md transition-all",
+                    !showModal && "scale-x-0 opacity-0",
+                )}
+                onSubmit={(e) => {
+                    if (name.length === 0) e.preventDefault();
+                }}
+                onClick={(e) => e.stopPropagation()}
+            >
+                <h1 className="absolute inset-x-0 bottom-full m-auto flex w-fit -translate-y-1/2 items-center gap-1.5 text-xl font-bold tracking-wide">
+                    <Trash2 /> Remove Building
+                </h1>
+                <div className="flex items-center gap-2">
+                    <Building />
+                    <div className="relative grow">
+                        <input
+                            ref={inputRef}
+                            spellCheck={false}
+                            autoComplete="off"
+                            type="text"
+                            id="newbuilding"
+                            name="nameConfirmation"
+                            className="peer w-full border-b-2 border-gray-700/50 py-1 text-xl font-semibold tracking-wide outline-none placeholder:text-transparent focus:border-gray-700"
+                            disabled={!showModal}
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="Building Name"
+                        />
+                        <label
+                            htmlFor="newbuilding"
+                            className="pointer-events-none absolute -top-5 left-0 text-sm text-gray-700 transition-all peer-placeholder-shown:top-1 peer-placeholder-shown:text-xl peer-placeholder-shown:text-gray-700/50 peer-focus:-top-5 peer-focus:text-sm peer-focus:text-gray-700"
+                        >
+                            Enter the building's name to confirm
+                        </label>
+                    </div>
+                </div>
+                <div className="flex gap-2">
+                    <button
+                        type="button"
+                        className={clsx(
+                            "bg-black-400 text-black-100 mt-5 flex cursor-pointer items-center justify-center gap-1 rounded-md px-3 py-2",
+                        )}
+                        onClick={() => closeModal()}
+                        disabled={!showModal}
+                    >
+                        <X /> Cancel
+                    </button>
+                    <button
+                        type="submit"
+                        disabled={!showModal || isPending || name.length === 0}
+                        className={clsx(
+                            "text-black-100 mt-5 flex grow items-center justify-center gap-1 rounded-md px-3 py-2",
+                            isPending || name.length === 0
+                                ? "bg-black-400/50 pointer-events-none"
+                                : "cursor-pointer bg-red-700",
+                        )}
+                    >
+                        {isPending ? (
+                            <>
+                                <LoaderCircle className="animate-spin" />{" "}
+                                Removing...
+                            </>
+                        ) : (
+                            <>
+                                <Trash2 /> Remove
                             </>
                         )}
                     </button>
@@ -179,6 +310,11 @@ export function BuildingSettings({
             <RenameBuildingComponent
                 buildingId={buildingId}
                 showModal={openedModal === "rename"}
+                closeModal={closeModal}
+            />
+            <RemoveBuildingComponent
+                buildingId={buildingId}
+                showModal={openedModal === "remove"}
                 closeModal={closeModal}
             />
             <div className="flex gap-4">
