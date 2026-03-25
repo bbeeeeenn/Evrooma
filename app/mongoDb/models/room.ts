@@ -15,8 +15,13 @@ const roomSchema = new Schema({
 
 roomSchema.virtual("schedules", {
     ref: "Schedule",
-    localField: "_id",
     foreignField: "room",
+    localField: "_id",
 });
+
+roomSchema.index(
+    { building: 1, code: 1 },
+    { unique: true, collation: { locale: "en", strength: 2 } },
+);
 
 export const Room = models.Room || model("Room", roomSchema);

@@ -1,12 +1,18 @@
 import { model, models, Schema } from "mongoose";
 
-const buildingSchema = new Schema({
-    name: { type: String, required: true },
-});
-
 export interface PlainBuildingDocument {
     _id: string;
     name: string;
 }
+
+const buildingSchema = new Schema({
+    name: { type: String, required: true },
+});
+
+buildingSchema.virtual("rooms", {
+    ref: "Room",
+    foreignField: "building",
+    localField: "_id",
+});
 
 export const Building = models.Building || model("Building", buildingSchema);

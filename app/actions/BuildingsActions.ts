@@ -7,7 +7,7 @@ import { connectDB } from "../mongoDb/mongodb";
 import { Building } from "../mongoDb/models/building";
 import { ServerActionResponse } from "./_";
 import { isValidObjectId } from "mongoose";
-import { redirect } from "next/navigation";
+import { AuthenticateAdmin } from "./AdminAuthActions";
 
 export type AddBuildingAction = (
     _: unknown,
@@ -22,6 +22,13 @@ export async function AddBuilding(
     _: unknown,
     formData: FormData,
 ): Promise<ServerActionResponse> {
+    if (!(await AuthenticateAdmin())) {
+        return {
+            status: "error",
+            message: "Unauthorized.",
+        };
+    }
+
     const name = (formData.get("name") as string | null)?.trim() ?? "";
 
     if (!name) {
@@ -65,6 +72,13 @@ export async function RenameBuilding(
     buildingId: string,
     newName: string,
 ): Promise<ServerActionResponse> {
+    if (!(await AuthenticateAdmin())) {
+        return {
+            status: "error",
+            message: "Unauthorized.",
+        };
+    }
+
     const sanitizedName = newName.trim();
 
     if (!isValidObjectId(buildingId)) {
@@ -117,6 +131,13 @@ export async function RemoveBuilding(
     buildingId: string,
     nameConfirmation: string,
 ): Promise<ServerActionResponse> {
+    if (!(await AuthenticateAdmin())) {
+        return {
+            status: "error",
+            message: "Unauthorized.",
+        };
+    }
+
     if (!isValidObjectId(buildingId)) {
         return { status: "error", message: "Invalid building ID" };
     }
