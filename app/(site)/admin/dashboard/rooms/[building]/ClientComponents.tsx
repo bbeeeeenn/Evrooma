@@ -139,13 +139,18 @@ function RenameBuildingComponent({
                     </button>
                     <button
                         type="submit"
-                        disabled={!showModal || isPending || name.length === 0}
+                        disabled={
+                            !showModal ||
+                            isPending ||
+                            name.length === 0 ||
+                            name === originalName
+                        }
                         className={clsx(
                             "bg-black-400 text-black-100 mt-5 flex grow items-center justify-center gap-1 rounded-md px-3 py-2",
                             isPending ||
                                 name.length === 0 ||
                                 name === originalName
-                                ? "pointer-events-none opacity-75"
+                                ? "opacity-75"
                                 : "cursor-pointer",
                         )}
                     >
@@ -273,7 +278,7 @@ function RemoveBuildingComponent({
                         className={clsx(
                             "text-black-100 mt-5 flex grow items-center justify-center gap-1 rounded-md px-3 py-2",
                             isPending || name.length === 0
-                                ? "bg-black-400/50 pointer-events-none"
+                                ? "bg-black-400/50"
                                 : "cursor-pointer bg-red-700",
                         )}
                     >
