@@ -1,36 +1,39 @@
 "use client";
 import React, { useContext, useState } from "react";
 
-const BuildingNameContext = React.createContext<string>("");
+const BuildingInfoContext = React.createContext<{
+    buildingId: string;
+    buildingName: string;
+}>({ buildingId: "", buildingName: "" });
 const UpdateBuildingNameContext = React.createContext<
     (newName: string) => void
 >(() => {});
 
-export function BuildingNameProvider({
+export function BuildingInfoProvider({
     children,
-    name,
+    info,
 }: Readonly<{
     children: React.ReactNode;
-    name: string;
+    info: { buildingId: string; buildingName: string };
 }>) {
-    const [buildingName, setBuildingName] = useState(name);
+    const [buildingInfo, setBuildingInfo] = useState({ ...info });
 
     const updateBuildingName = (newName: string) => {
-        setBuildingName(newName);
+        setBuildingInfo((prev) => ({ ...prev, buildingName: newName }));
     };
 
     return (
-        <BuildingNameContext.Provider value={buildingName}>
+        <BuildingInfoContext.Provider value={buildingInfo}>
             <UpdateBuildingNameContext.Provider value={updateBuildingName}>
                 {children}
             </UpdateBuildingNameContext.Provider>
-        </BuildingNameContext.Provider>
+        </BuildingInfoContext.Provider>
     );
 }
 
 // HOOKS
-export function useBuildingName() {
-    return useContext(BuildingNameContext);
+export function useBuildingInfo() {
+    return useContext(BuildingInfoContext);
 }
 export function useUpdateBuildingName() {
     return useContext(UpdateBuildingNameContext);

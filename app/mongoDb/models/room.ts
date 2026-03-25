@@ -1,11 +1,11 @@
-import { model } from "mongoose";
+import { model, ObjectId } from "mongoose";
 import { models, Schema, SchemaTypes } from "mongoose";
 import type { PlainBuildingDocument } from "./building";
 
 export type PlainRoomDocument = {
-    _id: string;
+    _id: ObjectId;
     code: string;
-    building: string;
+    building: ObjectId;
 };
 
 export type PopulatedPlainRoomDocument = Omit<PlainRoomDocument, "building"> & {

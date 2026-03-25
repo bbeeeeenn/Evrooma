@@ -1,7 +1,7 @@
-import { model, models, Schema } from "mongoose";
+import { model, models, ObjectId, Schema } from "mongoose";
 
 export interface PlainBuildingDocument {
-    _id: string;
+    _id: ObjectId;
     name: string;
 }
 

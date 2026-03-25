@@ -1,8 +1,8 @@
-import { model, models, Schema } from "mongoose";
+import { model, models, ObjectId, Schema } from "mongoose";
 import mongooseLeanVirtuals from "mongoose-lean-virtuals";
 
 export interface PlainUserDocument {
-    _id: string;
+    _id: ObjectId;
     firstName: string;
     lastName: string;
     username: string;

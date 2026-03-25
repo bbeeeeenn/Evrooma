@@ -4,6 +4,7 @@ import {
     AddClassroomComponent,
     BuildingNameHeader,
     BuildingSettings,
+    Divider,
 } from "./ClientComponents";
 import { Suspense } from "react";
 import Link from "next/link";
@@ -14,30 +15,20 @@ import {
 } from "@/app/mongoDb/models/room";
 import { connectDB } from "@/app/mongoDb/mongodb";
 
-function Divider({ text }: { text: string }) {
-    return (
-        <div className="relative my-10 flex items-center justify-center font-bold sm:justify-start">
-            <div className="bg-black-400 absolute inset-0 m-auto h-0.5 rounded-full"></div>
-            <p className="text-black-400 bg-black-100 text-md absolute w-fit px-2 text-center tracking-wide sm:ml-10 sm:text-lg">
-                {text}
-            </p>
-        </div>
-    );
-}
-
 async function Classrooms({ buildingId }: { buildingId: string }) {
     let classrooms: PopulatedPlainRoomDocument[] = [];
     await connectDB();
     classrooms = await Room.find({ building: buildingId })
         .populate("building")
+        .sort()
         .lean();
 
     return (
         <>
             {classrooms.map((classroom) => (
                 <Link
-                    key={classroom._id}
-                    href={""}
+                    key={classroom._id.toString()}
+                    href={`${adminRoomsPage}/${buildingId}/${classroom._id}`}
                     className="mb-4 block border-r-4 bg-white px-5 py-3 shadow-md"
                 >
                     <p className="truncate text-4xl font-bold">

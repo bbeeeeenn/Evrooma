@@ -4,9 +4,9 @@ import { RemoveBuilding, RenameBuilding } from "@/app/actions/BuildingsActions";
 import { useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import {
-    useBuildingName,
+    useBuildingInfo,
     useUpdateBuildingName,
-} from "@/app/contexts/BuildingNameProvider";
+} from "@/app/contexts/BuildingProvider";
 import clsx from "clsx";
 import {
     Building,
@@ -22,11 +22,23 @@ import { useRouter } from "next/navigation";
 import { adminRoomsPage } from "@/constants";
 import { AddClassroom } from "@/app/actions/ClassroomActions";
 
+export function Divider({ text }: { text: string }) {
+    return (
+        <div className="relative my-10 flex items-center justify-center font-bold sm:justify-start">
+            <div className="bg-black-400 absolute inset-0 m-auto h-0.5 rounded-full"></div>
+            <p className="text-black-400 bg-black-100 text-md absolute w-fit px-2 text-center tracking-wide sm:ml-10 sm:text-lg">
+                {text}
+            </p>
+        </div>
+    );
+}
+
 export function BuildingNameHeader() {
+    const { buildingName } = useBuildingInfo();
     return (
         <h1 className="flex items-center gap-2 text-4xl font-bold">
             <BuildingIcon size={30} />
-            {useBuildingName()}
+            {buildingName}
         </h1>
     );
 }
@@ -42,7 +54,7 @@ function RenameBuildingComponent({
     showModal: boolean;
     closeModal: () => void;
 }) {
-    const originalName = useBuildingName();
+    const { buildingName: originalName } = useBuildingInfo();
     const [name, setName] = useState(originalName);
     const updateBuildingName = useUpdateBuildingName();
     const onAction = async (_: unknown, formData: FormData): Promise<void> => {

@@ -5,8 +5,7 @@ import { adminRoomsPage } from "@/constants";
 import { isValidObjectId } from "mongoose";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
-import { BuildingNameProvider } from "@/app/contexts/BuildingNameProvider";
-import { connection } from "next/server";
+import { BuildingInfoProvider } from "@/app/contexts/BuildingProvider";
 
 async function Suspended({
     children,
@@ -35,9 +34,15 @@ async function Suspended({
     }
 
     return (
-        <BuildingNameProvider key={building.name} name={building.name}>
+        <BuildingInfoProvider
+            key={building.name}
+            info={{
+                buildingId: building._id.toString(),
+                buildingName: building.name,
+            }}
+        >
             {children}
-        </BuildingNameProvider>
+        </BuildingInfoProvider>
     );
 }
 
