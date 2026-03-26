@@ -9,9 +9,8 @@ import {
 } from "@/app/contexts/BuildingProvider";
 import clsx from "clsx";
 import {
-    Building,
-    BuildingIcon,
-    DoorClosed,
+    Building2,
+    DoorOpen,
     LoaderCircle,
     Pencil,
     Plus,
@@ -37,7 +36,7 @@ export function BuildingNameHeader() {
     const { buildingName } = useBuildingInfo();
     return (
         <h1 className="flex items-center gap-2 text-4xl font-bold underline">
-            <BuildingIcon size={30} />
+            <Building2 size={30} />
             {buildingName}
         </h1>
     );
@@ -83,14 +82,20 @@ function RenameBuildingComponent({
     const inputRef = useRef<HTMLInputElement>(null);
     useEffect(() => {
         if (showModal) {
-            inputRef.current?.focus();
-            setName(originalName); // Refresh input
+            setName(originalName); // Refresh input first
         }
         const onKeyDown = (e: KeyboardEvent) => {
             if (e.key === "Escape") closeModal();
         };
         window.addEventListener("keydown", onKeyDown);
         return () => window.removeEventListener("keydown", onKeyDown);
+    }, [showModal]);
+
+    useEffect(() => {
+        if (showModal && inputRef.current) {
+            inputRef.current.focus();
+            inputRef.current.setSelectionRange(name.length, name.length);
+        }
     }, [showModal]);
 
     return (
@@ -117,7 +122,7 @@ function RenameBuildingComponent({
                     <Pencil /> Rename Building
                 </h1>
                 <div className="flex items-center gap-2">
-                    <Building />
+                    <Building2 />
                     <div className="relative grow">
                         <input
                             ref={inputRef}
@@ -199,8 +204,9 @@ function RemoveBuildingComponent({
 
     useEffect(() => {
         if (showModal) {
+            setName(""); // Refresh input first
             inputRef.current?.focus();
-            setName(""); // Refresh input
+            inputRef.current?.setSelectionRange(0, 0);
         }
     }, [showModal]);
 
@@ -252,7 +258,7 @@ function RemoveBuildingComponent({
                     <Trash2 /> Remove Building
                 </h1>
                 <div className="flex items-center gap-2">
-                    <Building />
+                    <Building2 />
                     <div className="relative grow">
                         <input
                             ref={inputRef}
@@ -422,10 +428,10 @@ export function AddClassroomComponent() {
                     onClick={(e) => e.stopPropagation()}
                 >
                     <h1 className="absolute inset-x-0 bottom-full m-auto flex w-fit -translate-y-1/2 items-center gap-1.5 text-xl font-bold tracking-wide">
-                        <DoorClosed /> New Classroom
+                        <DoorOpen /> New Classroom
                     </h1>
                     <div className="flex items-center gap-2">
-                        <DoorClosed />
+                        <DoorOpen />
                         <div className="relative grow">
                             <input
                                 ref={inputRef}
@@ -434,12 +440,10 @@ export function AddClassroomComponent() {
                                 type="text"
                                 id="newClassroom"
                                 name="code"
-                                className="peer w-full border-b-2 border-gray-700/50 py-1 text-xl font-semibold tracking-wide outline-none placeholder:text-transparent focus:border-gray-700"
+                                className="peer w-full border-b-2 border-gray-700/50 py-1 text-xl font-semibold tracking-wide uppercase outline-none placeholder:text-transparent focus:border-gray-700"
                                 disabled={!showModal}
                                 value={code}
-                                onChange={(e) =>
-                                    setCode(e.target.value.toUpperCase())
-                                }
+                                onChange={(e) => setCode(e.target.value)}
                                 placeholder="Classroom Code"
                             />
                             <label

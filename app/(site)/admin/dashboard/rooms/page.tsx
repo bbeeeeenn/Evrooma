@@ -7,7 +7,7 @@ import { Suspense } from "react";
 import { Room } from "@/app/mongoDb/models/room";
 import Link from "next/link";
 import { adminDashboardPage, adminRoomsPage } from "@/constants";
-import { BuildingIcon } from "lucide-react";
+import { Building2 } from "lucide-react";
 
 async function ClassroomCount({
     buildingId,
@@ -73,7 +73,7 @@ async function BuildingsList() {
                         className="block cursor-pointer p-5"
                     >
                         <p className="flex items-center gap-1 truncate">
-                            <BuildingIcon />
+                            <Building2 />
                             {b.name}
                         </p>
                         <ClassroomCount buildingId={b._id.toString()} />

@@ -70,14 +70,20 @@ function RenameClassroomComponent({
     const inputRef = useRef<HTMLInputElement>(null);
     useEffect(() => {
         if (showModal) {
-            inputRef.current?.focus();
-            setCode(originalCode); // Refresh input
+            setCode(originalCode); // Refresh input first
         }
         const onKeyDown = (e: KeyboardEvent) => {
             if (e.key === "Escape") closeModal();
         };
         window.addEventListener("keydown", onKeyDown);
         return () => window.removeEventListener("keydown", onKeyDown);
+    }, [showModal]);
+
+    useEffect(() => {
+        if (showModal && inputRef.current) {
+            inputRef.current.focus();
+            inputRef.current.setSelectionRange(code.length, code.length);
+        }
     }, [showModal]);
 
     return (
@@ -113,12 +119,10 @@ function RenameClassroomComponent({
                             type="text"
                             id="newRoomCode"
                             name="newCode"
-                            className="peer w-full border-b-2 border-gray-700/50 py-1 text-xl font-semibold tracking-wide outline-none placeholder:text-transparent focus:border-gray-700"
+                            className="peer w-full border-b-2 border-gray-700/50 py-1 text-xl font-semibold tracking-wide uppercase outline-none placeholder:text-transparent focus:border-gray-700"
                             disabled={!showModal}
                             value={code}
-                            onChange={(e) =>
-                                setCode(e.target.value.toUpperCase())
-                            }
+                            onChange={(e) => setCode(e.target.value)}
                             placeholder="Classroom Code"
                         />
                         <label
@@ -189,8 +193,8 @@ function RemoveClassroomComponent({
 
     useEffect(() => {
         if (showModal) {
+            setCode(""); // Refresh input first
             inputRef.current?.focus();
-            setCode(""); // Refresh input
         }
     }, [showModal]);
 
@@ -251,12 +255,10 @@ function RemoveClassroomComponent({
                             type="text"
                             id="roomCode"
                             name="codeConfirmation"
-                            className="peer w-full border-b-2 border-gray-700/50 py-1 text-xl font-semibold tracking-wide outline-none placeholder:text-transparent focus:border-gray-700"
+                            className="peer w-full border-b-2 border-gray-700/50 py-1 text-xl font-semibold tracking-wide uppercase outline-none placeholder:text-transparent focus:border-gray-700"
                             disabled={!showModal}
                             value={code}
-                            onChange={(e) =>
-                                setCode(e.target.value.toUpperCase())
-                            }
+                            onChange={(e) => setCode(e.target.value)}
                             placeholder="Building Name"
                         />
                         <label
