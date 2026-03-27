@@ -79,7 +79,7 @@ export function AdminNavBar() {
                             )}
                         >
                             <UsersRound className="transition-transform group-hover:scale-110" />{" "}
-                            Accounts
+                            Users
                         </Link>
                     </div>
                     <div className="flex grow">
