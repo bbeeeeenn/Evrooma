@@ -11,7 +11,6 @@ import Link from "next/link";
 import { adminDashboardPage, adminRoomsPage } from "@/constants";
 import { Building2, DoorOpen } from "lucide-react";
 import { connection } from "next/server";
-import Loading from "@/app/(site)/loading";
 
 async function ClassroomCount({
     buildingId,
@@ -53,6 +52,7 @@ function BuildingListSkeleton() {
 }
 
 async function BuildingsList() {
+    await connection();
     let buildings: PlainBuildingDocument[] = [];
     try {
         await connectDB();
@@ -87,7 +87,8 @@ async function BuildingsList() {
     );
 }
 
-function ClassroomsSkeleton() {
+async function ClassroomsSkeleton() {
+    await connection();
     return (
         <ul>
             {Array.from({ length: 4 }).map((_, i) => (
@@ -111,6 +112,7 @@ function ClassroomsSkeleton() {
 }
 
 async function Classrooms() {
+    await connection();
     let classrooms: PopulatedPlainRoomDocument[] = [];
     await connectDB();
     classrooms = await Room.find()
@@ -155,8 +157,7 @@ async function Classrooms() {
     );
 }
 
-async function Suspended() {
-    await connection();
+export default async function AdminRoomsPage() {
     return (
         <>
             <BackButton dest={adminDashboardPage} />
@@ -170,13 +171,5 @@ async function Suspended() {
                 <Classrooms />
             </Suspense>
         </>
-    );
-}
-
-export default async function AdminRoomsPage() {
-    return (
-        <Suspense fallback={<Loading />}>
-            <Suspended />
-        </Suspense>
     );
 }
