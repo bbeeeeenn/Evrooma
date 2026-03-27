@@ -11,6 +11,7 @@ import Link from "next/link";
 import { adminDashboardPage, adminRoomsPage } from "@/constants";
 import { Building2, DoorOpen } from "lucide-react";
 import { connection } from "next/server";
+import Loading from "@/app/(site)/loading";
 
 async function ClassroomCount({
     buildingId,
@@ -154,7 +155,7 @@ async function Classrooms() {
     );
 }
 
-export default async function AdminRoomsPage() {
+async function Suspended() {
     await connection();
     return (
         <>
@@ -169,5 +170,13 @@ export default async function AdminRoomsPage() {
                 <Classrooms />
             </Suspense>
         </>
+    );
+}
+
+export default async function AdminRoomsPage() {
+    return (
+        <Suspense fallback={<Loading />}>
+            <Suspended />
+        </Suspense>
     );
 }
