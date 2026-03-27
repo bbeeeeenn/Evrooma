@@ -66,7 +66,7 @@ export default async function BuildingPage({
     const { building: buildingId } = await params;
     return (
         <>
-            <BackButton />
+            <BackButton dest={adminRoomsPage} />
             <BuildingNameHeader />
             <Divider text="Settings" />
             <BuildingSettings />

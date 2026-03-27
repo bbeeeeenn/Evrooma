@@ -2,11 +2,17 @@ import { CalendarDays } from "lucide-react";
 import { BackButton } from "../../../ClientComponents";
 import { Divider } from "../../ClientComponents";
 import { ClassroomCodeHeader, ClassroomSettings } from "./ClientComponents";
+import { adminRoomsPage } from "@/constants";
 
-export default async function AdminClassroomPage() {
+export default async function AdminClassroomPage({
+    params,
+}: {
+    params: Promise<{ building: string; classroom: string }>;
+}) {
+    const { building } = await params;
     return (
         <>
-            <BackButton />
+            <BackButton dest={`${adminRoomsPage}/${building}`} />
             <ClassroomCodeHeader />
             <Divider text="Settings" />
             <ClassroomSettings />
