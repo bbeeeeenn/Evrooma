@@ -65,6 +65,7 @@ export async function RenameClassroom(
         classroom.code = sanitizedClassRoomCode;
         await classroom.save();
         revalidatePath(`${adminRoomsPage}/${classroom.building}`);
+        revalidatePath(adminRoomsPage);
         return {
             status: "success",
             message: "Classroom renamed.",
@@ -129,6 +130,7 @@ export async function RemoveClassroom(
         const deleted = await classroom.deleteOne();
         if (deleted.deletedCount >= 1) {
             revalidatePath(`${adminRoomsPage}/${classroom.building}`);
+            revalidatePath(adminRoomsPage);
             return {
                 status: "success",
                 message: `Successfully removed [${classroom.code}]`,
@@ -205,6 +207,7 @@ export async function AddClassroom(
         });
 
         revalidatePath(`${adminRoomsPage}/${buildingId}`);
+        revalidatePath(adminRoomsPage);
         return {
             status: "success",
             message: "Classroom created.",

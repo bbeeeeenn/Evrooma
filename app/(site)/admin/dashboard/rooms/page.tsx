@@ -54,7 +54,6 @@ function BuildingListSkeleton() {
 async function BuildingsList() {
     let buildings: PlainBuildingDocument[] = [];
     try {
-        await connection();
         await connectDB();
         buildings = await Building.find()
             .sort({ createdAt: 1 })
@@ -111,6 +110,7 @@ function ClassroomsSkeleton() {
 }
 
 async function Classrooms() {
+    // i wonder why classrooms here are updated when i rename a classroom even though the classroom rename server action didnt revalidate this path
     let classrooms: PopulatedPlainRoomDocument[] = [];
     await connectDB();
     classrooms = await Room.find()
@@ -146,7 +146,7 @@ export default async function AdminRoomsPage() {
             <Suspense fallback={<BuildingListSkeleton />}>
                 <BuildingsList />
             </Suspense>
-            <h1 className="my-10 text-4xl font-bold">Classroomss</h1>
+            <h1 className="my-10 text-4xl font-bold">Classrooms</h1>
             <Suspense fallback={<ClassroomsSkeleton />}>
                 <Classrooms />
             </Suspense>

@@ -156,6 +156,7 @@ export async function RemoveBuilding(
                 message: "Invalid building name.",
             };
         }
+        // TODO: Delete the classrooms first.. and maybe do some research on mongoose middlewares/hooks
 
         const deleted = await building.deleteOne();
         if (deleted.deletedCount >= 1) {
