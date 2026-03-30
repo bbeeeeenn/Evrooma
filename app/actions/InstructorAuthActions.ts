@@ -2,7 +2,7 @@
 import { getIronSession, SessionOptions } from "iron-session";
 import { AuthSessionData, LoginFormActionResponse } from "./_";
 import { connectDB } from "@/app/mongoDb/mongodb";
-import { Instructor, PlainUserDocument } from "@/app/mongoDb/models/user";
+import { Instructor, PlainInstructorDocument } from "@/app/mongoDb/models/user";
 import { cookies } from "next/headers";
 import { compare } from "@/app/lib/bcrypt";
 
@@ -20,20 +20,20 @@ const instructorSessionOptions: SessionOptions = {
 export async function InstructorAuth(
     formData: FormData,
 ): Promise<LoginFormActionResponse> {
-    const username = (formData.get("username") as string).trim();
+    const email = (formData.get("email") as string).trim();
     const password = (formData.get("password") as string).trim();
 
     try {
         await connectDB();
 
         const user = await Instructor.findOne({
-            username: username,
-        }).lean<PlainUserDocument>();
+            email,
+        }).lean<PlainInstructorDocument>();
 
         if (!user || !(await compare(password, user.password))) {
             return {
                 status: "error",
-                message: "Invalid username and password",
+                message: "Invalid email and password",
                 user: null,
                 formData,
             };
@@ -78,7 +78,7 @@ export async function LogoutInstructor(): Promise<void> {
     );
     session.destroy();
 }
-export async function GetInstructorInfo(): Promise<PlainUserDocument | null> {
+export async function GetInstructorInfo(): Promise<PlainInstructorDocument | null> {
     try {
         const session = await getIronSession<AuthSessionData>(
             await cookies(),
@@ -87,7 +87,7 @@ export async function GetInstructorInfo(): Promise<PlainUserDocument | null> {
         await connectDB();
         const admin = await Instructor.findById(
             session.data?.userId,
-        ).lean<PlainUserDocument>({ virtuals: true });
+        ).lean<PlainInstructorDocument>({ virtuals: true });
         return admin;
     } catch (e) {
         console.error(e);

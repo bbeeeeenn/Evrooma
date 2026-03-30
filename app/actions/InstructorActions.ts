@@ -4,6 +4,9 @@ import { ServerActionResponse } from "./_";
 import { connectDB } from "@/app/mongoDb/mongodb";
 import { Instructor } from "@/app/mongoDb/models/user";
 import { encrypt } from "@/app/lib/bcrypt";
+import { AuthenticateAdmin } from "./AdminAuthActions";
+import { revalidatePath } from "next/cache";
+import { adminAccountsPage } from "@/constants";
 
 export type RawInstructorData = {
     fname: string;
@@ -14,6 +17,13 @@ export type RawInstructorData = {
 export async function CreateInstructor(
     data: RawInstructorData,
 ): Promise<ServerActionResponse> {
+    if (!(await AuthenticateAdmin())) {
+        return {
+            status: "error",
+            message: "Unauthorized.",
+        };
+    }
+
     const { fname, lname, email, password } = data;
 
     const firstName = fname.trim();
@@ -59,6 +69,7 @@ export async function CreateInstructor(
             username: normalizedEmail,
             password: hashedPassword,
         });
+        revalidatePath(adminAccountsPage);
 
         return {
             status: "success",

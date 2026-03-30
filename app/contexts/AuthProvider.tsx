@@ -1,6 +1,8 @@
 // ####################################################################
 // ####################################################################
-// ############################# UNUSED ###############################
+// ########################                ############################
+// ########################     UNUSED     ############################
+// ########################                ############################
 // ####################################################################
 // ####################################################################
 
@@ -15,6 +17,11 @@ const AuthUpdateContext = React.createContext<(id: string | null) => void>(
 );
 
 // PROVIDER
+
+/**
+ *
+ * @deprecated
+ */
 export function AuthProvider({
     children,
     authAction,
@@ -58,10 +65,21 @@ export function AuthProvider({
 }
 
 // HOOKS
+
+/**
+ *
+ * @deprecated
+ */
 export function useAuth() {
     return useContext(AuthContext);
 }
 
+/**
+ *
+ * @deprecated
+ */
 export function useAuthUpdate() {
     return useContext(AuthUpdateContext);
 }
+
+useAuth;

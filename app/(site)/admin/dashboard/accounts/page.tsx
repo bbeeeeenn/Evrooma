@@ -1,8 +1,48 @@
 import clsx from "clsx";
-import { Plus } from "lucide-react";
+import { BookText, Plus, SquareUserRound, UserRound } from "lucide-react";
 import { BackButton } from "../ClientComponents";
-import { adminCreateAccountPage, adminDashboardPage } from "@/constants";
+import {
+    adminAccountsPage,
+    adminCreateAccountPage,
+    adminDashboardPage,
+} from "@/constants";
 import Link from "next/link";
+import { Suspense } from "react";
+import { Instructor, PlainInstructorDocument } from "@/app/mongoDb/models/user";
+import { connectDB } from "@/app/mongoDb/mongodb";
+import { connection } from "next/server";
+
+async function InstructorsList() {
+    let instructors: PlainInstructorDocument[] = [];
+    try {
+        await connection();
+        await connectDB();
+        instructors = await Instructor.find().lean({ virtuals: true });
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+
+    return (
+        <ul className="space-y-4">
+            {instructors.map((instructor) => (
+                <li key={instructor._id.toString()}>
+                    <Link
+                        href={`${adminAccountsPage}/${instructor._id}`}
+                        className="block w-full rounded-md border-b-4 bg-white px-5 py-5 shadow-md"
+                    >
+                        <p className="flex items-center gap-1 text-2xl font-bold">
+                            <BookText /> {instructor.fullName}
+                        </p>
+                        <p className="font-semibold underline">
+                            {instructor.email}
+                        </p>
+                    </Link>
+                </li>
+            ))}
+        </ul>
+    );
+}
 
 export default function AccountsPage() {
     return (
@@ -20,6 +60,9 @@ export default function AccountsPage() {
             >
                 <Plus /> Add Instructor
             </Link>
+            <Suspense fallback="Loading...">
+                <InstructorsList />
+            </Suspense>
         </>
     );
 }

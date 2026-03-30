@@ -112,12 +112,12 @@ export default function LoginForm({
                     <div className="relative w-full">
                         <input
                             type="text"
-                            name="username"
+                            name={formType === "admin" ? "username" : "email"}
                             id="username"
                             placeholder="Username"
                             required
                             defaultValue={
-                                formType == "admin" ? "admin" : "instructor"
+                                formType == "admin" ? "admin" : ""
                                 // : (state.formData.get("username") as string)
                             }
                             autoComplete="off"
@@ -128,7 +128,7 @@ export default function LoginForm({
                             htmlFor="username"
                             className="pointer-events-none absolute -top-5 left-0 text-sm text-gray-600 transition-all duration-200 peer-placeholder-shown:top-0 peer-placeholder-shown:text-lg peer-placeholder-shown:text-gray-400 peer-focus:-top-5 peer-focus:text-sm peer-focus:text-gray-600"
                         >
-                            Username
+                            {formType === "admin" ? "Username" : "Email"}
                         </label>
                     </div>
                 </div>
@@ -144,7 +144,7 @@ export default function LoginForm({
                             placeholder="Password"
                             required
                             defaultValue={
-                                "123123"
+                                formType === "admin" ? "123123" : ""
                                 //  (state.formData.get("password") as string)
                             }
                             autoComplete="off"

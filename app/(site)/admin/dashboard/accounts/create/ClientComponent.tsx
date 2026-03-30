@@ -1,28 +1,11 @@
 "use client";
-import { adminCreateAccountPage } from "@/constants";
+import { CreateInstructor } from "@/app/actions/InstructorActions";
+import { adminAccountsPage, adminCreateAccountPage } from "@/constants";
 import clsx from "clsx";
-import { BookText, CirclePlus, Lock, Mail, User } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { CirclePlus, Lock, Mail, User } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 import { useActionState, useState } from "react";
-
-/**
- * Creates a form component for registering a new instructor.
- *
- * The form collects the following information:
- * - First Name
- * - Last Name
- * - Email
- * - Password
- * - Password confirmation
- *
- * Features:
- * - Animated floating labels that transition when input is focused or populated
- * - Styled with Tailwind CSS and Poppins font
- * - Uses icon indicators for each section (BookText, User, Mail, Lock)
- * - Input fields have bottom border focus states
- *
- * @returns {React.ReactNode} A form element for creating new instructor accounts
- */
+import { toast } from "react-toastify";
 
 type Data = {
     fname: string;
@@ -42,6 +25,7 @@ const defaultData: Data = {
 
 export function CreateInstructorForm(): React.ReactNode {
     const [data, setData] = useState<Data>({ ...defaultData });
+    const router = useRouter();
     const pathname = usePathname();
 
     const onAction = async (_: unknown, formData: FormData): Promise<void> => {
@@ -52,6 +36,36 @@ export function CreateInstructorForm(): React.ReactNode {
             (formData.get("password") as string | null)?.trim() ?? "";
         const password2 =
             (formData.get("password2") as string | null)?.trim() ?? "";
+
+        if (password !== password2) {
+            toast.error("Passwords doesn't match.");
+            return;
+        }
+
+        const loadingToast = toast.loading("Waiting...");
+        const response = await CreateInstructor({
+            fname,
+            lname,
+            email,
+            password,
+        });
+        if (response.status === "success") {
+            toast.update(loadingToast, {
+                isLoading: false,
+                type: "success",
+                render: response.message,
+                autoClose: 3000,
+            });
+            router.replace(adminAccountsPage);
+            setData({ ...defaultData });
+        } else {
+            toast.update(loadingToast, {
+                isLoading: false,
+                type: "error",
+                render: response.message,
+                autoClose: 3000,
+            });
+        }
     };
 
     const [_, formAction, isPending] = useActionState(onAction, null);
@@ -59,7 +73,7 @@ export function CreateInstructorForm(): React.ReactNode {
         <form
             action={formAction}
             className={clsx(
-                "font-poppins m-auto mt-10 max-w-sm rounded-lg bg-white px-2 sm:max-w-lg sm:p-10 sm:shadow-md",
+                "font-poppins m-auto mt-10 max-w-sm rounded-lg bg-white px-2 sm:max-w-lg sm:px-16 sm:py-10 sm:shadow-md",
                 pathname === adminCreateAccountPage && "cif",
             )}
         >

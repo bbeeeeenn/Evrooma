@@ -1,7 +1,7 @@
 import { model, models, ObjectId, Schema } from "mongoose";
 import mongooseLeanVirtuals from "mongoose-lean-virtuals";
 
-export interface PlainUserDocument {
+export interface PlainAdminDocument {
     _id: ObjectId;
     firstName: string;
     lastName: string;
@@ -9,6 +9,15 @@ export interface PlainUserDocument {
     password: string;
     fullName: string;
 }
+
+export type PlainInstructorDocument = {
+    _id: ObjectId;
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    fullName: string;
+};
 
 const adminSchema = new Schema({
     firstName: { type: String, required: true },
@@ -31,7 +40,6 @@ const instructorSchema = new Schema({
     },
     firstName: { type: String, required: true, trim: true },
     lastName: { type: String, required: true, trim: true },
-    username: { type: String, required: true, trim: true },
     password: { type: String, required: true },
 });
 instructorSchema.virtual("fullName").get(function () {
