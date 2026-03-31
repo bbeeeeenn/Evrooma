@@ -35,7 +35,6 @@ async function Suspended({
 
     return (
         <BuildingInfoProvider
-            key={building.name}
             info={{
                 buildingId: building._id.toString(),
                 buildingName: building.name,

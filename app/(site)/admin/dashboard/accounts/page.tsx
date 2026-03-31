@@ -13,7 +13,6 @@ import { connectDB } from "@/app/mongoDb/mongodb";
 import { connection } from "next/server";
 
 async function InstructorsList() {
-    await new Promise((res) => setTimeout(res, 3000));
     let instructors: PlainInstructorDocument[] = [];
     try {
         await connection();

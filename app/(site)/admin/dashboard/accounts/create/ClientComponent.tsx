@@ -29,7 +29,6 @@ export function CreateInstructorForm(): React.ReactNode {
     const pathname = usePathname();
 
     const onAction = async (_: unknown, formData: FormData): Promise<void> => {
-        await new Promise((res) => setTimeout(res, 3000));
         const fname = (formData.get("fname") as string | null)?.trim() ?? "";
         const lname = (formData.get("lname") as string | null)?.trim() ?? "";
         const email = (formData.get("email") as string | null)?.trim() ?? "";

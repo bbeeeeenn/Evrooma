@@ -1,6 +1,7 @@
 import { connectDB } from "@/app/mongoDb/mongodb";
 import { BackButton } from "../ClientComponents";
-import AddBuilding, { Divider } from "./ClientComponents";
+import AddBuilding from "./ClientComponents";
+import { Divider } from "../ClientComponents";
 import { Building, PlainBuildingDocument } from "@/app/mongoDb/models/building";
 import { Suspense } from "react";
 import {

@@ -33,7 +33,6 @@ async function Suspended({
 
     return (
         <ClassroomInfoProvider
-            key={classroom.code}
             info={{
                 classroomCode: classroom.code,
                 classroomId: classroom._id.toString(),

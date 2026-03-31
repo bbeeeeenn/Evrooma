@@ -138,3 +138,16 @@ export function BackButton({ dest }: Readonly<{ dest?: string }>) {
         </>
     );
 }
+
+export function Divider({ text }: { text?: string }) {
+    return (
+        <div className="relative my-10 flex items-center justify-center font-bold sm:justify-start">
+            <div className="bg-black-400 absolute inset-0 m-auto h-0.5 rounded-full"></div>
+            {text && (
+                <p className="text-black-400 bg-black-100 text-md absolute w-fit px-2 text-center tracking-wide sm:ml-10 sm:text-lg">
+                    {text}
+                </p>
+            )}
+        </div>
+    );
+}
