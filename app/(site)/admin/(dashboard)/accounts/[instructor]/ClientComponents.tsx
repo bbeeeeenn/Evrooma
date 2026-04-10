@@ -18,7 +18,7 @@ function Row({
     return (
         <tr>
             <td>{label}:</td>
-            <td className="text-black/70">
+            <td className="text-white/80">
                 <p className="flex items-center gap-2 underline">
                     <span className="break-all">{content}</span>
                     <button>
@@ -36,11 +36,11 @@ export function InstructorInfoComponent() {
 
     return (
         <>
-            <h1 className="flex items-center gap-2 text-4xl font-bold">
+            <h1 className="flex items-center gap-2 text-4xl font-bold text-white/95">
                 <BookText size={40} /> {`${fname} ${lname}`}
             </h1>
             <Divider text="Account" />
-            <table className="font-poppins w-full border-separate border-spacing-2 font-semibold select-text">
+            <table className="font-poppins w-full border-separate border-spacing-2 font-semibold text-white/95 select-text">
                 <tbody>
                     <Row label="First Name" content={fname} />
                     <Row label="Last Name" content={lname} />
@@ -48,7 +48,7 @@ export function InstructorInfoComponent() {
                     <Row label="Password" content={"•".repeat(15)} />
                 </tbody>
             </table>
-            <button className="font-poppins hover:bg-black-400 hover:text-black-100 flex cursor-pointer items-center justify-center gap-2 rounded-md bg-white px-4 py-2 font-semibold shadow-md transition-colors">
+            <button className="font-poppins hover:bg-green-tertiary bg-yellow-primary mt-2 flex cursor-pointer items-center justify-center gap-2 rounded-md px-4 py-2 font-semibold shadow-md transition-colors hover:text-white">
                 <Trash2 size={20} /> Delete Account
             </button>
         </>

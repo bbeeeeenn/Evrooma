@@ -11,12 +11,15 @@ import {
 import clsx from "clsx";
 import {
     BookText,
+    Check,
     Eye,
     EyeClosed,
     LoaderCircle,
     Lock,
     ShieldUser,
+    Square,
     SquareArrowRightEnter,
+    SquareCheck,
     Undo2,
     User,
 } from "lucide-react";
@@ -79,20 +82,22 @@ export default function LoginForm({
 
     return (
         <>
-            <h1 className="text-black-400 font-poppins mb-7 flex items-center gap-2 text-center text-2xl font-bold tracking-widest">
+            <h1 className="font-poppins mb-7 flex items-center gap-2 text-center text-2xl font-semibold tracking-wider text-white">
                 {formType === "instructor" ? (
                     <>
-                        <BookText /> Instructor
+                        <BookText size={30} /> Instructor
                     </>
                 ) : (
                     <>
-                        <ShieldUser /> Administrator
+                        <ShieldUser size={30} /> Administrator
                     </>
                 )}
             </h1>
             <form
                 action={formAction}
-                className="text-md font-poppins relative w-full max-w-md space-y-10 rounded-xl bg-white px-[7vw] pt-14 pb-12 sm:px-12 sm:shadow-lg"
+                className={clsx(
+                    "text-md font-poppins bg-green-primary relative w-full max-w-md space-y-10 rounded-xl px-[7vw] pt-14 pb-12 text-white sm:px-12 sm:shadow-lg",
+                )}
             >
                 <div className="flex items-center gap-3">
                     <label htmlFor="username">
@@ -111,11 +116,11 @@ export default function LoginForm({
                             }
                             autoComplete="off"
                             spellCheck={false}
-                            className="peer block w-full border-b-2 border-gray-300 py-1 placeholder-transparent focus:border-gray-600 focus:outline-0"
+                            className="peer block w-full border-b-2 border-white/50 py-1 placeholder-transparent focus:border-white focus:outline-0"
                         />
                         <label
                             htmlFor="username"
-                            className="pointer-events-none absolute -top-5 left-0 text-sm text-gray-600 transition-all duration-200 peer-placeholder-shown:top-0 peer-placeholder-shown:text-lg peer-placeholder-shown:text-gray-400 peer-focus:-top-5 peer-focus:text-sm peer-focus:text-gray-600"
+                            className="pointer-events-none absolute -top-5 left-0 text-sm text-white/90 transition-all duration-200 peer-placeholder-shown:top-0 peer-placeholder-shown:text-lg peer-placeholder-shown:text-white/50 peer-focus:-top-5 peer-focus:text-sm peer-focus:text-white/90"
                         >
                             {formType === "admin" ? "Username" : "Email"}
                         </label>
@@ -137,24 +142,24 @@ export default function LoginForm({
                                 //  (state.formData.get("password") as string)
                             }
                             autoComplete="off"
-                            className="peer min-w-0 grow border-b-2 border-gray-300 py-1 placeholder-transparent focus-within:border-gray-600 focus:outline-0"
+                            className="peer min-w-0 grow border-b-2 border-white/50 py-1 placeholder-transparent outline-0 focus:border-white/90"
                         />
 
                         <label
                             htmlFor="password"
-                            className="pointer-events-none absolute -top-5 left-0 text-sm text-gray-600 transition-all duration-200 peer-placeholder-shown:top-0 peer-placeholder-shown:text-lg peer-placeholder-shown:text-gray-400 peer-focus:-top-5 peer-focus:text-sm peer-focus:text-gray-600"
+                            className="pointer-events-none absolute -top-5 left-0 text-sm text-white/90 transition-all duration-200 peer-placeholder-shown:top-0 peer-placeholder-shown:text-lg peer-placeholder-shown:text-white/50 peer-focus:-top-5 peer-focus:text-sm peer-focus:text-white/90"
                         >
                             Password
                         </label>
                         <button
-                            className="flex cursor-pointer items-center justify-center p-0.5"
+                            className="flex cursor-pointer items-center justify-center p-0.5 text-white"
                             onClick={onShowPassword}
                             type="button"
                         >
                             {showPassword ? (
-                                <Eye className="text-gray-600 transition-all duration-200 peer-placeholder-shown:text-gray-400 peer-focus:text-gray-600" />
+                                <Eye className="transition-all duration-200" />
                             ) : (
-                                <EyeClosed className="text-gray-600 transition-all duration-200 peer-placeholder-shown:text-gray-400 peer-focus:text-gray-600" />
+                                <EyeClosed className="transition-all duration-200" />
                             )}
                         </button>
                     </div>
@@ -162,7 +167,7 @@ export default function LoginForm({
                 {rememberMe !== null && (
                     <label
                         htmlFor="rememberme"
-                        className="font-inter text-md flex w-fit cursor-pointer items-center gap-2 font-bold text-gray-600 hover:underline"
+                        className="font-inter text-md flex w-fit cursor-pointer items-center gap-2 font-medium tracking-wide text-white hover:underline"
                     >
                         <input
                             type="checkbox"
@@ -170,8 +175,19 @@ export default function LoginForm({
                             name="rememberme"
                             checked={rememberMe}
                             onChange={onRemember}
+                            hidden
                             className="accent-black-400 size-4 cursor-pointer"
                         />
+                        <Square className="flex items-center justify-center">
+                            {rememberMe && (
+                                <Check
+                                    size={18}
+                                    x={3}
+                                    y={3}
+                                    strokeWidth={2.5}
+                                />
+                            )}
+                        </Square>
                         Remember me?
                     </label>
                 )}
@@ -182,7 +198,7 @@ export default function LoginForm({
                 )}
                 <button
                     className={clsx(
-                        "bg-black-400 text-black-100 mb-3 flex w-full cursor-pointer items-center justify-center gap-2 rounded-md py-2 focus:outline-0",
+                        "bg-yellow-primary font-inter mb-3 flex w-full cursor-pointer items-center justify-center gap-2 rounded-md py-2 font-bold text-black/80 focus:outline-0",
                         isPending && "opacity-50",
                     )}
                     disabled={isPending}
@@ -210,7 +226,7 @@ export default function LoginForm({
                     <Link
                         href={homePage}
                         type="button"
-                        className="absolute inset-x-0 top-full m-auto size-fit translate-y-1/2 cursor-pointer rounded-full bg-white p-2 shadow-md hover:scale-105 focus-visible:scale-105"
+                        className="bg-yellow-primary absolute inset-x-0 top-full m-auto size-fit translate-y-1/2 cursor-pointer rounded-full p-2 text-black shadow-md hover:scale-105 focus-visible:scale-105"
                     >
                         <Undo2 />
                     </Link>

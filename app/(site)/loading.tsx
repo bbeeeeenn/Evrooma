@@ -4,13 +4,14 @@ export default function Loading({
     text = "EVROOMA",
 }: Readonly<{ text?: string }>) {
     return (
-        <div className="bg-black-100 font-inter fixed inset-0 z-50 m-auto flex flex-col items-center justify-center gap-3 text-3xl tracking-widest">
+        <div className="bg-green-secondary font-inter fixed inset-0 z-50 m-auto flex flex-col items-center justify-center gap-3 text-3xl tracking-widest text-white/95">
             <Image
                 draggable={false}
-                src="/favicon_light.svg"
+                src="/favicon_dark.svg"
                 width={150}
                 height={150}
                 alt="logo"
+                loading="eager"
                 className="animate-bounce"
             />
             <p className="w-full truncate px-5 text-center font-bold">{text}</p>

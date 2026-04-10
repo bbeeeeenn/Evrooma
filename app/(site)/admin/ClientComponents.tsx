@@ -30,7 +30,7 @@ export function AdminNavBar() {
             <>
                 <nav
                     className={clsx(
-                        "bg-black-400 text-black-100 divide-black-100 fixed inset-x-0 bottom-0 z-40 m-auto flex justify-evenly divide-x pt-3 pb-2 font-bold tracking-wide transition-transform sm:inset-x-1/12 sm:bottom-4 sm:max-w-2xl sm:rounded-full sm:py-4",
+                        "bg-green-tertiary fixed inset-x-0 bottom-0 z-40 m-auto flex justify-evenly divide-x divide-white pt-3 pb-2 font-bold tracking-wide text-white transition-transform sm:inset-x-1/12 sm:bottom-4 sm:max-w-2xl sm:rounded-full sm:py-4",
                         !shown &&
                             "translate-y-full sm:translate-y-[calc(100%+1rem)]",
                     )}
@@ -42,7 +42,7 @@ export function AdminNavBar() {
                         )}
                         onClick={() => setShown((prev) => !prev)}
                     >
-                        <ChevronUp size={30} color="#1d1d1d" />
+                        <ChevronUp size={30} />
                     </button>
                     <div className="flex grow">
                         <Link
@@ -121,14 +121,14 @@ export function BackButton({ dest }: Readonly<{ dest?: string }>) {
             {dest ? (
                 <Link
                     href={dest}
-                    className="hover:bg-black-400 hover:text-black-100 mt-2 mb-7 flex w-fit cursor-pointer items-center gap-1 rounded-md bg-white px-3 py-1 text-sm font-semibold shadow-md transition-colors active:scale-105"
+                    className="hover:bg-green-tertiary bg-yellow-primary mt-2 mb-7 flex w-fit cursor-pointer items-center gap-1 rounded-md px-3 py-1 text-sm font-semibold shadow-md transition-colors hover:text-white active:scale-105"
                 >
                     <ArrowLeft size={15} /> Back
                 </Link>
             ) : (
                 <button
                     onClick={() => router.back()}
-                    className="hover:bg-black-400 hover:text-black-100 mt-2 mb-7 flex w-fit cursor-pointer items-center gap-1 rounded-md bg-white px-3 py-1 text-sm font-semibold shadow-md transition-colors active:scale-105"
+                    className="hover:bg-green-tertiary bg-yellow-primary mt-2 mb-7 flex w-fit cursor-pointer items-center gap-1 rounded-md px-3 py-1 text-sm font-semibold shadow-md transition-colors hover:text-white active:scale-105"
                 >
                     <ArrowLeft size={15} /> Back
                 </button>
@@ -139,10 +139,10 @@ export function BackButton({ dest }: Readonly<{ dest?: string }>) {
 
 export function Divider({ text }: { text?: string }) {
     return (
-        <div className="relative my-10 flex items-center justify-center font-bold sm:justify-start">
-            <div className="bg-black-400 absolute inset-0 m-auto h-0.5 rounded-full"></div>
+        <div className="relative my-10 flex items-center justify-center font-semibold sm:justify-start">
+            <div className="absolute inset-0 m-auto h-px rounded-full bg-white"></div>
             {text && (
-                <p className="text-black-400 bg-black-100 text-md absolute w-fit px-2 text-center tracking-wide sm:ml-10 sm:text-lg">
+                <p className="bg-green-primary text-md absolute w-fit px-2 text-center tracking-wide text-white sm:ml-10 sm:text-lg">
                     {text}
                 </p>
             )}

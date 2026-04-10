@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-    --background: #F2F2F2;
+    --background: #4CAF50;
     --foreground: #171717;
 }
 
@@ -10,9 +10,10 @@
     --font-inria-sans: var(--font-inria-sans);
     --font-poppins: var(--font-poppins);
 
-    --color-black-100: #F2F2F2;
-    --color-black-200: #666;
-    --color-black-400: #1d1d1d;
+    --color-yellow-primary: #F2E44D;
+    --color-green-tertiary: #107A18;
+    --color-green-primary: #4CAF50;
+    --color-green-secondary: #59C35D;
 }
 
 ::selection {
@@ -29,7 +30,10 @@
 }
 
 body {
-    background: var(--background);
     color: var(--foreground);
     font-family: Arial, Helvetica, sans-serif;
+}
+
+*:focus-visible {
+    outline: transparent !important;
 }

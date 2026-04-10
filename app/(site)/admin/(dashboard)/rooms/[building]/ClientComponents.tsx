@@ -24,7 +24,7 @@ import { AddClassroom } from "@/app/actions/ClassroomActions";
 export function BuildingNameHeader() {
     const { buildingName } = useBuildingInfo();
     return (
-        <h1 className="flex items-center gap-2 text-4xl font-bold underline">
+        <h1 className="flex items-center gap-2 text-4xl font-bold text-white underline">
             <Building2 size={30} />
             {buildingName}
         </h1>
@@ -321,14 +321,14 @@ export function BuildingSettings() {
             />
             <div className="flex gap-4">
                 <button
-                    className="hover:bg-black-400 hover:text-black-100 flex min-w-0 grow cursor-pointer items-center justify-center gap-2 rounded-md bg-white px-5 py-2 font-semibold shadow-md transition-all sm:max-w-3xs"
+                    className="hover:bg-green-tertiary bg-yellow-primary flex min-w-0 grow cursor-pointer items-center justify-center gap-2 rounded-md px-5 py-2 font-semibold shadow-md transition-all hover:text-white sm:max-w-3xs"
                     onClick={() => setOpenedModal("rename")}
                     disabled={openedModal === "rename"}
                 >
                     <Pencil /> Rename
                 </button>
                 <button
-                    className="hover:bg-black-400 hover:text-black-100 flex min-w-0 grow cursor-pointer items-center justify-center gap-2 rounded-md bg-white px-5 py-2 font-semibold shadow-md transition-all sm:max-w-3xs"
+                    className="hover:bg-green-tertiary bg-yellow-primary flex min-w-0 grow cursor-pointer items-center justify-center gap-2 rounded-md px-5 py-2 font-semibold shadow-md transition-all hover:text-white sm:max-w-3xs"
                     onClick={() => setOpenedModal("remove")}
                     disabled={openedModal === "remove"}
                 >
@@ -392,7 +392,7 @@ export function AddClassroomComponent() {
     return (
         <>
             <button
-                className="hover:bg-black-400 hover:text-black-100 mb-5 flex cursor-pointer items-center gap-1 rounded-md bg-white px-4 py-2.5 font-semibold shadow-md transition-all"
+                className="hover:bg-green-tertiary bg-yellow-primary mb-5 flex cursor-pointer items-center gap-1 rounded-md px-4 py-2.5 font-semibold shadow-md transition-colors hover:text-white"
                 onClick={() => setShowModal(true)}
                 disabled={showModal}
             >

@@ -40,7 +40,7 @@ async function InstructorsList() {
                 <li key={instructor._id.toString()}>
                     <Link
                         href={`${adminAccountsPage}/${instructor._id}`}
-                        className="block w-full rounded-md border-b-4 bg-white px-5 py-5 shadow-md"
+                        className="bg-green-secondary border-yellow-primary block w-full rounded-md border-l-4 px-5 py-5 text-white shadow-md"
                     >
                         <p className="flex items-center gap-1 text-2xl font-bold">
                             <BookText /> {instructor.fullName}
@@ -58,14 +58,14 @@ async function InstructorsList() {
 export default function AccountsPage() {
     return (
         <>
-            <h1 className="flex items-center gap-2 text-4xl font-bold">
+            <h1 className="flex items-center gap-2 text-4xl font-bold text-white/95">
                 Instructors
             </h1>
             <Link
                 href={adminCreateAccountPage}
                 className={clsx(
-                    "mt-10 mb-5 flex w-fit cursor-pointer items-center gap-1 rounded-md bg-white p-2 font-semibold shadow-md",
-                    "hover:bg-black-400 hover:text-black-100 transition-colors active:scale-105",
+                    "bg-yellow-primary mt-10 mb-5 flex w-fit cursor-pointer items-center gap-1 rounded-md p-2 font-semibold shadow-md",
+                    "hover:bg-green-tertiary hover:text-black-100 transition-colors active:scale-105",
                 )}
             >
                 <Plus /> Add Instructor

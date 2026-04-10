@@ -56,6 +56,7 @@ async function VineSFX() {
     await connection();
     const date = new Date();
     return date.getMonth() === 3 && date.getDate() === 1 && <VineSounds />;
+    // return <VineSounds />;
 }
 
 export default async function RootLayout({
@@ -75,6 +76,7 @@ export default async function RootLayout({
                     inriaSans.variable,
                     poppins.variable,
                     "antialiased select-none",
+                    "has-[.accountform]:bg-green-tertiary bg-green-primary",
                 )}
             >
                 <Suspense>

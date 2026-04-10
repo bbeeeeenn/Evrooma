@@ -24,19 +24,19 @@ export function InstructorNavBar() {
         <>
             <nav
                 className={clsx(
-                    "bg-black-400 text-black-100 divide-black-100 fixed inset-x-0 bottom-0 m-auto flex justify-evenly divide-x pt-3 pb-2 font-bold tracking-wide transition-transform sm:inset-x-1/12 sm:bottom-4 sm:max-w-xl sm:rounded-full sm:py-4",
+                    "bg-green-tertiary fixed inset-x-0 bottom-0 m-auto flex justify-evenly divide-x divide-white pt-3 pb-2 font-bold tracking-wide text-white transition-transform sm:inset-x-1/12 sm:bottom-4 sm:max-w-xl sm:rounded-full sm:py-4",
                     !shown &&
                         "translate-y-full sm:translate-y-[calc(100%+1rem)]",
                 )}
             >
                 <button
                     className={clsx(
-                        "from-black-100 absolute bottom-full mb-1 cursor-pointer rounded-full border-0 bg-radial to-transparent p-1 transition-transform",
+                        "absolute bottom-full mb-1 cursor-pointer rounded-full border-0 p-1 backdrop-blur-xs transition-transform",
                         shown ? "rotate-180" : "animate-bounce",
                     )}
                     onClick={() => setShown((prev) => !prev)}
                 >
-                    <ChevronUp size={30} color="#1d1d1d" />
+                    <ChevronUp size={30} />
                 </button>
 
                 <div className="flex grow">

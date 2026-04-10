@@ -48,7 +48,7 @@ async function Classrooms({ buildingId }: { buildingId: string }) {
                 <Link
                     key={classroom._id.toString()}
                     href={`${adminRoomsPage}/${buildingId}/${classroom._id}`}
-                    className="mb-4 block border-r-4 bg-white px-5 py-3 shadow-md"
+                    className="bg-green-secondary border-yellow-primary mb-4 block border-r-4 px-5 py-3 text-white/95 shadow-md"
                 >
                     <p className="truncate text-4xl font-bold">
                         {classroom.code}

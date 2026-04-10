@@ -81,8 +81,8 @@ export function CreateInstructorForm(): React.ReactNode {
         <form
             action={formAction}
             className={clsx(
-                "font-poppins m-auto mt-10 max-w-sm rounded-lg bg-white px-2 sm:max-w-lg sm:px-16 sm:py-10 sm:shadow-md",
-                pathname === adminCreateAccountPage && "cif",
+                "font-poppins bg-green-primary m-auto mt-10 max-w-sm rounded-lg px-2 text-white sm:max-w-lg sm:px-16 sm:py-10 sm:shadow-md",
+                pathname === adminCreateAccountPage && "accountform",
             )}
         >
             <p className="flex items-center gap-2 text-lg font-semibold">
@@ -101,14 +101,14 @@ export function CreateInstructorForm(): React.ReactNode {
                     onChange={(e) =>
                         setData((prev) => ({ ...prev, fname: e.target.value }))
                     }
-                    className="peer w-full border-b-2 border-gray-300 text-xl outline-transparent placeholder:text-transparent focus:border-gray-600"
+                    className="peer w-full border-b-2 border-white/50 text-xl outline-transparent placeholder:text-transparent focus:border-white"
                 />
                 <label
                     htmlFor="fname"
                     className={clsx(
-                        "pointer-events-none absolute -top-5 left-0 w-full truncate text-sm text-gray-600 transition-all",
-                        "peer-placeholder-shown:top-0 peer-placeholder-shown:text-xl peer-placeholder-shown:text-gray-300",
-                        "peer-focus:-top-5 peer-focus:text-sm peer-focus:text-gray-600",
+                        "pointer-events-none absolute -top-5 left-0 w-full truncate text-sm text-white transition-all",
+                        "peer-placeholder-shown:top-0 peer-placeholder-shown:text-xl peer-placeholder-shown:text-white/50",
+                        "peer-focus:-top-5 peer-focus:text-sm peer-focus:text-white",
                     )}
                 >
                     First Name
@@ -127,14 +127,14 @@ export function CreateInstructorForm(): React.ReactNode {
                     onChange={(e) =>
                         setData((prev) => ({ ...prev, lname: e.target.value }))
                     }
-                    className="peer w-full border-b-2 border-gray-300 text-xl outline-transparent placeholder:text-transparent focus:border-gray-600"
+                    className="peer w-full border-b-2 border-white/50 text-xl outline-transparent placeholder:text-transparent focus:border-white"
                 />
                 <label
                     htmlFor="lname"
                     className={clsx(
-                        "pointer-events-none absolute -top-5 left-0 w-full truncate text-sm text-gray-600 transition-all",
-                        "peer-placeholder-shown:top-0 peer-placeholder-shown:text-xl peer-placeholder-shown:text-gray-300",
-                        "peer-focus:-top-5 peer-focus:text-sm peer-focus:text-gray-600",
+                        "pointer-events-none absolute -top-5 left-0 w-full truncate text-sm text-white transition-all",
+                        "peer-placeholder-shown:top-0 peer-placeholder-shown:text-xl peer-placeholder-shown:text-white/50",
+                        "peer-focus:-top-5 peer-focus:text-sm peer-focus:text-white",
                     )}
                 >
                     Last Name
@@ -156,14 +156,14 @@ export function CreateInstructorForm(): React.ReactNode {
                     onChange={(e) =>
                         setData((prev) => ({ ...prev, email: e.target.value }))
                     }
-                    className="peer w-full border-b-2 border-gray-300 text-xl outline-transparent placeholder:text-transparent focus:border-gray-600"
+                    className="peer w-full border-b-2 border-white/50 text-xl outline-transparent placeholder:text-transparent focus:border-white"
                 />
                 <label
                     htmlFor="email"
                     className={clsx(
-                        "pointer-events-none absolute -top-5 left-0 w-full truncate text-sm text-gray-600 opacity-0 transition-all",
-                        "peer-placeholder-shown:top-0 peer-placeholder-shown:text-xl peer-placeholder-shown:text-gray-300 peer-placeholder-shown:opacity-100",
-                        "peer-focus:-top-5 peer-focus:text-sm peer-focus:text-gray-600 peer-focus:opacity-0",
+                        "pointer-events-none absolute -top-5 left-0 w-full truncate text-sm text-white opacity-0 transition-all",
+                        "peer-placeholder-shown:top-0 peer-placeholder-shown:text-xl peer-placeholder-shown:text-white/50 peer-placeholder-shown:opacity-100",
+                        "peer-focus:-top-5 peer-focus:text-sm peer-focus:text-white peer-focus:opacity-0",
                     )}
                 >
                     example@gmail.com
@@ -171,9 +171,9 @@ export function CreateInstructorForm(): React.ReactNode {
                 <label
                     htmlFor="email"
                     className={clsx(
-                        "pointer-events-none absolute -top-5 left-0 w-full truncate text-sm text-gray-600 opacity-100 transition-all",
-                        "peer-placeholder-shown:top-0 peer-placeholder-shown:text-xl peer-placeholder-shown:text-gray-300 peer-placeholder-shown:opacity-0",
-                        "peer-focus:-top-5 peer-focus:text-sm peer-focus:text-gray-600 peer-focus:opacity-100",
+                        "pointer-events-none absolute -top-5 left-0 w-full truncate text-sm text-white opacity-100 transition-all",
+                        "peer-placeholder-shown:top-0 peer-placeholder-shown:text-xl peer-placeholder-shown:text-white/50 peer-placeholder-shown:opacity-0",
+                        "peer-focus:-top-5 peer-focus:text-sm peer-focus:text-white peer-focus:opacity-100",
                     )}
                 >
                     Email
@@ -198,14 +198,14 @@ export function CreateInstructorForm(): React.ReactNode {
                             password: e.target.value,
                         }))
                     }
-                    className="peer w-full border-b-2 border-gray-300 text-xl outline-transparent placeholder:text-transparent focus:border-gray-600"
+                    className="peer w-full border-b-2 border-white/50 text-xl outline-transparent placeholder:text-transparent focus:border-white"
                 />
                 <label
                     htmlFor="password"
                     className={clsx(
-                        "pointer-events-none absolute -top-5 left-0 w-full truncate text-sm text-gray-600 transition-all",
-                        "peer-placeholder-shown:top-0 peer-placeholder-shown:text-xl peer-placeholder-shown:text-gray-300",
-                        "peer-focus:-top-5 peer-focus:text-sm peer-focus:text-gray-600",
+                        "pointer-events-none absolute -top-5 left-0 w-full truncate text-sm text-white transition-all",
+                        "peer-placeholder-shown:top-0 peer-placeholder-shown:text-xl peer-placeholder-shown:text-white/50",
+                        "peer-focus:-top-5 peer-focus:text-sm peer-focus:text-white",
                     )}
                 >
                     Password
@@ -227,14 +227,14 @@ export function CreateInstructorForm(): React.ReactNode {
                             password2: e.target.value,
                         }))
                     }
-                    className="peer w-full border-b-2 border-gray-300 text-xl outline-transparent placeholder:text-transparent focus:border-gray-600"
+                    className="peer w-full border-b-2 border-white/50 text-xl outline-transparent placeholder:text-transparent focus:border-white"
                 />
                 <label
                     htmlFor="password2"
                     className={clsx(
-                        "pointer-events-none absolute -top-5 left-0 w-full truncate text-sm text-gray-600 transition-all",
-                        "peer-placeholder-shown:top-0 peer-placeholder-shown:text-xl peer-placeholder-shown:text-gray-300",
-                        "peer-focus:-top-5 peer-focus:text-sm peer-focus:text-gray-600",
+                        "pointer-events-none absolute -top-5 left-0 w-full truncate text-sm text-white transition-all",
+                        "peer-placeholder-shown:top-0 peer-placeholder-shown:text-xl peer-placeholder-shown:text-white/50",
+                        "peer-focus:-top-5 peer-focus:text-sm peer-focus:text-white",
                     )}
                 >
                     Confirm Password
@@ -244,7 +244,7 @@ export function CreateInstructorForm(): React.ReactNode {
                 type="submit"
                 disabled={isPending}
                 className={clsx(
-                    "text-black-100 bg-black-400 mt-10 flex w-full items-center justify-center gap-2 rounded-md px-10 py-2 text-xl font-semibold",
+                    "bg-yellow-primary mt-10 flex w-full items-center justify-center gap-2 rounded-md px-10 py-2 text-xl font-semibold text-black shadow-md",
                     isPending ? "opacity-70" : "cursor-pointer",
                 )}
             >
@@ -254,7 +254,7 @@ export function CreateInstructorForm(): React.ReactNode {
                     </>
                 ) : (
                     <>
-                        <CirclePlus color="#f2f2f2" /> Create
+                        <CirclePlus /> Create
                     </>
                 )}
             </button>

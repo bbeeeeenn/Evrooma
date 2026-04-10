@@ -25,7 +25,7 @@ async function ClassroomCount({
     }
 
     return (
-        <p className="text-sm tracking-wide">
+        <p className="text-sm font-medium tracking-wide">
             <span className="underline">{count}</span> classroom
             {count != 1 ? "s" : ""}
         </p>
@@ -65,11 +65,11 @@ async function BuildingsList() {
     }
 
     return (
-        <ul className="flex flex-wrap gap-x-6 gap-y-4">
+        <ul className="flex flex-wrap gap-x-6 gap-y-4 text-white/95">
             {buildings.map((b) => (
                 <li
                     key={b._id.toString()}
-                    className="font-poppins min-w-3xs grow rounded-lg border-b-4 bg-white text-3xl font-semibold shadow-md transition-transform hover:-translate-y-0.5 sm:max-w-sm"
+                    className="font-poppins border-yellow-primary bg-green-secondary min-w-3xs grow rounded-lg border-b-4 text-3xl font-semibold shadow-md transition-transform hover:-translate-y-0.5 sm:max-w-sm"
                 >
                     <Link
                         href={adminRoomsPage + "/" + b._id}
@@ -139,7 +139,7 @@ async function Classrooms() {
                         <BuildingDiv />
                         <Link
                             href={`${adminRoomsPage}/${classroom.building._id}/${classroom._id}`}
-                            className="mb-4 block border-r-4 bg-white px-5 py-3 shadow-md"
+                            className="bg-green-secondary border-yellow-primary mb-4 block border-r-4 px-5 py-3 text-white/95 shadow-md"
                         >
                             <p className="flex items-center gap-2 truncate text-4xl font-bold">
                                 <DoorOpen size={25} /> {classroom.code}
@@ -159,12 +159,16 @@ export default async function AdminRoomsPage() {
     await connection();
     return (
         <>
-            <h1 className="mb-10 text-4xl font-bold">Buildings</h1>
+            <h1 className="mb-10 text-4xl font-bold text-white/95">
+                Buildings
+            </h1>
             <AddBuilding />
             <Suspense fallback={<BuildingListSkeleton />}>
                 <BuildingsList />
             </Suspense>
-            <h1 className="my-10 text-4xl font-bold">Classrooms</h1>
+            <h1 className="my-10 text-4xl font-bold text-white/95">
+                Classrooms
+            </h1>
             <Suspense fallback={<ClassroomsSkeleton />}>
                 <Classrooms />
             </Suspense>

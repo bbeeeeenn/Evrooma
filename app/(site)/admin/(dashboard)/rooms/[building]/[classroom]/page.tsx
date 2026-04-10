@@ -16,7 +16,7 @@ export default async function AdminClassroomPage({
             <ClassroomCodeHeader />
             <Divider text="Settings" />
             <ClassroomSettings />
-            <div className="mt-15 flex items-center gap-3">
+            <div className="mt-15 flex items-center gap-3 text-white/95">
                 <CalendarDays size={40} />
                 <h1 className="text-4xl font-bold">Schedules</h1>
             </div>
