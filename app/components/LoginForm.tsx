@@ -96,7 +96,7 @@ export default function LoginForm({
             <form
                 action={formAction}
                 className={clsx(
-                    "text-md font-poppins bg-green-primary relative w-full max-w-md space-y-10 rounded-xl px-[7vw] pt-14 pb-12 text-white sm:px-12 sm:shadow-lg",
+                    "text-md font-poppins bg-green-secondary relative w-full max-w-md space-y-10 rounded-xl px-[7vw] pt-14 pb-12 text-white sm:px-12 sm:shadow-lg",
                 )}
             >
                 <div className="flex items-center gap-3">

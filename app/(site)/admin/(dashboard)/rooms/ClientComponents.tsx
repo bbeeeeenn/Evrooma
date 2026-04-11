@@ -40,8 +40,8 @@ export default function AddBuilding() {
         <>
             <button
                 className={clsx(
-                    "bg-yellow-primary mb-5 flex cursor-pointer items-center gap-1 rounded-md p-2 font-semibold text-black shadow-md",
-                    "hover:bg-green-tertiary transition-colors hover:text-white active:scale-105",
+                    "bg-yellow-primary focus-visible:bg-yellow-secondary active:bg-yellow-secondary hover:bg-yellow-secondary mb-5 flex cursor-pointer items-center gap-1 rounded-md p-2 font-semibold text-black shadow-md",
+                    "hover:bg-green-secondary transition-colors active:scale-105",
                 )}
                 onClick={() => setShowModal(true)}
             >
@@ -61,7 +61,7 @@ export default function AddBuilding() {
                         if (name.length === 0) e.preventDefault();
                     }}
                     className={clsx(
-                        "w-full max-w-md rounded-xl bg-white px-6 pt-10 pb-7 shadow-md transition-all",
+                        "bg-green-secondary border-yellow-primary w-full max-w-md rounded-xl border-b-4 px-6 pt-10 pb-7 text-white shadow-md transition-all",
                         !showModal && "opacity-0",
                     )}
                     onClick={(e) => e.stopPropagation()}
@@ -76,7 +76,7 @@ export default function AddBuilding() {
                                 type="text"
                                 id="newbuilding"
                                 name="name"
-                                className="peer w-full border-b-2 border-gray-700/50 py-1 text-xl font-semibold tracking-wide outline-none placeholder:text-transparent focus:border-gray-700"
+                                className="peer w-full border-b-2 border-green-200 py-1 text-xl font-semibold tracking-wide outline-none placeholder:text-transparent focus:border-green-50"
                                 disabled={!showModal}
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
@@ -84,7 +84,7 @@ export default function AddBuilding() {
                             />
                             <label
                                 htmlFor="newbuilding"
-                                className="pointer-events-none absolute -top-5 left-0 text-sm text-gray-700 transition-all peer-placeholder-shown:top-1 peer-placeholder-shown:text-xl peer-placeholder-shown:text-gray-700/50 peer-focus:-top-5 peer-focus:text-sm peer-focus:text-gray-700"
+                                className="pointer-events-none absolute -top-5 left-0 text-sm text-green-50 transition-all peer-placeholder-shown:top-1 peer-placeholder-shown:text-xl peer-placeholder-shown:text-green-200 peer-focus:-top-5 peer-focus:text-sm peer-focus:text-green-50"
                             >
                                 Building Name
                             </label>
@@ -94,7 +94,7 @@ export default function AddBuilding() {
                         <button
                             type="button"
                             className={clsx(
-                                "bg-black-400 text-black-100 mt-5 flex cursor-pointer items-center justify-center gap-1 rounded-md px-3 py-2",
+                                "bg-yellow-primary mt-5 flex cursor-pointer items-center justify-center gap-1 rounded-md px-3 py-2 text-black",
                             )}
                             onClick={() => setShowModal(false)}
                             disabled={!showModal}
@@ -107,7 +107,7 @@ export default function AddBuilding() {
                                 !showModal || isPending || name.length === 0
                             }
                             className={clsx(
-                                "bg-black-400 text-black-100 mt-5 flex grow items-center justify-center gap-1 rounded-md px-3 py-2",
+                                "bg-yellow-primary mt-5 flex grow items-center justify-center gap-1 rounded-md px-3 py-2 text-black",
                                 isPending || name.length === 0
                                     ? "opacity-75"
                                     : "cursor-pointer",

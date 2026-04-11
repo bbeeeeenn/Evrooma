@@ -20,10 +20,12 @@ export function ClassroomCodeHeader() {
     const { classroomCode } = useClassroomInfo();
     const { buildingName } = useBuildingInfo();
     return (
-        <div className="flex items-end gap-2 text-white/95">
+        <div className="text-text-primary flex items-end gap-2">
             <DoorOpen size={50} />
             <div>
-                <p className="text-lg font-semibold">{buildingName}</p>
+                <p className="text-text-secondary text-lg font-semibold">
+                    {buildingName}
+                </p>
                 <h1 className="text-4xl font-bold underline">
                     {classroomCode}
                 </h1>
@@ -324,14 +326,14 @@ export function ClassroomSettings() {
             />
             <div className="flex gap-4">
                 <button
-                    className="hover:bg-green-tertiary bg-yellow-primary flex min-w-0 grow cursor-pointer items-center justify-center gap-2 rounded-md px-5 py-2 font-semibold shadow-md transition-all hover:text-white sm:max-w-3xs"
+                    className="hover:bg-yellow-secondary focus-visible:bg-yellow-secondary active:bg-yellow-secondary bg-yellow-primary flex min-w-0 grow cursor-pointer items-center justify-center gap-2 rounded-md px-5 py-2 font-semibold shadow-md transition-all sm:max-w-3xs"
                     onClick={() => setOpenedModal("rename")}
                     disabled={openedModal === "rename"}
                 >
                     <Pencil /> Rename
                 </button>
                 <button
-                    className="hover:bg-green-tertiary bg-yellow-primary flex min-w-0 grow cursor-pointer items-center justify-center gap-2 rounded-md px-5 py-2 font-semibold shadow-md transition-all hover:text-white sm:max-w-3xs"
+                    className="hover:bg-yellow-secondary focus-visible:bg-yellow-secondary active:bg-yellow-secondary bg-yellow-primary flex min-w-0 grow cursor-pointer items-center justify-center gap-2 rounded-md px-5 py-2 font-semibold shadow-md transition-all sm:max-w-3xs"
                     onClick={() => setOpenedModal("remove")}
                     disabled={openedModal === "remove"}
                 >

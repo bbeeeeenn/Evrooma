@@ -40,7 +40,7 @@ async function InstructorsList() {
                 <li key={instructor._id.toString()}>
                     <Link
                         href={`${adminAccountsPage}/${instructor._id}`}
-                        className="bg-green-secondary border-yellow-primary block w-full rounded-md border-l-4 px-5 py-5 text-white shadow-md"
+                        className="bg-green-secondary border-yellow-primary block w-full rounded-md border-l-4 px-5 py-5 text-green-50 shadow-md"
                     >
                         <p className="flex items-center gap-1 text-2xl font-bold">
                             <BookText /> {instructor.fullName}
@@ -58,7 +58,7 @@ async function InstructorsList() {
 export default function AccountsPage() {
     return (
         <>
-            <h1 className="flex items-center gap-2 text-4xl font-bold text-white/95">
+            <h1 className="flex items-center gap-2 text-4xl font-bold text-green-100">
                 Instructors
             </h1>
             <Link

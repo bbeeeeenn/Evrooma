@@ -36,11 +36,11 @@ export function InstructorInfoComponent() {
 
     return (
         <>
-            <h1 className="flex items-center gap-2 text-4xl font-bold text-white/95">
+            <h1 className="flex items-center gap-2 text-4xl font-bold text-white/90">
                 <BookText size={40} /> {`${fname} ${lname}`}
             </h1>
             <Divider text="Account" />
-            <table className="font-poppins w-full border-separate border-spacing-2 font-semibold text-white/95 select-text">
+            <table className="font-poppins w-full border-separate border-spacing-2 font-semibold text-white/90 select-text">
                 <tbody>
                     <Row label="First Name" content={fname} />
                     <Row label="Last Name" content={lname} />

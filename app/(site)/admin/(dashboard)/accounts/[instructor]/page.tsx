@@ -8,7 +8,7 @@ export default function InstructorInfoPage() {
         <>
             <BackButton dest={adminAccountsPage} />
             <InstructorInfoComponent />
-            <div className="mt-10 flex items-center gap-3 text-white/95">
+            <div className="mt-10 flex items-center gap-3 text-white/90">
                 <CalendarDays size={40} />
                 <h1 className="text-4xl font-bold">Schedules</h1>
             </div>

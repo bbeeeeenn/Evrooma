@@ -24,7 +24,7 @@ async function ClassroomCount({
     }
 
     return (
-        <p className="text-sm font-medium tracking-wide">
+        <p className="text-text-secondary text-sm font-medium tracking-wide">
             <span className="underline">{count}</span> classroom
             {count != 1 ? "s" : ""}
         </p>
@@ -37,7 +37,7 @@ function BuildingListSkeleton() {
             {Array.from({ length: 3 }).map((_, i) => (
                 <li
                     key={i}
-                    className="font-poppins bg-green-secondary border-green-tertiary/50 min-w-3xs grow rounded-lg border-b-4 p-5 font-semibold shadow-md transition-transform sm:max-w-sm"
+                    className="font-poppins bg-green-secondary border-green-secondary/50 min-w-3xs grow rounded-lg border-b-4 p-5 font-semibold shadow-md transition-transform sm:max-w-sm"
                 >
                     <p className="mb-1 w-5/6 animate-pulse truncate bg-white/30 text-2xl text-transparent">
                         I Love Spaghetti
@@ -64,11 +64,11 @@ async function BuildingsList() {
     }
 
     return (
-        <ul className="flex flex-wrap gap-x-6 gap-y-4 text-white/95">
+        <ul className="text-text-primary flex flex-wrap gap-x-6 gap-y-4">
             {buildings.map((b) => (
                 <li
                     key={b._id.toString()}
-                    className="font-poppins border-yellow-primary bg-green-secondary min-w-3xs grow rounded-lg border-b-4 text-3xl font-semibold shadow-md transition-transform hover:-translate-y-0.5 sm:max-w-sm"
+                    className="font-poppins border-subtleborder bg-green-secondary focus-within:bg-green-tertiary active:bg-green-tertiary hover:bg-green-tertiary min-w-3xs grow rounded-lg border-b-4 text-3xl font-semibold shadow-md transition-transform hover:-translate-y-0.5 sm:max-w-sm"
                 >
                     <Link
                         href={adminRoomsPage + "/" + b._id}
@@ -138,12 +138,12 @@ async function Classrooms() {
                         <BuildingDiv />
                         <Link
                             href={`${adminRoomsPage}/${classroom.building._id}/${classroom._id}`}
-                            className="bg-green-secondary border-yellow-primary mb-4 block border-r-4 px-5 py-3 text-white/95 shadow-md"
+                            className="bg-green-secondary focus-visible:bg-green-tertiary active:bg-green-tertiary hover:bg-green-tertiary text-text-primary mb-4 block px-5 py-3 shadow-md"
                         >
                             <p className="flex items-center gap-2 truncate text-4xl font-bold">
                                 <DoorOpen size={25} /> {classroom.code}
                             </p>
-                            <p className="font-semibold">
+                            <p className="text-text-secondary font-semibold">
                                 {classroom.building.name}
                             </p>
                         </Link>
@@ -158,14 +158,14 @@ export default async function AdminRoomsPage() {
     await connection();
     return (
         <>
-            <h1 className="mb-10 text-4xl font-bold text-white/95">
+            <h1 className="text-text-primary mb-10 text-4xl font-bold">
                 Buildings
             </h1>
             <AddBuilding />
             <Suspense fallback={<BuildingListSkeleton />}>
                 <BuildingsList />
             </Suspense>
-            <h1 className="my-10 text-4xl font-bold text-white/95">
+            <h1 className="text-text-primary my-10 text-4xl font-bold">
                 Classrooms
             </h1>
             <Suspense fallback={<ClassroomsSkeleton />}>

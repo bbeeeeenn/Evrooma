@@ -30,7 +30,7 @@ export function AdminNavBar() {
             <>
                 <nav
                     className={clsx(
-                        "bg-green-tertiary fixed inset-x-0 bottom-0 z-40 m-auto flex justify-evenly divide-x divide-white pt-3 pb-2 font-bold tracking-wide text-white transition-transform sm:inset-x-1/12 sm:bottom-4 sm:max-w-2xl sm:rounded-full sm:py-4",
+                        "border-yellow-primary bg-green-secondary text-text-primary fixed inset-x-0 bottom-0 z-40 m-auto flex justify-evenly border-t-2 pt-3 pb-2 font-bold tracking-wide shadow-md transition-transform sm:inset-x-1/12 sm:bottom-4 sm:max-w-2xl sm:rounded-xl sm:border-2 sm:py-4",
                         !shown &&
                             "translate-y-full sm:translate-y-[calc(100%+1rem)]",
                     )}
@@ -121,14 +121,14 @@ export function BackButton({ dest }: Readonly<{ dest?: string }>) {
             {dest ? (
                 <Link
                     href={dest}
-                    className="hover:bg-green-tertiary bg-yellow-primary mt-2 mb-7 flex w-fit cursor-pointer items-center gap-1 rounded-md px-3 py-1 text-sm font-semibold shadow-md transition-colors hover:text-white active:scale-105"
+                    className="hover:bg-yellow-secondary focus-visible:bg-yellow-secondary active:bg-yellow-secondary bg-yellow-primary mt-2 mb-7 flex w-fit cursor-pointer items-center gap-1 rounded-md px-3 py-1 text-sm font-semibold shadow-md transition-colors active:scale-105"
                 >
                     <ArrowLeft size={15} /> Back
                 </Link>
             ) : (
                 <button
                     onClick={() => router.back()}
-                    className="hover:bg-green-tertiary bg-yellow-primary mt-2 mb-7 flex w-fit cursor-pointer items-center gap-1 rounded-md px-3 py-1 text-sm font-semibold shadow-md transition-colors hover:text-white active:scale-105"
+                    className="hover:bg-yellow-secondary focus-visible:bg-yellow-secondary active:bg-yellow-secondary bg-yellow-primary mt-2 mb-7 flex w-fit cursor-pointer items-center gap-1 rounded-md px-3 py-1 text-sm font-semibold shadow-md transition-colors active:scale-105"
                 >
                     <ArrowLeft size={15} /> Back
                 </button>
@@ -140,9 +140,9 @@ export function BackButton({ dest }: Readonly<{ dest?: string }>) {
 export function Divider({ text }: { text?: string }) {
     return (
         <div className="relative my-10 flex items-center justify-center font-semibold sm:justify-start">
-            <div className="absolute inset-0 m-auto h-px rounded-full bg-white"></div>
+            <div className="absolute inset-0 m-auto h-px rounded-full bg-green-100"></div>
             {text && (
-                <p className="bg-green-primary text-md absolute w-fit px-2 text-center tracking-wide text-white sm:ml-10 sm:text-lg">
+                <p className="bg-green-primary text-md absolute w-fit px-2 text-center tracking-wide text-green-100 sm:ml-10 sm:text-lg">
                     {text}
                 </p>
             )}

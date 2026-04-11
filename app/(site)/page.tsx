@@ -55,31 +55,31 @@ export default function Home() {
             </section>
             <section
                 ref={roleRef}
-                className="bg-green-tertiary relative h-svh snap-start pt-20"
+                className="bg-green-primary relative h-svh snap-start pt-20"
             >
-                <div className="font-inter absolute inset-0 m-auto flex w-[80%] max-w-sm flex-col justify-center text-white">
+                <div className="font-inter absolute inset-0 m-auto flex w-[80%] max-w-sm flex-col justify-center text-green-100">
                     <h1 className="text-center text-2xl font-bold tracking-wide sm:text-3xl">
                         Continue as
                     </h1>
                     <Link
                         href={adminLoginPage}
-                        className="bg-green-primary font-inria-sans mt-8 flex cursor-pointer items-center justify-center gap-2 rounded-md py-2 text-lg text-white shadow-md sm:text-xl"
+                        className="bg-green-secondary font-inria-sans mt-8 flex cursor-pointer items-center justify-center gap-2 rounded-md py-2 text-lg text-white shadow-md sm:text-xl"
                     >
                         <ShieldUser /> Administrator
                     </Link>
                     <Link
                         href={instructorLoginPage}
-                        className="bg-green-primary font-inria-sans mt-5 flex cursor-pointer items-center justify-center gap-2 rounded-md py-2 text-lg text-white shadow-md sm:text-xl"
+                        className="bg-green-secondary font-inria-sans mt-5 flex cursor-pointer items-center justify-center gap-2 rounded-md py-2 text-lg text-white shadow-md sm:text-xl"
                     >
                         <BookText /> Instructor
                     </Link>
                     <div className="relative my-5 flex h-10 items-center justify-center">
                         <div className="absolute inset-0 m-auto h-0.5 rounded-full bg-white"></div>
-                        <p className="bg-green-tertiary absolute w-fit px-2 text-center text-sm tracking-widest text-white sm:text-lg">
+                        <p className="bg-green-primary absolute w-fit px-2 text-center text-sm tracking-widest text-white sm:text-lg">
                             OR
                         </p>
                     </div>
-                    <button className="bg-green-primary font-inria-sans flex cursor-pointer items-center justify-center gap-2 rounded-md py-2 text-lg text-white shadow-md sm:text-xl">
+                    <button className="bg-green-secondary font-inria-sans flex cursor-pointer items-center justify-center gap-2 rounded-md py-2 text-lg text-white shadow-md sm:text-xl">
                         <GraduationCap /> Student
                     </button>
                 </div>

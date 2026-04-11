@@ -24,7 +24,7 @@ export function InstructorNavBar() {
         <>
             <nav
                 className={clsx(
-                    "bg-green-tertiary fixed inset-x-0 bottom-0 m-auto flex justify-evenly divide-x divide-white pt-3 pb-2 font-bold tracking-wide text-white transition-transform sm:inset-x-1/12 sm:bottom-4 sm:max-w-xl sm:rounded-full sm:py-4",
+                    "bg-green-secondary fixed inset-x-0 bottom-0 m-auto flex justify-evenly divide-x divide-white pt-3 pb-2 font-bold tracking-wide text-white transition-transform sm:inset-x-1/12 sm:bottom-4 sm:max-w-xl sm:rounded-full sm:py-4",
                     !shown &&
                         "translate-y-full sm:translate-y-[calc(100%+1rem)]",
                 )}
