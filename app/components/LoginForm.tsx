@@ -1,6 +1,11 @@
 "use client";
 
 import { LoginFormActionResponse } from "@/app/actions/_";
+import { useRouter } from "next/navigation";
+import { useActionState, useEffect, useState } from "react";
+import Link from "next/link";
+import { AdminAuth } from "../actions/AdminAuthActions";
+import { InstructorAuth } from "../actions/InstructorAuthActions";
 import {
     adminLoginForgotPage,
     adminRoomsPage,
@@ -23,11 +28,6 @@ import {
     Undo2,
     User,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useActionState, useEffect, useState } from "react";
-import Link from "next/link";
-import { AdminAuth } from "../actions/AdminAuthActions";
-import { InstructorAuth } from "../actions/InstructorAuthActions";
 
 export default function LoginForm({
     formType,
