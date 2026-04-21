@@ -73,7 +73,12 @@ export async function AuthenticateAdmin(): Promise<{
     password: string;
 } | null> {
     const adminInfo = await GetAdminAuthInfo();
-
+    if (
+        !adminInfo ||
+        adminInfo.username !== ADMIN_USERNAME ||
+        adminInfo.password !== ADMIN_PASSWORD
+    )
+        return null;
     return adminInfo;
 }
 
