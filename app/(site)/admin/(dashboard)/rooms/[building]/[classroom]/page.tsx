@@ -20,10 +20,6 @@ async function GetSchedule({
     day: string;
 }) {
     let schedules: PopulatedPlainScheduleDocument[] = []; // Populated Schedule Document
-    if (!isValidObjectId(classroomId)) {
-        return <>Error</>;
-    }
-
     try {
         await connectDB();
         schedules = await Schedule.find({
@@ -37,9 +33,9 @@ async function GetSchedule({
     } catch (e) {
         console.error(e);
         return (
-            <div className="text-text-primary">
-                {e instanceof Error ? e.message : "Ingna ko pag nag error"}
-            </div>
+            <p className="text-text-primary">
+                {e instanceof Error ? e.message : "Unexpected Error"}
+            </p>
         );
     }
     return (

@@ -30,7 +30,11 @@ async function GetSchedule({
             .lean();
     } catch (e) {
         console.error(e);
-        return null;
+        return (
+            <p className="text-text-primary">
+                {e instanceof Error ? e.message : "Unexpected Error"}
+            </p>
+        );
     }
     return (
         schedules.length > 0 && (
