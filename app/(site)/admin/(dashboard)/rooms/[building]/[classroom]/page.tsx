@@ -31,7 +31,7 @@ async function GetSchedule({
             .lean({ virtuals: true });
     } catch (e) {
         console.error(e);
-        return <>Error</>;
+        return <div className="text-text-primary">{JSON.stringify(e)}</div>;
     }
     return (
         schedules.length > 0 && (
