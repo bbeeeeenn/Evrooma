@@ -1,6 +1,8 @@
 import { model, models, ObjectId, Schema, SchemaTypes } from "mongoose";
-import { PopulatedPlainRoomDocument } from "./room";
-import { PlainInstructorDocument } from "./user";
+import "./room";
+import "./user";
+import type { PopulatedPlainRoomDocument } from "./room";
+import type { PlainInstructorDocument } from "./user";
 
 const timeSchema = new Schema(
     {

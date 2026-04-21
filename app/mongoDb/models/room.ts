@@ -1,5 +1,6 @@
 import { model, ObjectId } from "mongoose";
 import { models, Schema, SchemaTypes } from "mongoose";
+import "./building";
 import type { PlainBuildingDocument } from "./building";
 
 export type PlainRoomDocument = {
