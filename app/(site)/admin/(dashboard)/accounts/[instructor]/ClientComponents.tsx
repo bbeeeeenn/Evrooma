@@ -93,9 +93,8 @@ function DeleteAccount() {
             autoClose: 3000,
             render: response.message,
         });
-        if (response.status === "success") {
-            router.replace(adminAccountsPage);
-        }
+        if (response.status === "success") router.replace(adminAccountsPage);
+
         return { email: "", modalOpened: response.status === "error" };
     };
 
@@ -143,7 +142,7 @@ function DeleteAccount() {
                                 id="email"
                                 name="email"
                                 defaultValue={state.email}
-                                className="peer w-full border-b-2 border-green-200 py-1 text-xl font-semibold tracking-wide outline-none placeholder:text-transparent focus:border-green-50"
+                                className="peer w-full border-b-2 border-green-200 py-1 text-xl font-semibold tracking-wide lowercase outline-none placeholder:text-transparent focus:border-green-50"
                                 required
                                 placeholder="Confirm Email"
                             />
