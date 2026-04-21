@@ -4,14 +4,12 @@ import { InstructorInfoComponent, ScheduleCard } from "./ClientComponents";
 import { CalendarDays } from "lucide-react";
 import { Suspense } from "react";
 import {
-    PlainScheduleDocument,
     PopulatedPlainScheduleDocument,
     Schedule,
 } from "@/app/mongoDb/models/schedule";
-import { PlainRoomDocument } from "@/app/mongoDb/models/room";
 import { connectDB } from "@/app/mongoDb/mongodb";
 import { Divider } from "@/app/components/Divider";
-import { PlainBuildingDocument } from "@/app/mongoDb/models/building";
+import { ScheduleCardSkeleton } from "@/app/(site)/ClientComponents";
 
 async function GetSchedule({
     instructorId,
@@ -91,12 +89,22 @@ export default async function InstructorInfoPage({
                 <CalendarDays size={40} />
                 <h1 className="text-4xl font-bold">Schedules</h1>
             </div>
-            <Suspense fallback={<></>}>
+            <Suspense fallback={<ScheduleCardSkeleton />}>
                 <GetSchedule instructorId={instructorId} day="Monday" />
+            </Suspense>
+            <Suspense fallback={<ScheduleCardSkeleton />}>
                 <GetSchedule instructorId={instructorId} day="Tuesday" />
+            </Suspense>
+            <Suspense fallback={<ScheduleCardSkeleton />}>
                 <GetSchedule instructorId={instructorId} day="Wednesday" />
+            </Suspense>
+            <Suspense fallback={<ScheduleCardSkeleton />}>
                 <GetSchedule instructorId={instructorId} day="Thursday" />
+            </Suspense>
+            <Suspense fallback={<ScheduleCardSkeleton />}>
                 <GetSchedule instructorId={instructorId} day="Friday" />
+            </Suspense>
+            <Suspense fallback={<ScheduleCardSkeleton />}>
                 <GetSchedule instructorId={instructorId} day="Saturday" />
             </Suspense>
         </>

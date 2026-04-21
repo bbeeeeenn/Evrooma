@@ -8,6 +8,8 @@ import {
     Schedule,
 } from "@/app/mongoDb/models/schedule";
 import { ScheduleCard } from "./ClientComponents";
+import { ScheduleCardSkeleton } from "@/app/(site)/ClientComponents";
+import { Suspense } from "react";
 
 async function GetSchedule({
     classroomId,
@@ -92,12 +94,24 @@ export default async function AdminClassroomPage({
             >
                 <Plus /> Add Schedule
             </Link>
-            <GetSchedule classroomId={classroomId} day="Monday" />
-            <GetSchedule classroomId={classroomId} day="Tuesday" />
-            <GetSchedule classroomId={classroomId} day="Wednesday" />
-            <GetSchedule classroomId={classroomId} day="Thursday" />
-            <GetSchedule classroomId={classroomId} day="Friday" />
-            <GetSchedule classroomId={classroomId} day="Saturday" />
+            <Suspense fallback={<ScheduleCardSkeleton />}>
+                <GetSchedule classroomId={classroomId} day="Monday" />
+            </Suspense>
+            <Suspense fallback={<ScheduleCardSkeleton />}>
+                <GetSchedule classroomId={classroomId} day="Tuesday" />
+            </Suspense>
+            <Suspense fallback={<ScheduleCardSkeleton />}>
+                <GetSchedule classroomId={classroomId} day="Wednesday" />
+            </Suspense>
+            <Suspense fallback={<ScheduleCardSkeleton />}>
+                <GetSchedule classroomId={classroomId} day="Thursday" />
+            </Suspense>
+            <Suspense fallback={<ScheduleCardSkeleton />}>
+                <GetSchedule classroomId={classroomId} day="Friday" />
+            </Suspense>
+            <Suspense fallback={<ScheduleCardSkeleton />}>
+                <GetSchedule classroomId={classroomId} day="Saturday" />
+            </Suspense>
         </>
     );
 }
