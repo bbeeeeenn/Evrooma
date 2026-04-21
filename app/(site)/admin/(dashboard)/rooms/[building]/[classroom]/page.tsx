@@ -38,7 +38,7 @@ async function GetSchedule({
         console.error(e);
         return (
             <div className="text-text-primary">
-                {e instanceof Error ? e.message : e}
+                {e instanceof Error ? e.message : "Ingna ko pag nag error"}
             </div>
         );
     }
