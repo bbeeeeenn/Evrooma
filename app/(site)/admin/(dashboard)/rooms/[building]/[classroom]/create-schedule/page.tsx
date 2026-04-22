@@ -1,5 +1,5 @@
 import { adminAccountsPage, adminRoomsPage } from "@/constants";
-import { CalendarDays, ChevronLeft, Plus } from "lucide-react";
+import { CalendarDays, ChevronLeft, LoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { CreateScheduleForm } from "./ClientComponents";
 import { Suspense } from "react";
@@ -8,6 +8,17 @@ import { connectDB } from "@/app/mongoDb/mongodb";
 import { Instructor, PlainInstructorDocument } from "@/app/mongoDb/models/user";
 import { redirect } from "next/navigation";
 import NewScheduleProvider, { _Instructor } from "./NewScheduleProvider";
+
+function CreateScheduleFallback() {
+    return (
+        <div className="text-text-primary font-poppins bg-green-secondary/20 flex items-center justify-center gap-2 rounded-2xl py-20 text-xl font-semibold tracking-wide shadow-sm sm:text-2xl">
+            <span className="animate-spin">
+                <LoaderCircle />
+            </span>
+            <p>Loading...</p>
+        </div>
+    );
+}
 
 async function CreateSchedule({
     buildingId,
@@ -69,7 +80,9 @@ export default async function CreateSchedulePage({
             >
                 <ChevronLeft /> Return
             </Link>
-            <CreateSchedule buildingId={buildingId} roomId={classroomId} />
+            <Suspense fallback={<CreateScheduleFallback />}>
+                <CreateSchedule buildingId={buildingId} roomId={classroomId} />
+            </Suspense>
         </>
     );
 }

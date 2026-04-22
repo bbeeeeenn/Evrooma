@@ -427,7 +427,7 @@ export function AddClassroomComponent() {
                                 type="text"
                                 id="newClassroom"
                                 name="code"
-                                className="peer w-full border-b-2 border-green-200 py-1 text-xl font-semibold tracking-wide outline-none placeholder:text-transparent focus:border-green-50"
+                                className="peer w-full border-b-2 border-green-200 py-1 text-xl font-semibold tracking-wide uppercase outline-none placeholder:text-transparent focus:border-green-50"
                                 disabled={!showModal}
                                 required
                                 value={code}

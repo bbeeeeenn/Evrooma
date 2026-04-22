@@ -1,11 +1,18 @@
 import { GetInstructorAuthInfo } from "@/app/actions/InstructorAuthActions";
 import { instructorLoginPage } from "@/constants";
-import { BookText, Settings, Settings2 } from "lucide-react";
+import { BookText, Building2, DoorOpen, Settings2 } from "lucide-react";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import Loading from "../../loading";
 import Link from "next/link";
 import { Divider } from "@/app/components/Divider";
+import {
+    PopulatedPlainScheduleDocument,
+    Schedule,
+} from "@/app/mongoDb/models/schedule";
+import { connection } from "next/server";
+import { ObjectId } from "mongoose";
+import { connectDB } from "@/app/mongoDb/mongodb";
 
 async function Profile() {
     const instructor = await GetInstructorAuthInfo();
@@ -33,6 +40,80 @@ async function Profile() {
     );
 }
 
+const weekDays = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+];
+async function ScheduleToday() {
+    await connection();
+    const day = weekDays[new Date().getDay()];
+    let schedToday: (Omit<PopulatedPlainScheduleDocument, "instructor"> & {
+        instructor: ObjectId;
+    })[];
+    try {
+        const instructor = await GetInstructorAuthInfo();
+        if (!instructor) return <>asd</>;
+
+        await connectDB();
+        schedToday = await Schedule.find({
+            instructor: instructor._id,
+            "slot.dayOfWeek": day,
+        })
+            .sort({ "slot.start.hour": 1, "slot.start.minute": 1 })
+            .populate({ path: "room", populate: "building" })
+            .lean();
+        console.log(schedToday);
+    } catch (e) {
+        return (
+            <div className="text-text-primary">
+                {e instanceof Error ? e.message : "Unexpected Error"}
+            </div>
+        );
+    }
+    return (
+        schedToday.length > 0 &&
+        schedToday.map((sched) => {
+            const startMeridiem: "AM" | "PM" =
+                sched.slot.start.hour < 12 ? "AM" : "PM";
+            const startHour =
+                sched.slot.start.hour % 12 === 0
+                    ? 12
+                    : sched.slot.start.hour % 12;
+            const startMinute = sched.slot.start.minute;
+            const endMeridiem: "AM" | "PM" =
+                sched.slot.start.hour < 12 ? "AM" : "PM";
+            const endHour =
+                sched.slot.end.hour % 12 === 0 ? 12 : sched.slot.end.hour % 12;
+            const endMinute = sched.slot.end.minute;
+            return (
+                <div
+                    key={sched._id.toString()}
+                    className="text-text-primary bg-green-secondary my-5 rounded-md p-4 shadow-md"
+                >
+                    <p className="font-poppins text-yellow-primary font-semibold">
+                        {sched.subject}
+                    </p>
+                    <p className="font-roboto-mono text-2xl font-semibold">
+                        {startHour}:{startMinute < 30 && "0"}
+                        {startMinute}
+                        {startMeridiem} - {endHour}:{endMinute < 30 && "0"}
+                        {endMinute}
+                        {endMeridiem}
+                    </p>
+                    <p className="font-poppins font-semibold">
+                        {sched.room.building.name} - {sched.room.code}
+                    </p>
+                </div>
+            );
+        })
+    );
+}
+
 export default function InstructorPage() {
     return (
         <>
@@ -40,6 +121,9 @@ export default function InstructorPage() {
                 <Profile />
             </Suspense>
             <Divider text="Today's Schedule" />
+            <Suspense>
+                <ScheduleToday />
+            </Suspense>
         </>
     );
 }

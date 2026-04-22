@@ -138,7 +138,7 @@ async function Classrooms() {
                         <BuildingDiv />
                         <Link
                             href={`${adminRoomsPage}/${classroom.building._id}/${classroom._id}`}
-                            className="bg-green-secondary focus-visible:bg-green-tertiary active:bg-green-tertiary group hover:bg-green-tertiary text-text-primary mb-4 block px-5 py-3 shadow-md"
+                            className="bg-green-secondary focus-visible:bg-green-tertiary active:bg-green-tertiary hover:bg-green-tertiary text-text-primary mb-4 block rounded-md px-5 py-3 shadow-md"
                         >
                             <div className="flex items-center gap-1">
                                 <span>

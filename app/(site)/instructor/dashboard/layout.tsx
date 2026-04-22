@@ -4,14 +4,15 @@ import { redirect } from "next/navigation";
 import { InstructorNavBar } from "./ClientComponents";
 import { Suspense } from "react";
 import { headers } from "next/headers";
+import Loading from "../../loading";
 
 async function Authenticate({
     children,
 }: Readonly<{ children: React.ReactNode }>) {
     const instructor = await GetInstructorAuthInfo();
-    const pathname = (await headers()).get("x-pathname") ?? "";
 
     if (!instructor) {
+        const pathname = (await headers()).get("x-pathname") ?? "";
         redirect(
             `${instructorLoginPage}?redirect=${encodeURIComponent(pathname)}`,
         );
@@ -31,7 +32,7 @@ export default async function Layout({
     children,
 }: Readonly<{ children: React.ReactNode }>) {
     return (
-        <Suspense>
+        <Suspense fallback={<Loading />}>
             <Authenticate>{children}</Authenticate>
         </Suspense>
     );

@@ -25,7 +25,7 @@ async function GetSchedule({
             instructor: instructorId,
             "slot.dayOfWeek": day,
         })
-            .sort({ "slot.start.hour": 1 })
+            .sort({ "slot.start.hour": 1, "slot.start.minute": 1 })
             .populate({ path: "room", populate: "building" })
             .lean();
     } catch (e) {
