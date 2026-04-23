@@ -67,7 +67,6 @@ async function ScheduleToday() {
             .sort({ "slot.start.hour": 1, "slot.start.minute": 1 })
             .populate({ path: "room", populate: "building" })
             .lean();
-        console.log(schedToday);
     } catch (e) {
         return (
             <div className="text-text-primary">

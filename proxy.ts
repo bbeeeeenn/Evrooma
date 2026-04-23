@@ -4,7 +4,7 @@ export default function proxy(request: NextRequest) {
     const url = new URL(request.url);
     return NextResponse.next({
         headers: {
-            "x-pathname": url.pathname,
+            "x-pathname": url.pathname + url.search,
         },
     });
 }

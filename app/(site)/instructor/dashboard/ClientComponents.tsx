@@ -49,7 +49,7 @@ export function InstructorNavBar() {
                         )}
                     >
                         <CalendarCheck className="transition-transform group-hover:scale-110 group-focus:scale-110 group-active:scale-110" />{" "}
-                        Schedules
+                        My Schedules
                     </Link>
                 </div>
                 <div className="flex grow">

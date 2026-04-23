@@ -87,12 +87,13 @@ async function BuildingsList() {
 }
 
 export async function ClassroomsSkeleton() {
+    await connection();
     return (
-        <ul>
+        <ul className="-z-50">
             {Array.from({ length: 4 }).map((_, i) => (
                 <li
                     key={i}
-                    className="bg-green-secondary mb-4 block space-y-2 px-5 py-3 opacity-50 shadow-md"
+                    className="bg-green-secondary mb-4 block space-y-2 rounded-md px-5 py-3 opacity-50 shadow-md"
                 >
                     <p className="h-fit w-fit animate-pulse truncate bg-white/30 text-2xl font-bold text-transparent">
                         DUMMY
