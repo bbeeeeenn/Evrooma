@@ -22,7 +22,7 @@ export function InstructorNavBar() {
     const pathname = usePathname();
 
     return (
-        <nav
+        <nav    
             className={clsx(
                 "bg-green-quarternary border-yellow-secondary fixed inset-x-0 bottom-0 z-50 m-auto flex justify-evenly border-t-2 pt-3 pb-2 font-bold tracking-wide text-white shadow-md transition-transform sm:inset-x-1/12 sm:bottom-4 sm:max-w-xl sm:rounded-xl sm:border-2 sm:py-4",
                 !shown && "translate-y-full sm:translate-y-[calc(100%+1rem)]",

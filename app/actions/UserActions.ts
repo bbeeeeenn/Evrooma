@@ -2,22 +2,18 @@
 
 import { ServerActionResponse } from "./_";
 import { connectDB } from "@/app/mongoDb/mongodb";
-import { Instructor } from "@/app/mongoDb/models/user";
+import { PlainUserDocument, User } from "@/app/mongoDb/models/user";
 import { encrypt } from "@/app/lib/bcrypt";
 import { AuthenticateAdmin } from "./AdminAuthActions";
 import { revalidatePath } from "next/cache";
 import { adminAccountsPage } from "@/constants";
 import { isValidObjectId } from "mongoose";
 
-export type RawInstructorData = {
-    fname: string;
-    lname: string;
-    email: string;
-    password: string;
-};
-export async function CreateInstructor(
-    data: RawInstructorData,
-): Promise<ServerActionResponse & { instructorId?: string }> {
+export type RawUserData = Omit<PlainUserDocument, "fullName" | "_id">;
+
+export async function CreateUser(
+    data: RawUserData,
+): Promise<ServerActionResponse & { userId?: string }> {
     if (!(await AuthenticateAdmin())) {
         return {
             status: "error",
@@ -25,14 +21,20 @@ export async function CreateInstructor(
         };
     }
 
-    const { fname, lname, email, password } = data;
+    const { firstName, lastName, email, password, type } = data;
 
-    const firstName = fname.trim();
-    const lastName = lname.trim();
+    const normalizedFirstname = firstName.trim();
+    const normalizedLastname = lastName.trim();
     const normalizedEmail = email.trim().toLowerCase();
     const normalizedPassword = password.trim();
 
-    if (!firstName || !lastName || !normalizedEmail || !normalizedPassword) {
+    if (
+        !normalizedFirstname ||
+        !normalizedLastname ||
+        !normalizedEmail ||
+        !normalizedPassword ||
+        (type !== "instructor" && type !== "student")
+    ) {
         return {
             status: "error",
             message: "Please complete all required fields.",
@@ -50,35 +52,36 @@ export async function CreateInstructor(
     try {
         await connectDB();
 
-        const existingInstructor = await Instructor.findOne({
+        const existingUser = await User.findOne({
             email: normalizedEmail,
         }).lean();
 
-        if (existingInstructor) {
+        if (existingUser) {
             return {
                 status: "error",
-                message: "Instructor with such email already exists.",
+                message: "User with such email already exists.",
             };
         }
 
         const hashedPassword = await encrypt(normalizedPassword);
 
-        const newInstructor = await Instructor.create({
-            firstName,
-            lastName,
+        const newUser = await User.create({
+            firstName: normalizedFirstname,
+            lastName: normalizedLastname,
             email: normalizedEmail,
             username: normalizedEmail,
             password: hashedPassword,
+            type,
         });
         revalidatePath(adminAccountsPage);
 
         return {
             status: "success",
-            message: "Instructor created successfully.",
-            instructorId: newInstructor._id.toString(),
+            message: `${type === "instructor" ? "Instructor" : "Student"} created successfully.`,
+            userId: newUser._id.toString(),
         };
     } catch (e) {
-        console.error("[CreateInstructor]", e);
+        console.error("[CreateUser]", e);
         return {
             status: "error",
             message: "Something went wrong. Please try again later.",
@@ -86,8 +89,8 @@ export async function CreateInstructor(
     }
 }
 
-export async function ChangeInstructorFirstName(
-    instructorId: string,
+export async function ChangeUserFirstName(
+    userId: string,
     fname: string,
 ): Promise<ServerActionResponse> {
     if (!(await AuthenticateAdmin())) {
@@ -96,10 +99,10 @@ export async function ChangeInstructorFirstName(
             message: "Unauthorized.",
         };
     }
-    if (!isValidObjectId(instructorId)) {
+    if (!isValidObjectId(userId)) {
         return {
             status: "error",
-            message: "Invalid instructor ID",
+            message: "Invalid user ID",
         };
     }
 
@@ -113,15 +116,15 @@ export async function ChangeInstructorFirstName(
 
     try {
         await connectDB();
-        const instructor = await Instructor.findById(instructorId);
-        if (!instructor) {
+        const user = await User.findById(userId);
+        if (!user) {
             return {
                 status: "error",
-                message: "Instructor with such ID was not found.",
+                message: "User with such ID was not found.",
             };
         }
-        instructor.firstName = firstName;
-        await instructor.save();
+        user.firstName = firstName;
+        await user.save();
         revalidatePath(adminAccountsPage);
 
         return {
@@ -129,7 +132,7 @@ export async function ChangeInstructorFirstName(
             message: "Renamed successfully",
         };
     } catch (e) {
-        console.error("[ChangeInstructorFirstName]", e);
+        console.error("[ChangeUserFirstName]", e);
         return {
             status: "error",
             message: "Something went wrong. Please try again later.",
@@ -137,8 +140,8 @@ export async function ChangeInstructorFirstName(
     }
 }
 
-export async function ChangeInstructorLastName(
-    instructorId: string,
+export async function ChangeUserLastName(
+    userId: string,
     lname: string,
 ): Promise<ServerActionResponse> {
     if (!(await AuthenticateAdmin())) {
@@ -147,10 +150,10 @@ export async function ChangeInstructorLastName(
             message: "Unauthorized.",
         };
     }
-    if (!isValidObjectId(instructorId)) {
+    if (!isValidObjectId(userId)) {
         return {
             status: "error",
-            message: "Invalid instructor ID",
+            message: "Invalid user ID",
         };
     }
 
@@ -164,15 +167,15 @@ export async function ChangeInstructorLastName(
 
     try {
         await connectDB();
-        const instructor = await Instructor.findById(instructorId);
-        if (!instructor) {
+        const user = await User.findById(userId);
+        if (!user) {
             return {
                 status: "error",
-                message: "Instructor with such ID was not found.",
+                message: "User with such ID was not found.",
             };
         }
-        instructor.lastName = lastName;
-        await instructor.save();
+        user.lastName = lastName;
+        await user.save();
         revalidatePath(adminAccountsPage);
 
         return {
@@ -180,7 +183,7 @@ export async function ChangeInstructorLastName(
             message: "Renamed successfully",
         };
     } catch (e) {
-        console.error("[ChangeInstructorLastName]", e);
+        console.error("[ChangeUserLastName]", e);
         return {
             status: "error",
             message: "Something went wrong. Please try again later.",
@@ -188,8 +191,8 @@ export async function ChangeInstructorLastName(
     }
 }
 
-export async function ChangeInstructorPassword(
-    instructorId: string,
+export async function ChangeUserPassword(
+    userId: string,
     password: string,
 ): Promise<ServerActionResponse> {
     if (!(await AuthenticateAdmin())) {
@@ -198,10 +201,10 @@ export async function ChangeInstructorPassword(
             message: "Unauthorized.",
         };
     }
-    if (!isValidObjectId(instructorId)) {
+    if (!isValidObjectId(userId)) {
         return {
             status: "error",
-            message: "Invalid instructor ID",
+            message: "Invalid user ID",
         };
     }
 
@@ -215,22 +218,22 @@ export async function ChangeInstructorPassword(
 
     try {
         await connectDB();
-        const instructor = await Instructor.findById(instructorId);
-        if (!instructor) {
+        const user = await User.findById(userId);
+        if (!user) {
             return {
                 status: "error",
-                message: "Instructor with such ID was not found.",
+                message: "User with such ID was not found.",
             };
         }
-        instructor.password = await encrypt(normalizedPassword);
-        await instructor.save();
+        user.password = await encrypt(normalizedPassword);
+        await user.save();
 
         return {
             status: "success",
             message: "Password changed successfully",
         };
     } catch (e) {
-        console.error("[ChangeInstructorPassword]", e);
+        console.error("[ChangeUserPassword]", e);
         return {
             status: "error",
             message: "Something went wrong. Please try again later.",
@@ -238,8 +241,8 @@ export async function ChangeInstructorPassword(
     }
 }
 
-export async function ChangeInstructorEmail(
-    instructorId: string,
+export async function ChangeUserEmail(
+    userId: string,
     email: string,
 ): Promise<ServerActionResponse> {
     if (!(await AuthenticateAdmin())) {
@@ -248,10 +251,10 @@ export async function ChangeInstructorEmail(
             message: "Unauthorized.",
         };
     }
-    if (!isValidObjectId(instructorId)) {
+    if (!isValidObjectId(userId)) {
         return {
             status: "error",
-            message: "Invalid instructor ID",
+            message: "Invalid user ID",
         };
     }
 
@@ -272,27 +275,27 @@ export async function ChangeInstructorEmail(
 
     try {
         await connectDB();
-        const instructor = await Instructor.findById(instructorId);
-        if (!instructor) {
+        const user = await User.findById(userId);
+        if (!user) {
             return {
                 status: "error",
-                message: "Instructor with such ID was not found.",
+                message: "User with such ID was not found.",
             };
         }
 
-        const existingInstructor = await Instructor.findOne({
-            _id: { $ne: instructor._id },
+        const existingUser = await User.findOne({
+            _id: { $ne: user._id },
             email: normalizedEmail,
         }).lean();
-        if (existingInstructor) {
+        if (existingUser) {
             return {
                 status: "error",
-                message: "Instructor with such email already exists.",
+                message: "User with such email already exists.",
             };
         }
 
-        instructor.email = normalizedEmail;
-        await instructor.save();
+        user.email = normalizedEmail;
+        await user.save();
         revalidatePath(adminAccountsPage);
 
         return {
@@ -300,7 +303,7 @@ export async function ChangeInstructorEmail(
             message: "Email changed successfully",
         };
     } catch (e) {
-        console.error("[ChangeInstructorEmail]", e);
+        console.error("[ChangeUserEmail]", e);
         return {
             status: "error",
             message: "Something went wrong. Please try again later.",
@@ -308,25 +311,25 @@ export async function ChangeInstructorEmail(
     }
 }
 
-export async function DeleteInstructor(
-    instructorId: string,
+export async function DeleteUser(
+    userId: string,
 ): Promise<ServerActionResponse> {
-    if (!isValidObjectId(instructorId))
+    if (!isValidObjectId(userId))
         return {
             status: "error",
-            message: "Invalid instructor ID.",
+            message: "Invalid User ID.",
         };
 
     try {
-        const instructor = await Instructor.findById(instructorId);
-        if (!instructor) {
+        const user = await User.findById(userId);
+        if (!user) {
             return {
                 status: "error",
-                message: "Instructor with such ID was not found.",
+                message: "User with such ID was not found.",
             };
         }
 
-        await instructor.deleteOne();
+        await user.deleteOne();
         revalidatePath(adminAccountsPage);
 
         return {
@@ -334,7 +337,7 @@ export async function DeleteInstructor(
             message: "Deleted successfully.",
         };
     } catch (e) {
-        console.error(e);
+        console.error("[DeleteUser]", e);
         return {
             status: "error",
             message: "Something went wrong. Please try again later.",

@@ -1,6 +1,6 @@
 import Loading from "@/app/(site)/loading";
 import { InstructorInfoProvider } from "@/app/contexts/InstructorProvider";
-import { Instructor, PlainInstructorDocument } from "@/app/mongoDb/models/user";
+import { User, PlainUserDocument } from "@/app/mongoDb/models/user";
 import { connectDB } from "@/app/mongoDb/mongodb";
 import { adminAccountsPage } from "@/constants";
 import { isValidObjectId } from "mongoose";
@@ -15,10 +15,13 @@ async function VerifyInstructor({
     instructorId: string;
 }>) {
     if (!isValidObjectId(instructorId)) redirect(adminAccountsPage);
-    let instructor: PlainInstructorDocument;
+    let instructor: PlainUserDocument;
     try {
         await connectDB();
-        instructor = await Instructor.findById(instructorId).lean({
+        instructor = await User.findOne({
+            _id: instructorId,
+            type: "instructor",
+        }).lean({
             virtuals: true,
         });
         if (!instructor) {

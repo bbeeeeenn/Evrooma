@@ -1,5 +1,5 @@
 "use client";
-import { CreateInstructor } from "@/app/actions/InstructorActions";
+import { CreateUser } from "@/app/actions/UserActions";
 import { adminAccountsPage, adminCreateAccountPage } from "@/constants";
 import clsx from "clsx";
 import { CirclePlus, LoaderCircle, Lock, Mail, User } from "lucide-react";
@@ -29,8 +29,9 @@ export function CreateInstructorForm(): React.ReactNode {
     const pathname = usePathname();
 
     const onAction = async (_: unknown, formData: FormData): Promise<void> => {
-        const fname = (formData.get("fname") as string | null)?.trim() ?? "";
-        const lname = (formData.get("lname") as string | null)?.trim() ?? "";
+        const firstName =
+            (formData.get("fname") as string | null)?.trim() ?? "";
+        const lastName = (formData.get("lname") as string | null)?.trim() ?? "";
         const email = (formData.get("email") as string | null)?.trim() ?? "";
         const password =
             (formData.get("password") as string | null)?.trim() ?? "";
@@ -43,11 +44,12 @@ export function CreateInstructorForm(): React.ReactNode {
         }
 
         const loadingToast = toast.loading("Waiting...");
-        const response = await CreateInstructor({
-            fname,
-            lname,
+        const response = await CreateUser({
+            firstName,
+            lastName,
             email,
             password,
+            type: "instructor",
         });
         if (response.status === "success") {
             toast.update(loadingToast, {
@@ -56,9 +58,7 @@ export function CreateInstructorForm(): React.ReactNode {
                 render: response.message,
                 autoClose: 3000,
             });
-            router.replace(
-                `${adminAccountsPage}/${response.instructorId ?? ""}`,
-            );
+            router.replace(`${adminAccountsPage}/${response.userId ?? ""}`);
         } else {
             toast.update(loadingToast, {
                 isLoading: false,

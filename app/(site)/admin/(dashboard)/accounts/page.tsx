@@ -3,7 +3,7 @@ import { BookText, Plus } from "lucide-react";
 import { adminAccountsPage, adminCreateAccountPage } from "@/constants";
 import Link from "next/link";
 import { Suspense } from "react";
-import { Instructor, PlainInstructorDocument } from "@/app/mongoDb/models/user";
+import { User, PlainUserDocument } from "@/app/mongoDb/models/user";
 import { connectDB } from "@/app/mongoDb/mongodb";
 import { connection } from "next/server";
 
@@ -24,11 +24,13 @@ function InstructorListSkeleton() {
 }
 
 async function InstructorsList() {
-    let instructors: PlainInstructorDocument[] = [];
+    let instructors: PlainUserDocument[] = [];
     try {
         await connection();
         await connectDB();
-        instructors = await Instructor.find().lean({ virtuals: true });
+        instructors = await User.find({ type: "instructor" }).lean({
+            virtuals: true,
+        });
     } catch (e) {
         console.error(e);
         return null;

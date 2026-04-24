@@ -2,7 +2,7 @@
 import { getIronSession, SessionOptions } from "iron-session";
 import { InstructorAuthSessionData, LoginFormActionResponse } from "./_";
 import { connectDB } from "@/app/mongoDb/mongodb";
-import { Instructor, PlainInstructorDocument } from "@/app/mongoDb/models/user";
+import { User, PlainUserDocument } from "@/app/mongoDb/models/user";
 import { cookies } from "next/headers";
 import { compare } from "@/app/lib/bcrypt";
 import { INSTRUCTOR_SESSION_SECRET } from "@/constants";
@@ -28,9 +28,10 @@ export async function InstructorAuth(
     try {
         await connectDB();
 
-        const user = await Instructor.findOne({
+        const user = await User.findOne({
+            type: "instructor",
             email,
-        }).lean<PlainInstructorDocument>();
+        }).lean<PlainUserDocument>();
 
         if (!user || !(await compare(password, user.password))) {
             return {
@@ -70,16 +71,17 @@ export async function InstructorAuth(
     }
 }
 
-export async function GetInstructorAuthInfo(): Promise<PlainInstructorDocument | null> {
+export async function GetInstructorAuthInfo(): Promise<PlainUserDocument | null> {
     try {
         const session = await getIronSession<InstructorAuthSessionData>(
             await cookies(),
             instructorSessionOptions,
         );
         await connectDB();
-        const instructor = await Instructor.findById(
-            session.data?.userId,
-        ).lean<PlainInstructorDocument>({ virtuals: true });
+        const instructor = await User.findOne({
+            _id: session.data?.userId,
+            type: "instructor",
+        }).lean<PlainUserDocument>({ virtuals: true });
         return instructor;
     } catch (e) {
         console.error(e);

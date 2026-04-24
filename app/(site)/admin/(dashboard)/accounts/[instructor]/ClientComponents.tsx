@@ -9,6 +9,7 @@ import {
     DoorOpen,
     LinkIcon,
     LoaderCircle,
+    Mail,
     Plus,
     SquarePen,
     Trash2,
@@ -18,7 +19,7 @@ import { Divider } from "@/app/components/Divider";
 import { useActionState, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { toast } from "react-toastify";
-import { DeleteInstructor } from "@/app/actions/InstructorActions";
+import { DeleteUser } from "@/app/actions/UserActions";
 import { useRouter } from "next/navigation";
 import { adminAccountsPage, adminRoomsPage } from "@/constants";
 import { DeleteSchedule } from "@/app/actions/ScheduleActions";
@@ -86,7 +87,7 @@ function DeleteAccount() {
             return { email, modalOpened: true };
         }
 
-        const response = await DeleteInstructor(instructorId);
+        const response = await DeleteUser(instructorId);
         toast.update(loadingToast, {
             isLoading: false,
             type: response.status as "success" | "error",
@@ -132,7 +133,7 @@ function DeleteAccount() {
                 <form action={formAction}>
                     <div className="flex items-center gap-2">
                         <span>
-                            <DoorOpen />
+                            <Mail />
                         </span>
                         <div className="relative grow">
                             <input

@@ -8,7 +8,7 @@ import {
 import { connectDB } from "@/app/mongoDb/mongodb";
 import { Room } from "@/app/mongoDb/models/room";
 import { Schedule } from "@/app/mongoDb/models/schedule";
-import { Instructor } from "@/app/mongoDb/models/user";
+import { User } from "@/app/mongoDb/models/user";
 import { revalidatePath } from "next/cache";
 import { isValidObjectId } from "mongoose";
 import { AuthenticateAdmin } from "./AdminAuthActions";
@@ -150,7 +150,10 @@ export async function CreateSchedule(
             };
         }
 
-        const instructor = await Instructor.findById(instructorId).lean();
+        const instructor = await User.findOne({
+            _id: instructorId,
+            type: "instructor",
+        }).lean();
         if (!instructor) {
             return {
                 status: "error",

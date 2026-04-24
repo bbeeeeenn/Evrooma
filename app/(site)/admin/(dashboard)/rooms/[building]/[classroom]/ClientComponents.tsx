@@ -11,7 +11,7 @@ import {
     useUpdateClassroomName,
 } from "@/app/contexts/ClassroomProvider";
 import { PlainScheduleDocument } from "@/app/mongoDb/models/schedule";
-import { PlainInstructorDocument } from "@/app/mongoDb/models/user";
+import { PlainUserDocument } from "@/app/mongoDb/models/user";
 import { adminAccountsPage, adminRoomsPage } from "@/constants";
 import clsx from "clsx";
 import {

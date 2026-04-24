@@ -5,7 +5,7 @@ import { CreateScheduleForm } from "./ClientComponents";
 import { Suspense } from "react";
 import Loading from "@/app/(site)/loading";
 import { connectDB } from "@/app/mongoDb/mongodb";
-import { Instructor, PlainInstructorDocument } from "@/app/mongoDb/models/user";
+import { User, PlainUserDocument } from "@/app/mongoDb/models/user";
 import { redirect } from "next/navigation";
 import NewScheduleProvider, { _Instructor } from "./NewScheduleProvider";
 
@@ -27,10 +27,10 @@ async function CreateSchedule({
     buildingId: string;
     roomId: string;
 }) {
-    let instructors: PlainInstructorDocument[];
+    let instructors: PlainUserDocument[];
     try {
         await connectDB();
-        instructors = await Instructor.find().lean({
+        instructors = await User.find({ type: "instructor" }).lean({
             virtuals: true,
         });
         if (instructors.length === 0) {

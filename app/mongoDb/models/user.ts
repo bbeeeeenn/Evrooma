@@ -1,35 +1,17 @@
 import { model, models, ObjectId, Schema } from "mongoose";
 import mongooseLeanVirtuals from "mongoose-lean-virtuals";
 
-export interface PlainAdminDocument {
-    _id: ObjectId;
-    firstName: string;
-    lastName: string;
-    username: string;
-    password: string;
-    fullName: string;
-}
-
-export type PlainInstructorDocument = {
+export type PlainUserDocument = {
     _id: ObjectId;
     firstName: string;
     lastName: string;
     email: string;
     password: string;
     fullName: string;
+    type: "student" | "instructor";
 };
 
-const adminSchema = new Schema({
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    username: { type: String, required: true },
-    password: { type: String, required: true },
-});
-adminSchema.virtual("fullName").get(function () {
-    return `${this.firstName} ${this.lastName}`;
-});
-
-const instructorSchema = new Schema({
+const userSchema = new Schema({
     email: {
         type: String,
         required: true,
@@ -41,14 +23,17 @@ const instructorSchema = new Schema({
     firstName: { type: String, required: true, trim: true },
     lastName: { type: String, required: true, trim: true },
     password: { type: String, required: true },
+    type: {
+        type: String,
+        required: true,
+        enum: ["student", "instructor"],
+    },
 });
-instructorSchema.virtual("fullName").get(function () {
+
+userSchema.virtual("fullName").get(function () {
     return `${this.firstName} ${this.lastName}`;
 });
 
-adminSchema.plugin(mongooseLeanVirtuals);
-instructorSchema.plugin(mongooseLeanVirtuals);
+userSchema.plugin(mongooseLeanVirtuals);
 
-export const Instructor =
-    models.Instructor || model("Instructor", instructorSchema);
-export const Admin = models.Admin || model("Admin", adminSchema);
+export const User = models.User || model("User", userSchema);
