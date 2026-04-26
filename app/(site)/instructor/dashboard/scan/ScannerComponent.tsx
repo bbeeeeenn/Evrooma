@@ -1,12 +1,25 @@
 "use client";
 
+import { instructorScanPage } from "@/constants";
 import { IDetectedBarcode, Scanner } from "@yudiel/react-qr-scanner";
 import clsx from "clsx";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 export function QRScanner() {
+    const router = useRouter();
     const [error, setError] = useState<string | null>(null);
-    const handleScan = (codes: IDetectedBarcode[]) => {};
+    const handleScan = (codes: IDetectedBarcode[]) =>
+        codes.forEach((code) => {
+            if (!code.rawValue.includes(window.location.origin)) return;
+
+            const url = new URL(code.rawValue);
+            const roomId = url.searchParams.get("roomId");
+            if (roomId) {
+                router.replace(`${instructorScanPage}?roomId=${roomId}`);
+            }
+        });
+
     const handleError = (err: unknown) => {
         if (err instanceof Error && err.name === "NotAllowedError") {
             setError("Camera permission denied.");

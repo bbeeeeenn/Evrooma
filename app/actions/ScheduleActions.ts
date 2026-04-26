@@ -7,7 +7,10 @@ import {
 } from "@/constants";
 import { connectDB } from "@/app/mongoDb/mongodb";
 import { Room } from "@/app/mongoDb/models/room";
-import { Schedule } from "@/app/mongoDb/models/schedule";
+import {
+    PopulatedPlainScheduleDocument,
+    Schedule,
+} from "@/app/mongoDb/models/schedule";
 import { User } from "@/app/mongoDb/models/user";
 import { revalidatePath } from "next/cache";
 import { isValidObjectId } from "mongoose";
@@ -19,6 +22,8 @@ import type {
     Minute,
     NewSchedule,
 } from "../(site)/admin/(dashboard)/rooms/[building]/[classroom]/create-schedule/NewScheduleProvider";
+import { GetInstructorAuthInfo } from "./InstructorAuthActions";
+import { AttendanceLog } from "../mongoDb/models/log";
 
 export type NewScheduleInput = Omit<NewSchedule, "day"> & {
     day: DayOfWeek[];
@@ -71,6 +76,13 @@ function dayLabel(day: DayOfWeek): number {
         default:
             return 0;
     }
+}
+
+function getAttendanceDateKey(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
 }
 
 export async function CreateSchedule(
@@ -301,6 +313,115 @@ export async function DeleteSchedule(
         return {
             status: "error",
             message: "Something went wrong. Please try again later.",
+        };
+    }
+}
+
+export async function ProcessInstructorSchedule(
+    roomId: string,
+): Promise<
+    ServerActionResponse & { schedule?: PopulatedPlainScheduleDocument }
+> {
+    const instructor = await GetInstructorAuthInfo();
+    if (!instructor) {
+        return {
+            status: "error",
+            message: "Please sign in to verify attendance.",
+        };
+    }
+
+    try {
+        await connectDB();
+        const now = new Date();
+        const currentDay = now.getDay();
+        const currentHour = now.getHours();
+        const currentMinute = now.getMinutes();
+        const schedule: PopulatedPlainScheduleDocument = await Schedule.findOne(
+            {
+                room: roomId,
+                instructor: instructor._id,
+                "slot.dayOfWeek": currentDay,
+                $expr: {
+                    $and: [
+                        {
+                            $lte: [
+                                {
+                                    $add: [
+                                        { $multiply: ["$slot.start.hour", 60] },
+                                        "$slot.start.minute",
+                                    ],
+                                },
+                                currentHour * 60 + currentMinute,
+                            ],
+                        },
+                        {
+                            $gt: [
+                                {
+                                    $add: [
+                                        { $multiply: ["$slot.end.hour", 60] },
+                                        "$slot.end.minute",
+                                    ],
+                                },
+                                currentHour * 60 + currentMinute,
+                            ],
+                        },
+                    ],
+                },
+            },
+        )
+            .populate({ path: "room", populate: "building" })
+            .populate("instructor")
+            .lean({ virtuals: true });
+        if (!schedule) {
+            return {
+                status: "error",
+                message:
+                    "You have no active schedule for this classroom right now.",
+            };
+        }
+        const attendanceDate = getAttendanceDateKey(now);
+        const existing = await AttendanceLog.findOne({
+            schedule: schedule._id,
+            user: instructor._id,
+            attendanceDate,
+        });
+
+        if (existing) {
+            return {
+                status: "error",
+                message:
+                    "You’ve already marked attendance for this schedule today.",
+                schedule,
+            };
+        }
+
+        const log = new AttendanceLog({
+            schedule: schedule._id,
+            user: instructor._id,
+            attendanceDate,
+        });
+        await log.save();
+        return {
+            status: "success",
+            message: "Attendance verified successfully.",
+            schedule,
+        };
+    } catch (e) {
+        if (
+            e instanceof Error &&
+            "code" in e &&
+            (e as { code?: number }).code === 11000
+        ) {
+            return {
+                status: "error",
+                message:
+                    "You’ve already marked attendance for this schedule today.",
+            };
+        }
+        console.error(e);
+        return {
+            status: "error",
+            message: "Unable to verify attendance. Please try again.",
         };
     }
 }

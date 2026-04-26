@@ -60,10 +60,12 @@ const scheduleSchema = new Schema({
     subject: {
         type: String,
         default: "Undefined",
-        required: false,
         trim: true,
     },
     slot: slotSchema,
 });
+
+scheduleSchema.index({ room: 1, "slot.dayOfWeek": 1 });
+scheduleSchema.index({ instructor: 1 });
 
 export const Schedule = models.Schedule || model("Schedule", scheduleSchema);

@@ -2,7 +2,7 @@
 import { useBuildingInfo } from "@/app/contexts/BuildingProvider";
 import { useClassroomInfo } from "@/app/contexts/ClassroomProvider";
 import { scanLandingPage } from "@/constants";
-import { QrCode } from "lucide-react";
+import { Download, QrCode } from "lucide-react";
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import QRGenerator from "qrcode";
 import Image from "next/image";
@@ -29,7 +29,7 @@ export default function GenerateQrCode() {
 
             await QRGenerator.toCanvas(
                 qrCanvas,
-                `${window.location.host}${scanLandingPage}/${classroom.classroomId}`,
+                `${window.location.origin}${scanLandingPage}?roomId=${encodeURIComponent(classroom.classroomId)}`,
                 {
                     width: 500,
                     margin: 1,
@@ -61,8 +61,10 @@ export default function GenerateQrCode() {
         const { left, right, top, bottom } =
             dialog.current.getBoundingClientRect();
         const { clientX: x, clientY: y } = e;
-        if (x < left || x > right || y < top || y > bottom)
+        if (x < left || x > right || y < top || y > bottom) {
             dialog.current.close();
+            document.body.classList.remove("overflow-hidden");
+        }
     };
     return (
         <>
@@ -70,7 +72,7 @@ export default function GenerateQrCode() {
                 <dialog
                     ref={dialog}
                     onClick={handleDialogClick}
-                    className="m-auto w-full max-w-md bg-transparent px-5 backdrop:bg-black/30"
+                    className="m-auto w-[calc(100vw-40px)] max-w-sm bg-transparent select-none backdrop:bg-black/30"
                 >
                     <Image
                         src={data}
@@ -83,8 +85,11 @@ export default function GenerateQrCode() {
                     <a
                         href={data}
                         download={`EVROOMA-${building.buildingName}-${classroom.classroomCode}.png`}
-                        className="bg-yellow-primary hover:bg-yellow-secondary focus-visible:bg-yellow-secondary active:bg-yellow-secondary mt-4 block w-full rounded-md py-3 text-center text-xl font-semibold"
+                        className="bg-yellow-primary hover:bg-yellow-secondary focus-visible:bg-yellow-secondary active:bg-yellow-secondary mt-4 flex w-full items-center justify-center gap-2 rounded-md py-3 text-xl font-semibold"
                     >
+                        <span>
+                            <Download />
+                        </span>
                         Download
                     </a>
                 </dialog>
@@ -93,8 +98,8 @@ export default function GenerateQrCode() {
                 className="bg-yellow-primary my-10 flex w-full max-w-xs items-center justify-center gap-2 rounded-md py-2 font-semibold text-black shadow-md"
                 onClick={() => {
                     if (!dialog.current) return;
-                    if (dialog.current.open) dialog.current.close();
-                    else dialog.current.showModal();
+                    dialog.current.showModal();
+                    document.body.classList.add("overflow-hidden");
                 }}
             >
                 <span>
