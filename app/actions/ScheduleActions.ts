@@ -24,6 +24,7 @@ import type {
 } from "../(site)/admin/(dashboard)/rooms/[building]/[classroom]/create-schedule/NewScheduleProvider";
 import { GetInstructorAuthInfo } from "./InstructorAuthActions";
 import { AttendanceLog } from "../mongoDb/models/log";
+import { getAttendanceDateKey } from "../lib/utils";
 
 export type NewScheduleInput = Omit<NewSchedule, "day"> & {
     day: DayOfWeek[];
@@ -76,13 +77,6 @@ function dayLabel(day: DayOfWeek): number {
         default:
             return 0;
     }
-}
-
-export async function getAttendanceDateKey(date: Date): Promise<string> {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
 }
 
 export async function CreateSchedule(

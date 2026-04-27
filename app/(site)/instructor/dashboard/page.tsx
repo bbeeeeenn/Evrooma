@@ -2,7 +2,6 @@ import { GetInstructorAuthInfo } from "@/app/actions/InstructorAuthActions";
 import { instructorLoginPage, instructorScanPage } from "@/constants";
 import {
     BookText,
-    CircleCheckBig,
     ScanLine,
     Settings2,
     Square,
@@ -14,17 +13,16 @@ import Loading from "../../loading";
 import Link from "next/link";
 import { Divider } from "@/app/components/Divider";
 import {
-    PopulatedPlainScheduleDocument,
+    type PopulatedPlainScheduleDocument,
     Schedule,
 } from "@/app/mongoDb/models/schedule";
 import { connection } from "next/server";
 import { ObjectId } from "mongoose";
 import { connectDB } from "@/app/mongoDb/mongodb";
-import { getAttendanceDateKey } from "@/app/actions/ScheduleActions";
 import { AttendanceLog } from "@/app/mongoDb/models/log";
-import { PlainUserDocument } from "@/app/mongoDb/models/user";
+import { type PlainUserDocument } from "@/app/mongoDb/models/user";
 import clsx from "clsx";
-import { slotToMinutes } from "@/app/lib/utils";
+import { getAttendanceDateKey, slotToMinutes } from "@/app/lib/utils";
 
 async function Profile() {
     const instructor = await GetInstructorAuthInfo();
@@ -106,7 +104,7 @@ async function ScheduleToday() {
                 const endMinute = sched.slot.end.minute;
 
                 const now = new Date();
-                const dateKey = await getAttendanceDateKey(now);
+                const dateKey = getAttendanceDateKey(now);
                 const done = await AttendanceLog.findOne({
                     schedule: sched._id,
                     user: instructor._id,
