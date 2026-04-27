@@ -1,7 +1,7 @@
 import { BackButton } from "@/app/components/BackButton";
 import { instructorDashboardPage } from "@/constants";
 import { FilterRooms } from "./ClientComponents";
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 import { connectDB } from "@/app/mongoDb/mongodb";
 import { Building } from "@/app/mongoDb/models/building";
 import { connection } from "next/server";
@@ -9,6 +9,12 @@ import { PopulatedPlainRoomDocument, Room } from "@/app/mongoDb/models/room";
 import { DoorOpen } from "lucide-react";
 import { ClassroomsSkeleton } from "@/app/(site)/admin/(dashboard)/rooms/page";
 import Loading from "@/app/(site)/loading";
+import clsx from "clsx";
+import Link from "next/link";
+import { isValidObjectId } from "mongoose";
+import { Schedule } from "@/app/mongoDb/models/schedule";
+import { formatPH, getAttendanceDateKey } from "@/app/lib/utils";
+import { AttendanceLog } from "@/app/mongoDb/models/log";
 
 async function Filter() {
     await connection();
@@ -27,6 +33,80 @@ async function Filter() {
         );
     }
     return <FilterRooms buildings={buildings} />;
+}
+
+async function ClassroomAvailability({ roomId }: { roomId: string }) {
+    if (!isValidObjectId(roomId)) return null;
+    const now = new Date(formatPH());
+    try {
+        const activeSchedule = await Schedule.findOne({
+            room: roomId,
+            "slot.dayOfWeek": now.getDay(),
+            $expr: {
+                $and: [
+                    {
+                        $lte: [
+                            {
+                                $add: [
+                                    {
+                                        $multiply: ["$slot.start.hour", 60],
+                                    },
+                                    "$slot.start.minute",
+                                ],
+                            },
+                            now.getHours() * 60 + now.getMinutes(),
+                        ],
+                    },
+                    {
+                        $gt: [
+                            {
+                                $add: [
+                                    { $multiply: ["$slot.end.hour", 60] },
+                                    "$slot.end.minute",
+                                ],
+                            },
+                            now.getHours() * 60 + now.getMinutes(),
+                        ],
+                    },
+                ],
+            },
+        }).lean();
+        if (!activeSchedule) {
+            return (
+                <>
+                    <span className="size-3 rounded-full bg-green-400"></span>
+                    Available
+                </>
+            );
+        }
+        const markedInUsed = await AttendanceLog.findOne({
+            schedule: activeSchedule._id,
+            user: activeSchedule.instructor,
+            attendanceDate: getAttendanceDateKey(now),
+        }).lean();
+        if (!markedInUsed) {
+            return (
+                <>
+                    <span className="size-3 rounded-full bg-green-400"></span>
+                    Available
+                </>
+            );
+        }
+    } catch (e) {
+        console.error(e);
+        return (
+            <div className="text-text-primary font-semibold">
+                {e instanceof Error ? e.message : "Unexpected Error"}
+            </div>
+        );
+    }
+
+    return (
+        <>
+            <span className="size-3 rounded-full bg-red-500"></span>
+            In Use
+        </>
+    );
 }
 
 async function Classrooms({
@@ -52,30 +132,40 @@ async function Classrooms({
             </div>
         );
     }
-    return classrooms.map((classroom) => {
-        // TODO: chain delete all the schedules related to this classroom if the building is already deleted. Do it with server-action
-        if (!classroom.building) {
-            return null;
-        }
-        return (
-            <button
-                key={classroom._id.toString()}
-                className="bg-green-secondary focus-visible:bg-green-tertiary active:bg-green-tertiary hover:bg-green-tertiary text-text-primary mb-4 block w-full rounded-md px-5 py-3 shadow-md"
-            >
-                <div className="flex items-center gap-1">
-                    <span>
-                        <DoorOpen size={25} />
-                    </span>
-                    <p className="items-center gap-2 truncate text-4xl font-bold">
-                        {classroom.code}
-                    </p>
-                </div>
-                <p className="text-text-secondary text-start font-semibold">
-                    {classroom.building.name}
-                </p>
-            </button>
-        );
-    });
+    return classrooms.map(
+        (classroom) =>
+            classroom.building && (
+                <Link
+                    href={""}
+                    key={classroom._id.toString()}
+                    className="group text-text-primary block w-full space-y-1"
+                >
+                    <div className="bg-green-secondary group-focus-visible:bg-green-tertiary group-active:bg-green-tertiary group-hover:bg-green-tertiary mt-4 block w-full rounded-md px-5 py-3 shadow-md">
+                        <div className="flex items-center gap-1">
+                            <span>
+                                <DoorOpen size={25} />
+                            </span>
+                            <p className="items-center gap-2 truncate text-4xl font-bold">
+                                {classroom.code}
+                            </p>
+                        </div>
+                        <p className="text-text-secondary text-start font-semibold">
+                            {classroom.building.name}
+                        </p>
+                    </div>
+                    <div
+                        className={clsx(
+                            "bg-green-secondary flex items-center justify-center gap-2 rounded-md py-1 shadow-md",
+                            "group-active:bg-green-tertiary group-focus-visible:bg-green-tertiary group-hover:bg-green-tertiary",
+                        )}
+                    >
+                        <ClassroomAvailability
+                            roomId={classroom._id.toString()}
+                        />
+                    </div>
+                </Link>
+            ),
+    );
 }
 
 export default async function RoomsPage({
@@ -92,7 +182,7 @@ export default async function RoomsPage({
             <Suspense fallback={<Loading />}>
                 <Filter key={newKey} />
             </Suspense>
-            <div className="mt-5 space-y-4">
+            <div className="mt-5">
                 <Suspense key={newKey} fallback={<ClassroomsSkeleton />}>
                     <Classrooms searchParams={resolvedSearchParams} />
                 </Suspense>

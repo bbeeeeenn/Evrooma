@@ -116,8 +116,8 @@ async function ScheduleToday() {
                         key={sched._id.toString()}
                         className={clsx(
                             "text-text-primary bg-green-secondary relative my-5 overflow-hidden rounded-md p-4 shadow-md",
-                            slotToMinutes(sched.slot.end) <
-                                slotToMinutes(now) && "opacity-60",
+                            slotToMinutes(now) >=
+                                slotToMinutes(sched.slot.end) && "opacity-60",
                         )}
                     >
                         <p className="font-poppins text-yellow-primary font-semibold">
