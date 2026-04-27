@@ -45,7 +45,10 @@ async function InstructorsList() {
                         className="bg-green-secondary border-yellow-primary block w-full rounded-md border-l-4 px-5 py-5 text-green-50 shadow-md"
                     >
                         <p className="flex items-center gap-1 text-2xl font-bold">
-                            <BookText /> {instructor.fullName}
+                            <span>
+                                <BookText />
+                            </span>{" "}
+                            {instructor.fullName}
                         </p>
                         <p className="truncate font-semibold underline">
                             {instructor.email}

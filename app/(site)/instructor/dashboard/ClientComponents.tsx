@@ -58,24 +58,6 @@ export function InstructorNavBar() {
                 <div className="flex grow">
                     <Link
                         href={
-                            pathname.includes(instructorSchedulesPage)
-                                ? instructorDashboardPage
-                                : instructorSchedulesPage
-                        }
-                        tabIndex={shown ? 0 : -1}
-                        className={clsx(
-                            "group m-auto flex cursor-pointer flex-col items-center gap-2 text-xs decoration-2 underline-offset-4 sm:flex-row sm:gap-3 sm:text-base",
-                            pathname.includes(instructorSchedulesPage) &&
-                                "underline",
-                        )}
-                    >
-                        <CalendarCheck className="transition-transform group-hover:scale-110 group-focus:scale-110 group-active:scale-110" />{" "}
-                        My Schedules
-                    </Link>
-                </div>
-                <div className="flex grow">
-                    <Link
-                        href={
                             pathname.includes(instructorRoomsPage)
                                 ? instructorDashboardPage
                                 : instructorRoomsPage
@@ -89,6 +71,24 @@ export function InstructorNavBar() {
                     >
                         <DoorClosed className="transition-transform group-hover:scale-110 group-focus:scale-110 group-active:scale-110" />{" "}
                         Rooms
+                    </Link>
+                </div>
+                <div className="flex grow">
+                    <Link
+                        href={
+                            pathname.includes(instructorSchedulesPage)
+                                ? instructorDashboardPage
+                                : instructorSchedulesPage
+                        }
+                        tabIndex={shown ? 0 : -1}
+                        className={clsx(
+                            "group m-auto flex cursor-pointer flex-col items-center gap-2 text-xs decoration-2 underline-offset-4 sm:flex-row sm:gap-3 sm:text-base",
+                            pathname.includes(instructorSchedulesPage) &&
+                                "underline",
+                        )}
+                    >
+                        <CalendarCheck className="transition-transform group-hover:scale-110 group-focus:scale-110 group-active:scale-110" />{" "}
+                        My Schedules
                     </Link>
                 </div>
                 <div className="flex grow">

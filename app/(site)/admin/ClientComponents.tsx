@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
     adminAccountsPage,
-    adminChartsPage,
     adminLogoutPage,
     adminRoomsPage,
 } from "@/constants";
@@ -23,9 +22,7 @@ export function AdminNavBar() {
     const pathname = usePathname();
 
     return (
-        (pathname === adminRoomsPage ||
-            pathname === adminAccountsPage ||
-            pathname === adminChartsPage) && (
+        (pathname === adminRoomsPage || pathname === adminAccountsPage) && (
             <>
                 <nav
                     className={clsx(
@@ -76,25 +73,7 @@ export function AdminNavBar() {
                             )}
                         >
                             <UsersRound className="transition-transform group-hover:scale-110" />{" "}
-                            Users
-                        </Link>
-                    </div>
-                    <div className="flex grow">
-                        <Link
-                            href={adminChartsPage}
-                            tabIndex={
-                                shown && !pathname.includes(adminChartsPage)
-                                    ? 0
-                                    : -1
-                            }
-                            className={clsx(
-                                "group m-auto flex cursor-pointer flex-col items-center gap-2 text-xs decoration-2 underline-offset-4 sm:flex-row sm:gap-3 sm:text-base",
-                                pathname.includes(adminChartsPage) &&
-                                    "pointer-events-none underline",
-                            )}
-                        >
-                            <ChartNoAxesColumn className="transition-transform group-hover:scale-110" />{" "}
-                            Charts
+                            Accounts
                         </Link>
                     </div>
                     <div className="flex grow">

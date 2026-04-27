@@ -6,7 +6,6 @@ export const adminLoginForgotPage = "/admin/forgot";
 export const adminRoomsPage = "/admin/rooms";
 export const adminAccountsPage = "/admin/accounts";
 export const adminCreateAccountPage = "/admin/accounts/create";
-export const adminChartsPage = "/admin/charts";
 export const adminLogoutPage = "/admin/logout";
 
 export const instructorLoginPage = "/instructor";
