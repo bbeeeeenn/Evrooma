@@ -22,6 +22,7 @@ import { ObjectId } from "mongoose";
 import { connectDB } from "@/app/mongoDb/mongodb";
 import { getAttendanceDateKey } from "@/app/actions/ScheduleActions";
 import { AttendanceLog } from "@/app/mongoDb/models/log";
+import { PlainUserDocument } from "@/app/mongoDb/models/user";
 import clsx from "clsx";
 import { slotToMinutes } from "@/app/lib/utils";
 
