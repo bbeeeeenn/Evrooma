@@ -22,7 +22,7 @@ import { connectDB } from "@/app/mongoDb/mongodb";
 import { AttendanceLog } from "@/app/mongoDb/models/log";
 import { type PlainUserDocument } from "@/app/mongoDb/models/user";
 import clsx from "clsx";
-import { getAttendanceDateKey, slotToMinutes } from "@/app/lib/utils";
+import { formatPH, getAttendanceDateKey, slotToMinutes } from "@/app/lib/utils";
 
 async function Profile() {
     const instructor = await GetInstructorAuthInfo();
@@ -103,7 +103,7 @@ async function ScheduleToday() {
                         : sched.slot.end.hour % 12;
                 const endMinute = sched.slot.end.minute;
 
-                const now = new Date();
+                const now = new Date(formatPH());
                 const dateKey = getAttendanceDateKey(now);
                 const done = await AttendanceLog.findOne({
                     schedule: sched._id,
