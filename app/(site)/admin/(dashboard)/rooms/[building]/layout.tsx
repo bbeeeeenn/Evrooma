@@ -6,6 +6,7 @@ import { isValidObjectId } from "mongoose";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { BuildingInfoProvider } from "@/app/contexts/BuildingProvider";
+import ErrorFallback from "@/app/components/ErrorFallback";
 
 async function Suspended({
     children,
@@ -16,20 +17,19 @@ async function Suspended({
 }) {
     const { building: buildingId } = await params;
     if (!isValidObjectId(buildingId)) {
-        // TODO: return a jsx saying building not found instead
         redirect(adminRoomsPage);
     }
+
     let building: PlainBuildingDocument;
     try {
         await connectDB();
         building = await Building.findById(buildingId).lean();
-        if (!building) {
-            // TODO: return a jsx saying building not found instead
-            redirect(adminRoomsPage);
-        }
-    } catch (error) {
-        if (!(error instanceof Error) || error.message !== "NEXT_REDIRECT")
-            console.error(error);
+    } catch (e) {
+        console.error(e);
+        return <ErrorFallback error={e} />;
+    }
+
+    if (!building) {
         redirect(adminRoomsPage);
     }
 

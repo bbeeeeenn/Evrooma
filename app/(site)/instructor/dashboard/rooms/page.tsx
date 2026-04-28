@@ -1,5 +1,5 @@
 import { BackButton } from "@/app/components/BackButton";
-import { instructorDashboardPage } from "@/constants";
+import { instructorDashboardPage, instructorRoomsPage } from "@/constants";
 import { FilterRooms } from "./ClientComponents";
 import React, { Suspense } from "react";
 import { connectDB } from "@/app/mongoDb/mongodb";
@@ -15,6 +15,7 @@ import { isValidObjectId } from "mongoose";
 import { Schedule } from "@/app/mongoDb/models/schedule";
 import { formatPH, getAttendanceDateKey } from "@/app/lib/utils";
 import { AttendanceLog } from "@/app/mongoDb/models/log";
+import ErrorFallback from "@/app/components/ErrorFallback";
 
 async function Filter() {
     await connection();
@@ -126,17 +127,13 @@ async function Classrooms({
             .lean();
     } catch (e) {
         console.error(e);
-        return (
-            <div className="text-text-primary">
-                {e instanceof Error ? e.message : "Unexpected Error"}
-            </div>
-        );
+        return <ErrorFallback error={e} />;
     }
     return classrooms.map(
         (classroom) =>
             classroom.building && (
                 <Link
-                    href={""}
+                    href={`${instructorRoomsPage}/${classroom._id.toString()}`}
                     key={classroom._id.toString()}
                     className="group text-text-primary block w-full space-y-1"
                 >

@@ -10,6 +10,7 @@ import {
 import { ScheduleCard } from "./ClientComponents";
 import { ScheduleCardSkeleton } from "@/app/(site)/ClientComponents";
 import { Suspense } from "react";
+import ErrorFallback from "@/app/components/ErrorFallback";
 
 async function GetSchedule({
     classroomId,
@@ -31,11 +32,7 @@ async function GetSchedule({
             .lean({ virtuals: true });
     } catch (e) {
         console.error(e);
-        return (
-            <p className="text-text-primary">
-                {e instanceof Error ? e.message : "Unexpected Error"}
-            </p>
-        );
+        return <ErrorFallback error={e} />;
     }
     return (
         schedules.length > 0 && (

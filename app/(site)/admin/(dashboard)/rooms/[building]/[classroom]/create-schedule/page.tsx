@@ -3,11 +3,11 @@ import { CalendarDays, ChevronLeft, LoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { CreateScheduleForm } from "./ClientComponents";
 import { Suspense } from "react";
-import Loading from "@/app/(site)/loading";
 import { connectDB } from "@/app/mongoDb/mongodb";
 import { User, PlainUserDocument } from "@/app/mongoDb/models/user";
 import { redirect } from "next/navigation";
 import NewScheduleProvider, { _Instructor } from "./NewScheduleProvider";
+import ErrorFallback from "@/app/components/ErrorFallback";
 
 function CreateScheduleFallback() {
     return (
@@ -33,30 +33,25 @@ async function CreateSchedule({
         instructors = await User.find({ type: "instructor" }).lean({
             virtuals: true,
         });
-        if (instructors.length === 0) {
-            redirect(adminAccountsPage);
-        }
     } catch (e) {
-        if (e instanceof Error && e.message === "NEXT_REDIRECT")
-            redirect(adminAccountsPage);
         console.error(e);
-        redirect(`${adminRoomsPage}/${buildingId}/${roomId}`);
+        return <ErrorFallback error={e} />;
+    }
+
+    if (instructors.length === 0) {
+        redirect(adminAccountsPage);
     }
     return (
-        <Suspense fallback={<Loading />}>
-            <NewScheduleProvider classroomId={roomId}>
-                <CreateScheduleForm
-                    buildingId={buildingId}
-                    classroomId={roomId}
-                    instructors={
-                        instructors.map((i) => ({
-                            id: i._id.toString(),
-                            name: i.fullName,
-                        })) as _Instructor[]
-                    }
-                />
-            </NewScheduleProvider>
-        </Suspense>
+        <NewScheduleProvider classroomId={roomId}>
+            <CreateScheduleForm
+                buildingId={buildingId}
+                classroomId={roomId}
+                instructors={instructors.map<_Instructor>((i) => ({
+                    id: i._id.toString(),
+                    name: i.fullName,
+                }))}
+            />
+        </NewScheduleProvider>
     );
 }
 

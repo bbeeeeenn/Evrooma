@@ -11,6 +11,7 @@ import Link from "next/link";
 import { adminRoomsPage } from "@/constants";
 import { Building2, DoorOpen } from "lucide-react";
 import { connection } from "next/server";
+import ErrorFallback from "@/app/components/ErrorFallback";
 
 async function ClassroomCount({
     buildingId,
@@ -19,8 +20,9 @@ async function ClassroomCount({
     try {
         await connectDB();
         count = await Room.countDocuments({ building: buildingId });
-    } catch (error) {
-        console.error(error);
+    } catch (e) {
+        console.error(e);
+        return <ErrorFallback error={e} />;
     }
 
     return (
@@ -58,9 +60,9 @@ async function BuildingsList() {
         buildings = await Building.find()
             .sort({ createdAt: 1 })
             .lean<PlainBuildingDocument[]>();
-    } catch (error) {
-        console.error(error);
-        return null;
+    } catch (e) {
+        console.error(e);
+        return <ErrorFallback error={e} />;
     }
 
     return (
@@ -112,11 +114,17 @@ export async function ClassroomsSkeleton() {
 
 async function Classrooms() {
     let classrooms: PopulatedPlainRoomDocument[] = [];
-    await connectDB();
-    classrooms = await Room.find()
-        .populate("building")
-        .sort({ building: 1, createdAt: 1 })
-        .lean();
+
+    try {
+        await connectDB();
+        classrooms = await Room.find()
+            .populate("building")
+            .sort({ building: 1, createdAt: 1 })
+            .lean();
+    } catch (e) {
+        console.error(e);
+        return <ErrorFallback error={e} />;
+    }
 
     let currBuilding = "";
 

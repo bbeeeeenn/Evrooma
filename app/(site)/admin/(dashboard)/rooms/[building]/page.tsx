@@ -11,14 +11,21 @@ import { PopulatedPlainRoomDocument, Room } from "@/app/mongoDb/models/room";
 import { connectDB } from "@/app/mongoDb/mongodb";
 import { ClassroomsSkeleton } from "../page";
 import { BackButton } from "@/app/components/BackButton";
+import ErrorFallback from "@/app/components/ErrorFallback";
 
 async function Classrooms({ buildingId }: { buildingId: string }) {
     let classrooms: PopulatedPlainRoomDocument[] = [];
-    await connectDB();
-    classrooms = await Room.find({ building: buildingId })
-        .populate("building")
-        .sort({ createdAt: 1 })
-        .lean();
+
+    try {
+        await connectDB();
+        classrooms = await Room.find({ building: buildingId })
+            .populate("building")
+            .sort({ createdAt: 1 })
+            .lean();
+    } catch (e) {
+        console.error(e);
+        return <ErrorFallback error={e} />;
+    }
 
     return (
         <>

@@ -10,6 +10,7 @@ import { Suspense } from "react";
 import { ClassroomCodeHeader, ClassroomSettings } from "./ClientComponents";
 import { Divider } from "@/app/components/Divider";
 import GenerateQrCode from "./GenerateQrCode";
+import ErrorFallback from "@/app/components/ErrorFallback";
 
 function Classroom({ buildingId }: { buildingId: string }) {
     return (
@@ -35,18 +36,20 @@ async function Suspended({
     if (!isValidObjectId(classroomId)) {
         redirect(`${adminRoomsPage}/${buildingId}`);
     }
+
     let classroom: PlainRoomDocument;
     try {
         await connectDB();
         classroom = await Room.findOne({
             _id: classroomId,
         }).lean();
-        if (!classroom) {
-            redirect(`${adminRoomsPage}/${buildingId}`);
-        }
     } catch (e) {
         if (!(e instanceof Error) || e.message !== "NEXT_REDIRECT")
             console.error(e);
+        return <ErrorFallback error={e} />;
+    }
+
+    if (!classroom) {
         redirect(`${adminRoomsPage}/${buildingId}`);
     }
 
