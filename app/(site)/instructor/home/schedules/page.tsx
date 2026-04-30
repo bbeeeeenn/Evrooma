@@ -7,7 +7,7 @@ import {
     Schedule,
 } from "@/app/mongoDb/models/schedule";
 import { connectDB } from "@/app/mongoDb/mongodb";
-import { DaysOfWeek, instructorDashboardPage } from "@/constants";
+import { DaysOfWeek, instructorHomePage } from "@/constants";
 import { CalendarDays } from "lucide-react";
 import React, { Suspense } from "react";
 

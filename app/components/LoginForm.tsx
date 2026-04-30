@@ -10,9 +10,9 @@ import {
     adminLoginForgotPage,
     adminRoomsPage,
     homePage,
-    instructorDashboardPage,
+    instructorHomePage,
     instructorLoginForgotPage,
-    studentDashboardPage,
+    studentHomePage,
     studentLoginForgotPage,
     studentRegisterPage,
 } from "@/constants";
@@ -70,8 +70,8 @@ export default function LoginForm({
                     : formType === "admin"
                       ? adminRoomsPage
                       : formType === "instructor"
-                        ? instructorDashboardPage
-                        : studentDashboardPage,
+                        ? instructorHomePage
+                        : studentHomePage,
             );
             setShowPassword(false);
         }

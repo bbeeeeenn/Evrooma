@@ -1,6 +1,6 @@
 import { GetInstructorAuthInfo } from "@/app/actions/InstructorAuthActions";
 import LoginForm from "@/app/components/LoginForm";
-import { instructorDashboardPage } from "@/constants";
+import { instructorHomePage } from "@/constants";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import Loading from "../loading";
@@ -8,7 +8,7 @@ import Loading from "../loading";
 async function Login({ redirectPath }: { redirectPath?: string }) {
     const instructor = await GetInstructorAuthInfo();
     if (instructor) {
-        redirect(redirectPath ?? instructorDashboardPage);
+        redirect(redirectPath ?? instructorHomePage);
     }
 
     return (

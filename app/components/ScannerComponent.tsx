@@ -1,12 +1,11 @@
 "use client";
 
-import { instructorScanPage } from "@/constants";
 import { IDetectedBarcode, Scanner } from "@yudiel/react-qr-scanner";
 import clsx from "clsx";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export function QRScanner() {
+export function QRScanner({ scanUrl }: { scanUrl: string }) {
     const router = useRouter();
     const [error, setError] = useState<string | null>(null);
     const handleScan = (codes: IDetectedBarcode[]) =>
@@ -14,9 +13,9 @@ export function QRScanner() {
             if (!code.rawValue.includes(window.location.origin)) return;
 
             const url = new URL(code.rawValue);
-            const roomId = url.searchParams.get("roomId");
+            const roomId = url.searchParams.get("roomid");
             if (roomId) {
-                router.replace(`${instructorScanPage}?roomId=${roomId}`);
+                router.replace(`${scanUrl}?roomid=${roomId}`);
             }
         });
 

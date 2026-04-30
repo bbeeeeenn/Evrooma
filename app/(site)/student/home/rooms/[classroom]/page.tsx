@@ -1,6 +1,5 @@
 import { BackButton } from "@/app/components/BackButton";
-import { DaysOfWeek, instructorRoomsPage } from "@/constants";
-import { ClassroomHeader } from "./ClientComponents";
+import { DaysOfWeek, studentRoomsPage } from "@/constants";
 import React, { Suspense } from "react";
 import { connectDB } from "@/app/mongoDb/mongodb";
 import { isValidObjectId } from "mongoose";
@@ -22,6 +21,8 @@ import {
 import clsx from "clsx";
 import { CalendarDays } from "lucide-react";
 import { Divider } from "@/app/components/Divider";
+import { ClassroomHeader } from "@/app/components/ClassroomComponents";
+import { headers } from "next/headers";
 
 async function Schedules({ roomId }: { roomId: string }) {
     let schedules: PopulatedPlainScheduleDocument[];
@@ -201,7 +202,7 @@ async function ClassroomPage({
     params: Promise<{ classroom: string }>;
 }) {
     const roomId = (await params).classroom;
-    if (!isValidObjectId(roomId)) redirect(instructorRoomsPage);
+    if (!isValidObjectId(roomId)) redirect(studentRoomsPage);
     let classroom: PopulatedPlainRoomDocument;
 
     try {
@@ -217,7 +218,7 @@ async function ClassroomPage({
     }
 
     if (!classroom) {
-        redirect(instructorRoomsPage);
+        redirect(studentRoomsPage);
     }
 
     return (
@@ -239,14 +240,19 @@ async function ClassroomPage({
     );
 }
 
-export default function Page({
+export default async function Page({
     params,
 }: {
     params: Promise<{ classroom: string }>;
 }) {
+    const referer = (await headers()).get("referer");
     return (
         <>
-            <BackButton dest={instructorRoomsPage} text="Rooms" />
+            <BackButton
+                dest={studentRoomsPage}
+                text="Rooms"
+                referer={referer}
+            />
             <Suspense fallback={<Loading />}>
                 <ClassroomPage params={params} />
             </Suspense>

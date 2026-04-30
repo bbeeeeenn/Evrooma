@@ -1,21 +1,19 @@
-import { GetInstructorAuthInfo } from "@/app/actions/InstructorAuthActions";
+import { GetStudentAuthInfo } from "@/app/actions/StudentAuthActions";
 import {
-    instructorDashboardPage,
-    instructorLoginPage,
-    instructorLogoutPage,
-    instructorLogsPage,
-    instructorRoomsPage,
-    instructorScanPage,
-    instructorSchedulesPage,
-    instructorSettingsPage,
+    studentHomePage,
+    studentLoginPage,
+    studentLogoutPage,
+    studentLogsPage,
+    studentRoomsPage,
+    studentScanPage,
+    studentSettingsPage,
 } from "@/constants";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
-import { headers } from "next/headers";
 import Loading from "../../loading";
 import { CoolSidebar } from "@/app/components/CoolSidebar";
 import {
-    CalendarCheck,
     DoorClosed,
     Home,
     LogOut,
@@ -27,12 +25,12 @@ import {
 async function Authenticate({
     children,
 }: Readonly<{ children: React.ReactNode }>) {
-    const instructor = await GetInstructorAuthInfo();
+    const student = await GetStudentAuthInfo();
 
-    if (!instructor) {
+    if (!student) {
         const pathname = (await headers()).get("x-pathname") ?? "";
         redirect(
-            `${instructorLoginPage}?redirect=${encodeURIComponent(pathname)}`,
+            `${studentLoginPage}?redirect=${encodeURIComponent(pathname)}`,
         );
     }
 
@@ -41,39 +39,34 @@ async function Authenticate({
             items={[
                 {
                     icon: <Home size={30} />,
-                    text: "Dashboard",
-                    href: instructorDashboardPage,
+                    text: "Home",
+                    href: studentHomePage,
                 },
                 {
                     icon: <DoorClosed size={30} />,
                     text: "Rooms",
-                    href: instructorRoomsPage,
-                },
-                {
-                    icon: <CalendarCheck size={30} />,
-                    text: "My Schedules",
-                    href: instructorSchedulesPage,
+                    href: studentRoomsPage,
                 },
                 {
                     icon: <Logs size={30} />,
                     text: "My Logs",
-                    href: instructorLogsPage,
+                    href: studentLogsPage,
                 },
                 {
                     icon: <ScanLine size={30} />,
                     text: "Scanner",
-                    href: instructorScanPage,
+                    href: studentScanPage,
                 },
                 {
                     icon: <Settings2 size={30} />,
                     text: "Settings",
-                    href: instructorSettingsPage,
+                    href: studentSettingsPage,
                     pushdown: true,
                 },
                 {
                     icon: <LogOut size={30} />,
                     text: "Logout",
-                    href: instructorLogoutPage,
+                    href: studentLogoutPage,
                 },
             ]}
         >

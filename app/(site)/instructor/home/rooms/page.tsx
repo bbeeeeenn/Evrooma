@@ -1,7 +1,5 @@
-import { BackButton } from "@/app/components/BackButton";
-import { instructorDashboardPage, instructorRoomsPage } from "@/constants";
-import { FilterRooms } from "./ClientComponents";
-import React, { Suspense } from "react";
+import { instructorRoomsPage } from "@/constants";
+import { Suspense } from "react";
 import { connectDB } from "@/app/mongoDb/mongodb";
 import { Building } from "@/app/mongoDb/models/building";
 import { connection } from "next/server";
@@ -12,7 +10,6 @@ import Loading from "@/app/(site)/loading";
 import clsx from "clsx";
 import Link from "next/link";
 import { isValidObjectId } from "mongoose";
-import { Schedule } from "@/app/mongoDb/models/schedule";
 import {
     formatPH,
     GetActiveSchedule,
@@ -20,6 +17,7 @@ import {
 } from "@/app/lib/utils";
 import { AttendanceLog } from "@/app/mongoDb/models/log";
 import ErrorFallback from "@/app/components/ErrorFallback";
+import { FilterRooms } from "@/app/components/ClassroomComponents";
 
 async function Filter() {
     await connection();
@@ -40,11 +38,11 @@ async function Filter() {
     return <FilterRooms buildings={buildings} />;
 }
 
-async function ClassroomAvailability({ roomId }: { roomId: string }) {
-    if (!isValidObjectId(roomId)) return null;
+async function ClassroomAvailability({ roomid }: { roomid: string }) {
+    if (!isValidObjectId(roomid)) return null;
     const now = new Date(formatPH());
 
-    const activeSchedule = await GetActiveSchedule(roomId);
+    const activeSchedule = await GetActiveSchedule(roomid);
     if (!activeSchedule)
         return (
             <>
@@ -123,7 +121,7 @@ async function Classrooms({
                         )}
                     >
                         <ClassroomAvailability
-                            roomId={classroom._id.toString()}
+                            roomid={classroom._id.toString()}
                         />
                     </div>
                 </Link>

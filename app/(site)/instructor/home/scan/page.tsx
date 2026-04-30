@@ -1,17 +1,12 @@
-import { BackButton } from "@/app/components/BackButton";
-import { DaysOfWeek, instructorDashboardPage } from "@/constants";
-import { QRScanner } from "./ScannerComponent";
+import { QRScanner } from "../../../../components/ScannerComponent";
 import { Suspense } from "react";
 import { isValidObjectId } from "mongoose";
-import { connectDB } from "@/app/mongoDb/mongodb";
-import {
-    PopulatedPlainScheduleDocument,
-    Schedule,
-} from "@/app/mongoDb/models/schedule";
+import { PopulatedPlainScheduleDocument } from "@/app/mongoDb/models/schedule";
 import { ProcessInstructorSchedule } from "@/app/actions/ScheduleActions";
 import Loading from "@/app/(site)/loading";
 import { CircleAlert, CircleCheckBig } from "lucide-react";
 import clsx from "clsx";
+import { instructorScanPage } from "@/constants";
 
 function ScheduleCard({
     schedule,
@@ -53,9 +48,9 @@ function ScheduleCard({
     );
 }
 
-async function Process({ roomId }: { roomId: string }) {
+async function Process({ roomid }: { roomid: string }) {
     const { status, message, schedule } =
-        await ProcessInstructorSchedule(roomId);
+        await ProcessInstructorSchedule(roomid);
     return (
         <div className="fixed inset-x-5 inset-y-0 m-auto h-fit max-w-5xl">
             {schedule && <ScheduleCard schedule={schedule} />}
@@ -81,25 +76,24 @@ async function Process({ roomId }: { roomId: string }) {
 async function Suspended({
     searchParams,
 }: {
-    searchParams: Promise<{ roomId?: string }>;
+    searchParams: Promise<{ roomid?: string }>;
 }) {
-    const { roomId } = await searchParams;
+    const { roomid } = await searchParams;
 
-    return !roomId || !isValidObjectId(roomId) ? (
-        <QRScanner />
+    return !roomid || !isValidObjectId(roomid) ? (
+        <QRScanner scanUrl={instructorScanPage} />
     ) : (
-        <Process roomId={roomId} />
+        <Process roomid={roomid} />
     );
 }
 
 export default function Page({
     searchParams,
 }: {
-    searchParams: Promise<{ roomId?: string }>;
+    searchParams: Promise<{ roomid?: string }>;
 }) {
     return (
         <>
-            <BackButton dest={instructorDashboardPage} text="Home" />
             <Suspense fallback={<Loading />}>
                 <Suspended searchParams={searchParams} />
             </Suspense>

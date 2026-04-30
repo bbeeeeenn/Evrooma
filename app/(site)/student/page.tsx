@@ -3,12 +3,12 @@ import Loading from "../loading";
 import { redirect } from "next/navigation";
 import LoginForm from "@/app/components/LoginForm";
 import { GetStudentAuthInfo } from "@/app/actions/StudentAuthActions";
-import { studentDashboardPage } from "@/constants";
+import { studentHomePage } from "@/constants";
 
 async function Login({ redirectPath }: { redirectPath?: string }) {
     const student = await GetStudentAuthInfo();
     if (student) {
-        redirect(redirectPath ?? studentDashboardPage);
+        redirect(redirectPath ?? studentHomePage);
     }
 
     return (
