@@ -14,31 +14,68 @@ import { Bounce, ToastContainer } from "react-toastify";
 
 export async function generateMetadata() {
     return {
-        metadataBase: "https://evrooma.vercel.app",
+        metadataBase: new URL("https://www.evrooma.online"),
+
         title: "EVROOMA",
         description:
             "Helps quickly identify available classrooms through a centralized monitoring system designed for CCIS.",
-        icons: [
-            {
-                rel: "icon",
-                url: "/favicon_light.svg",
-                media: "(prefers-color-scheme: light)",
-            },
-            {
-                rel: "icon",
-                url: "/favicon_dark.svg",
-                media: "(prefers-color-scheme: dark)",
-            },
+
+        keywords: [
+            "EVROOMA",
+            "classrooms",
+            "CCIS",
+            "availability",
+            "scheduler",
+            "CSU",
+            "Caraga State University",
+            "Philippines",
+            "Ben Jay Lozada",
+            "Klein Timothy Magallano",
+            "Guy Miras",
+            "Carl Joshua Cariño",
         ],
+
+        icons: {
+            icon: [
+                {
+                    url: "/favicon_light.svg",
+                    media: "(prefers-color-scheme: light)",
+                },
+                {
+                    url: "/favicon_dark.svg",
+                    media: "(prefers-color-scheme: dark)",
+                },
+            ],
+        },
+
         openGraph: {
             title: "EVROOMA - Find Available Classrooms Instantly",
+            description:
+                "Helps quickly identify available classrooms through a centralized monitoring system designed for CCIS.",
+            url: "https://www.evrooma.online",
+            siteName: "EVROOMA",
             images: [
                 {
                     url: "/display.png",
                     width: 1200,
                     height: 630,
+                    alt: "EVROOMA Preview",
                 },
             ],
+            type: "website",
+        },
+
+        twitter: {
+            card: "summary_large_image",
+            title: "EVROOMA - Find Available Classrooms Instantly",
+            description:
+                "Helps quickly identify available classrooms through a centralized monitoring system designed for CCIS.",
+            images: ["/display.png"],
+        },
+
+        robots: {
+            index: true,
+            follow: true,
         },
     };
 }
