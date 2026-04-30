@@ -34,12 +34,6 @@ export function CoolSidebar({
     return (
         <>
             <div className="text-text-primary bg-green-quarternary border-yellow-primary fixed inset-x-0 top-0 z-20 flex items-center gap-3 border-b-2 py-5 text-xl font-bold tracking-widest">
-                {/* <button
-                    className="absolute left-3 sm:hidden"
-                    onClick={handleBurgerClick}
-                >
-                    {open ? <X /> : <Menu />}
-                </button> */}
                 <button className="absolute left-5" onClick={handleBurgerClick}>
                     {open ? <X size={30} /> : <Menu size={30} />}
                 </button>
@@ -80,7 +74,7 @@ export function CoolSidebar({
                 <div
                     ref={sidebar}
                     className={clsx(
-                        "bg-green-quarternary font-poppins text-text-primary fixed top-17.5 bottom-0 left-0 z-11 flex w-9/10 max-w-xs flex-col overflow-hidden transition-transform",
+                        "bg-green-quarternary font-poppins text-text-primary fixed top-17.5 bottom-0 left-0 z-11 flex w-full max-w-sm flex-col overflow-hidden transition-transform",
                         !open && "-translate-x-[calc(100%+4px)]",
                     )}
                 >
@@ -90,7 +84,7 @@ export function CoolSidebar({
                             inert={pathname === item.href}
                             href={item.href}
                             className={clsx(
-                                "hover:bg-green-quinary active:bg-green-quinary focus-visible:bg-green-quinary flex h-fit w-full items-center gap-4 px-7 py-5 text-2xl font-semibold",
+                                "hover:bg-green-quinary active:bg-green-quinary focus-visible:bg-green-quinary flex h-fit w-full items-center gap-4 px-5 py-5 text-2xl font-semibold",
                                 pathname === item.href &&
                                     "bg-yellow-primary pointer-events-none text-black",
                                 item.pushdown && "mt-auto",
