@@ -11,10 +11,12 @@ import {
 } from "@/app/mongoDb/models/resettoken";
 import { ChangePasswordForm, InvalidToken } from "./ClientComponents";
 import { connection } from "next/server";
+import { connectDB } from "@/app/mongoDb/mongodb";
 
 async function ResetPassword({ token }: { token: string }) {
     await connection();
     try {
+        await connectDB();
         const foundToken: PopulatedPlainResetTokenDocument =
             await ResetToken.findOne({ token })
                 .populate("user")
