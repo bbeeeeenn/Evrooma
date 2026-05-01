@@ -36,6 +36,7 @@ export const MONGODB_URI = process.env.MONGODB_URI || "";
 export const DB_NAME = process.env.DB_NAME || "";
 export const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "";
 export const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "";
+export const RESEND_API_KEY = process.env.RESEND_API_KEY || "";
 
 export const DaysOfWeek = [
     "Sunday",
