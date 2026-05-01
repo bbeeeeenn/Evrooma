@@ -5,14 +5,14 @@ export default function Email() {
         <Html>
             <Head />
             <Body>
-                <Container>
+                <div style={{ textAlign: "center" }}>
                     <Img
-                        src="public/logo.png"
+                        src="https://www.evrooma.online/logo.png"
                         alt=""
-                        width={300}
-                        height={300}
+                        width={75}
+                        height={75}
                     />
-                </Container>
+                </div>
                 <Button
                     href="https://example.com"
                     style={{
