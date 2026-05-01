@@ -121,9 +121,10 @@ export function ChangePasswordForm({
                 />
                 <button
                     type="submit"
+                    inert={isPending}
                     className={clsx(
                         "bg-yellow-primary mt-10 flex w-full items-center justify-center gap-2 rounded-md p-3 font-semibold text-black shadow-md",
-                        isPending && "opacity-75",
+                        isPending && "pointer-events-none opacity-75",
                     )}
                 >
                     {isPending ? (

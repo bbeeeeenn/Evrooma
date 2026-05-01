@@ -40,7 +40,7 @@ export async function SendToken(email: string): Promise<ServerActionResponse> {
             `${_headers.get("x-forwarded-proto")}://${_headers.get("host")}`; // I got this from chatgpt
 
         await resend.emails.send({
-            from: "Imong Mama <intergalacticbeing@evrooma.online>",
+            from: "Evrooma <intergalacticbeing@evrooma.online>",
             to: user.email,
             subject: "Reset Password",
             react: Email({

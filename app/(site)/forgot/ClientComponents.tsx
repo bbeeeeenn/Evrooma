@@ -1,5 +1,6 @@
 "use client";
 import { SendToken } from "@/app/actions/ResetPasswordActions";
+import clsx from "clsx";
 import { CircleAlert, Mail } from "lucide-react";
 import { SubmitEvent, useState } from "react";
 
@@ -39,7 +40,11 @@ export function EmailForm() {
                     />
                     <button
                         type="submit"
-                        className="bg-yellow-primary mt-10 w-full rounded-md p-3 font-semibold text-black shadow-md"
+                        inert={isPending}
+                        className={clsx(
+                            "bg-yellow-primary mt-10 w-full rounded-md p-3 font-semibold text-black shadow-md",
+                            isPending && "pointer-events-none opacity-75",
+                        )}
                     >
                         Next
                     </button>
