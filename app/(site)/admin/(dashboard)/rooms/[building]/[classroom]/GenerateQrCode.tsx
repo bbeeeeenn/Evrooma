@@ -59,7 +59,7 @@ export default function GenerateQrCode() {
 
             await QRGenerator.toCanvas(
                 qrCanvas,
-                `${window.location.origin}${scanLandingPage}?roomId=${encodeURIComponent(classroom.classroomId)}`,
+                `${window.location.origin}${scanLandingPage}?roomid=${encodeURIComponent(classroom.classroomId)}`,
                 {
                     width: 500,
                     margin: 1,
