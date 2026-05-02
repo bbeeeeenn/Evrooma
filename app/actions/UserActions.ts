@@ -8,6 +8,7 @@ import { AuthenticateAdmin } from "./AdminAuthActions";
 import { revalidatePath } from "next/cache";
 import { adminAccountsPage } from "@/constants";
 import { isValidObjectId } from "mongoose";
+import { NormalizeName } from "../lib/utils";
 
 export type RawUserData = Omit<PlainUserDocument, "fullName" | "_id">;
 
@@ -110,7 +111,7 @@ export async function CreateUser(
 export async function ChangeUserFirstName(
     userId: string,
     fname: string,
-): Promise<ServerActionResponse> {
+): Promise<ServerActionResponse & { new?: string }> {
     if (!(await AuthenticateAdmin())) {
         return {
             status: "error",
@@ -124,7 +125,7 @@ export async function ChangeUserFirstName(
         };
     }
 
-    const firstName = fname.trim();
+    const firstName = NormalizeName(fname);
     if (!firstName) {
         return {
             status: "error",
@@ -148,6 +149,7 @@ export async function ChangeUserFirstName(
         return {
             status: "success",
             message: "Renamed successfully",
+            new: firstName,
         };
     } catch (e) {
         console.error("[ChangeUserFirstName]", e);
@@ -161,7 +163,7 @@ export async function ChangeUserFirstName(
 export async function ChangeUserLastName(
     userId: string,
     lname: string,
-): Promise<ServerActionResponse> {
+): Promise<ServerActionResponse & { new?: string }> {
     if (!(await AuthenticateAdmin())) {
         return {
             status: "error",
@@ -175,7 +177,7 @@ export async function ChangeUserLastName(
         };
     }
 
-    const lastName = lname.trim();
+    const lastName = NormalizeName(lname);
     if (!lastName) {
         return {
             status: "error",
@@ -199,6 +201,7 @@ export async function ChangeUserLastName(
         return {
             status: "success",
             message: "Renamed successfully",
+            new: lastName,
         };
     } catch (e) {
         console.error("[ChangeUserLastName]", e);

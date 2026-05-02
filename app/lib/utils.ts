@@ -141,3 +141,15 @@ export async function IsInUseSchedule(
 
     return markedInUse;
 }
+
+export function NormalizeName(name: string): string {
+    return name
+        .trim()
+        .replace(/\s+/, " ")
+        .split(" ")
+        .map(
+            (word) =>
+                word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
+        )
+        .join(" ");
+}

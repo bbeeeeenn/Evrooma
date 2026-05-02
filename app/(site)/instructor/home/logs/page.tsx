@@ -78,7 +78,6 @@ export default function Page() {
                 My Logs
             </p>
             <Logs />
-            <Logs />
         </Suspense>
     );
 }

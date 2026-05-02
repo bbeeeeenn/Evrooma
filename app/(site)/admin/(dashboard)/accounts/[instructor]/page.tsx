@@ -86,7 +86,7 @@ async function GetSchedule({ instructorId }: { instructorId: string }) {
         </>
     ) : (
         <div className="text-text-primary bg-green-secondary/20 mt-10 rounded-md p-10 text-center text-xl font-semibold shadow-md">
-            There's no set schedule for this instructor.
+            There's no set schedule for this instructor yet.
         </div>
     );
 }
