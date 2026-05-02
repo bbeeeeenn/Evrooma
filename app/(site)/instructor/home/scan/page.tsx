@@ -4,9 +4,10 @@ import { isValidObjectId } from "mongoose";
 import { PopulatedPlainScheduleDocument } from "@/app/mongoDb/models/schedule";
 import { ProcessInstructorSchedule } from "@/app/actions/ScheduleActions";
 import Loading from "@/app/(site)/loading";
-import { CircleAlert, CircleCheckBig } from "lucide-react";
+import { ChevronLeft, CircleAlert, CircleCheckBig } from "lucide-react";
 import clsx from "clsx";
 import { instructorScanPage } from "@/constants";
+import Link from "next/link";
 
 function ScheduleCard({
     schedule,
@@ -69,6 +70,15 @@ async function Process({ roomid }: { roomid: string }) {
                 </span>
                 {message}
             </div>
+            <Link
+                href={instructorScanPage}
+                className="bg-yellow-primary mx-auto mt-10 flex w-fit items-center gap-1 rounded-md px-4 py-2 font-semibold text-black shadow-md"
+            >
+                <span>
+                    <ChevronLeft />
+                </span>
+                Back To Scanner
+            </Link>
         </div>
     );
 }

@@ -4,8 +4,9 @@ import { QRScanner } from "@/app/components/ScannerComponent";
 import { PopulatedPlainScheduleDocument } from "@/app/mongoDb/models/schedule";
 import { studentScanPage } from "@/constants";
 import clsx from "clsx";
-import { CircleAlert, CircleCheckBig } from "lucide-react";
+import { ChevronLeft, CircleAlert, CircleCheckBig } from "lucide-react";
 import { isValidObjectId } from "mongoose";
+import Link from "next/link";
 import { Suspense } from "react";
 
 function ScheduleCard({
@@ -68,6 +69,15 @@ async function Process({ roomid }: { roomid: string }) {
                 </span>
                 {message}
             </div>
+            <Link
+                href={studentScanPage}
+                className="bg-yellow-primary mx-auto mt-10 flex w-fit items-center gap-1 rounded-md px-4 py-2 font-semibold text-black shadow-md"
+            >
+                <span>
+                    <ChevronLeft />
+                </span>
+                Back To Scanner
+            </Link>
         </div>
     );
 }

@@ -4,21 +4,6 @@ https://chatgpt.com/share/69cf7a45-f0a8-8323-a682-1bcabeb357d5
 
 Room status at /instructor/dashboard/rooms/[roomId]
 
-Student Login/SignUp page
-
-Student Scanning, Logs, and Room browsing page
-
 Instructor account settings
 
 Finish modifying instructor account at Admin
-
-You should allow:
-
-search by user
-search by action (e.g. “LOGIN”, “DELETE_ROOM”)
-date range filter
-maybe even “severity” (info / warning / error)
-
-Because scrolling alone is not enough when:
-
-“I need logs from 3 weeks ago for a specific user”

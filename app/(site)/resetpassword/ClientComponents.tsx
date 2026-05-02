@@ -75,14 +75,14 @@ export function ChangePasswordForm({
             </p>
             <form action={formAction} className="mt-7">
                 <input type="hidden" name="email" value={email} />
-                <label htmlFor="newPassword" className="font-poppins">
+                <label htmlFor="password" className="font-poppins">
                     New Password
                 </label>
                 <input
                     type="password"
-                    name="newPassword"
+                    name="password"
                     value={password.new}
-                    id="newPassword"
+                    id="password"
                     required
                     placeholder="New Password"
                     className={clsx(

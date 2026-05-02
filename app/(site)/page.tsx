@@ -66,16 +66,16 @@ export default function Home() {
                         Continue as
                     </h1>
                     <Link
-                        href={adminLoginPage}
+                        href={instructorLoginPage}
                         className="bg-green-secondary font-inria-sans focus-visible:bg-green-tertiary active:bg-green-tertiary hover:bg-green-tertiary mt-8 flex cursor-pointer items-center justify-center gap-2 rounded-md py-2 text-lg shadow-md sm:text-xl"
                     >
-                        <ShieldUser /> Administrator
+                        <BookText /> Instructor
                     </Link>
                     <Link
-                        href={instructorLoginPage}
+                        href={studentLoginPage}
                         className="bg-green-secondary font-inria-sans focus-visible:bg-green-tertiary active:bg-green-tertiary hover:bg-green-tertiary mt-5 flex cursor-pointer items-center justify-center gap-2 rounded-md py-2 text-lg shadow-md sm:text-xl"
                     >
-                        <BookText /> Instructor
+                        <GraduationCap /> Student
                     </Link>
                     <div className="relative my-5 flex h-10 items-center justify-center">
                         <div className="bg-text-primary absolute inset-0 m-auto h-px rounded-full"></div>
@@ -84,10 +84,10 @@ export default function Home() {
                         </p>
                     </div>
                     <Link
-                        href={studentLoginPage}
+                        href={adminLoginPage}
                         className="bg-green-secondary font-inria-sans focus-visible:bg-green-tertiary active:bg-green-tertiary hover:bg-green-tertiary flex cursor-pointer items-center justify-center gap-2 rounded-md py-2 text-lg shadow-md sm:text-xl"
                     >
-                        <GraduationCap /> Student
+                        <ShieldUser /> Administrator
                     </Link>
                 </div>
             </section>
