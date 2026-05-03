@@ -101,14 +101,12 @@ async function Classrooms({
                     key={classroom._id.toString()}
                     className="group text-text-primary block w-full space-y-1"
                 >
-                    <div className="bg-green-secondary group-focus-visible:bg-green-tertiary group-active:bg-green-tertiary group-hover:bg-green-tertiary mt-4 block w-full rounded-md px-5 py-3 shadow-md">
-                        <div className="flex items-center gap-1">
+                    <div className="bg-green-secondary group-focus-visible:bg-green-tertiary group-active:bg-green-tertiary group-hover:bg-green-tertiary mt-4 w-full rounded-md px-5 py-3 shadow-md">
+                        <div className="flex items-center gap-1.5 text-4xl font-bold">
                             <span>
                                 <DoorOpen size={25} />
                             </span>
-                            <p className="items-center gap-2 truncate text-4xl font-bold">
-                                {classroom.code}
-                            </p>
+                            <p className="truncate">{classroom.code}</p>
                         </div>
                         <p className="text-text-secondary text-start font-semibold">
                             {classroom.building.name}
