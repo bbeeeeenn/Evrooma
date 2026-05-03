@@ -56,7 +56,14 @@ export function CoolSidebar({
                 <main
                     inert={open}
                     className={
-                        "font-inter has-[.accountform]:bg-green-secondary m-auto w-full px-5 pt-21 pb-20 transition-all duration-300 sm:has-[.accountform]:bg-transparent md:px-7 md:pt-3"
+                        "font-inter has-[.accountform]:bg-green-secondary m-auto w-full px-5 pt-21 pb-20 transition-all duration-300 sm:has-[.accountform]:bg-transparent md:hidden md:px-7 md:pt-3"
+                    }
+                >
+                    {children}
+                </main>
+                <main
+                    className={
+                        "font-inter has-[.accountform]:bg-green-secondary m-auto hidden w-full px-5 pt-21 pb-20 transition-all duration-300 sm:has-[.accountform]:bg-transparent md:block md:px-7 md:pt-3"
                     }
                 >
                     {children}
@@ -130,6 +137,7 @@ export function CoolSidebar({
                             key={i}
                             inert={pathname === item.href}
                             href={item.href}
+                            tabIndex={-1}
                             className={clsx(
                                 "hover:bg-green-quinary group active:bg-green-quinary focus-visible:bg-green-quinary h-fit w-full px-5 py-5 text-xl font-semibold",
                                 pathname === item.href &&

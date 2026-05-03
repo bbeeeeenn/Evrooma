@@ -96,6 +96,9 @@ export default async function AdminClassroomPage({
                 <Plus /> Add Schedule
             </Link>
             <Suspense fallback={<ScheduleCardSkeleton />}>
+                <GetSchedule classroomId={classroomId} day="Sunday" />
+            </Suspense>
+            <Suspense fallback={<ScheduleCardSkeleton />}>
                 <GetSchedule classroomId={classroomId} day="Monday" />
             </Suspense>
             <Suspense fallback={<ScheduleCardSkeleton />}>
