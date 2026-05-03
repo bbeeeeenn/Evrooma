@@ -15,6 +15,7 @@ async function Logs() {
     try {
         await connectDB();
         logs = await AttendanceLog.find({ user: student?._id })
+            .sort({ createdAt: -1 })
             .populate({
                 path: "schedule",
                 populate: { path: "room", populate: "building" },
