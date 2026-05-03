@@ -106,9 +106,10 @@ export function CoolSidebar({
                 ))}
             </div>
 
+            {/* Mobile Sidebar */}
             <div
                 className={clsx(
-                    "fixed inset-0 z-10 h-full w-full transition-colors md:hidden",
+                    "fixed inset-0 z-10 h-full w-full transition-colors md:pointer-events-none md:bg-transparent",
                     open ? "bg-black/20" : "pointer-events-none",
                 )}
                 onClick={({ clientX: x }) => {
@@ -117,11 +118,10 @@ export function CoolSidebar({
                     if (x > right) setOpen(false);
                 }}
             >
-                {/* Mobile Sidebar */}
                 <div
                     ref={sidebar}
                     className={clsx(
-                        "bg-green-quarternary font-poppins text-text-primary fixed top-17.5 bottom-0 left-0 z-11 flex w-full max-w-sm flex-col overflow-hidden transition-transform duration-300",
+                        "bg-green-quarternary font-poppins text-text-primary fixed inset-y-0 left-0 z-11 flex w-full max-w-sm flex-col overflow-hidden pt-18.5 transition-transform duration-300 md:-translate-x-full",
                         !open && "-translate-x-[calc(100%+4px)]",
                     )}
                 >
