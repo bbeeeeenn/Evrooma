@@ -21,7 +21,6 @@ async function Logs() {
                 populate: { path: "room", populate: "building" },
             })
             .lean();
-        console.log(logs);
     } catch (e) {
         console.error(e);
         return <ErrorFallback error={e} />;
