@@ -42,7 +42,10 @@ async function StudentsList() {
                 <li key={student._id.toString()}>
                     <Link
                         href={`${adminStudentsPage}/${student._id}`}
-                        className="bg-green-secondary block w-full rounded-md px-5 py-5 text-green-50 shadow-md"
+                        className={clsx(
+                            "bg-green-secondary block w-full rounded-md px-5 py-5 text-green-50 shadow-md transition-all",
+                            "hover:bg-green-tertiary active:bg-green-tertiary hover:scale-101 active:scale-100",
+                        )}
                     >
                         <p className="flex items-center gap-2 text-2xl font-bold">
                             <span>

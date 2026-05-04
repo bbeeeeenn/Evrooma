@@ -11,11 +11,16 @@ import { ClassroomCodeHeader, ClassroomSettings } from "./ClientComponents";
 import { Divider } from "@/app/components/Divider";
 import GenerateQrCode from "./GenerateQrCode";
 import ErrorFallback from "@/app/components/ErrorFallback";
+import { headers } from "next/headers";
 
-function Classroom({ buildingId }: { buildingId: string }) {
+async function Classroom({ buildingId }: { buildingId: string }) {
+    const referer = (await headers()).get("referer");
     return (
         <>
-            <BackButton dest={`${adminRoomsPage}/${buildingId}`} />
+            <BackButton
+                dest={`${adminRoomsPage}/${buildingId}`}
+                referer={referer}
+            />
             <ClassroomCodeHeader />
             <GenerateQrCode />
             <Divider text="Settings" />

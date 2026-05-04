@@ -10,6 +10,7 @@ import { adminInstructorsPage } from "@/constants";
 import { isValidObjectId } from "mongoose";
 import { NormalizeName } from "../lib/utils";
 import { Schedule } from "../mongoDb/models/schedule";
+import { AttendanceLog } from "../mongoDb/models/log";
 
 export type RawUserData = Omit<PlainUserDocument, "fullName" | "_id">;
 
@@ -355,6 +356,7 @@ export async function DeleteUser(
             await Schedule.deleteMany({ instructor: user._id });
         }
 
+        await AttendanceLog.deleteMany({ user: user._id }); // Delete logs associated with the user
         await user.deleteOne();
         revalidatePath(adminInstructorsPage);
 

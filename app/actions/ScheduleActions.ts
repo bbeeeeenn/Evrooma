@@ -293,6 +293,7 @@ export async function DeleteSchedule(
             };
         }
 
+        await AttendanceLog.deleteMany({ schedule: schedule._id }); // Delete logs associated with the schedule
         await Schedule.findByIdAndDelete(sanitizedScheduleId);
 
         revalidatePath(`${adminInstructorsPage}/${schedule.instructor}`);

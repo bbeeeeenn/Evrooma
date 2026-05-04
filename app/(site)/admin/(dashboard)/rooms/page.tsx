@@ -12,6 +12,7 @@ import { adminRoomsPage } from "@/constants";
 import { Building2, DoorOpen } from "lucide-react";
 import { connection } from "next/server";
 import ErrorFallback from "@/app/components/ErrorFallback";
+import clsx from "clsx";
 
 async function ClassroomCount({
     buildingId,
@@ -147,7 +148,10 @@ async function Classrooms() {
                         <BuildingDiv />
                         <Link
                             href={`${adminRoomsPage}/${classroom.building._id}/${classroom._id}`}
-                            className="bg-green-secondary focus-visible:bg-green-tertiary active:bg-green-tertiary hover:bg-green-tertiary text-text-primary mb-4 block rounded-md px-5 py-3 shadow-md"
+                            className={clsx(
+                                "bg-green-secondary focus-visible:bg-green-tertiary active:bg-green-tertiary text-text-primary mb-4 block rounded-md px-5 py-3 shadow-md transition-all",
+                                "hover:bg-green-tertiary active:bg-green-tertiary hover:scale-101 active:scale-100",
+                            )}
                         >
                             <div className="flex items-center gap-1">
                                 <span>
