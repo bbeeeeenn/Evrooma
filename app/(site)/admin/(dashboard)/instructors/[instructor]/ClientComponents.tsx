@@ -200,13 +200,15 @@ export function InstructorInfoComponent() {
 
     return (
         <>
-            <div className="flex items-center gap-2 text-white/90">
-                <span>
-                    <BookText size={40} />
-                </span>
+            <div className="flex w-full items-center gap-2 text-white/90">
                 <div>
-                    <p className="text-2xl font-bold sm:text-4xl">{`${fname} ${lname}`}</p>
-                    <p className="text-lg font-semibold sm:text-xl">{email}</p>
+                    <BookText size={40} />
+                </div>
+                <div>
+                    <p className="text-2xl font-bold wrap-anywhere sm:text-4xl">{`${fname} ${lname}`}</p>
+                    <p className="text-lg font-semibold wrap-anywhere sm:text-xl">
+                        {email}
+                    </p>
                 </div>
             </div>
 

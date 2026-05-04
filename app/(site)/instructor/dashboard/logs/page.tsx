@@ -60,7 +60,7 @@ async function Logs() {
                     <div className="bg-green-tertiary h-2 w-5 rounded-full" />
                     <div className="bg-green-tertiary h-2 w-5 rounded-full" />
                 </div>
-                <span className="absolute inset-y-0 right-3 flex items-center">
+                <span className="absolute inset-y-0 right-3 hidden items-center sm:flex">
                     <History size={30} />
                 </span>
             </div>

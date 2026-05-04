@@ -30,6 +30,7 @@ async function Logs({ instructorId }: { instructorId: string }) {
         console.error(e);
         return <ErrorFallback error={e} />;
     }
+
     return (
         <>
             <p className="text-text-primary mt-5 mb-10 flex items-center gap-2 text-2xl font-semibold">
@@ -39,49 +40,59 @@ async function Logs({ instructorId }: { instructorId: string }) {
                 {instructor.lastName}'
                 {instructor.lastName.charAt(-1) !== "s" && "s"} Logs
             </p>
-            {logs.map((log) => {
-                const date = log.createdAt.toLocaleDateString("en-PH", {
-                    timeZone: "Asia/Manila",
-                });
-                const time = log.createdAt.toLocaleTimeString("en-PH", {
-                    timeZone: "Asia/Manila",
-                });
-                return (
-                    <div
-                        key={log._id.toString()}
-                        className="bg-green-secondary text-text-primary border-green-tertiary relative my-3 grow rounded-md border-2 px-5 py-3 shadow-md"
-                    >
-                        <p>
-                            Subject:{" "}
-                            <span className="text-yellow-primary">
-                                {log.schedule.subject}
+            {logs.length <= 0 ? (
+                <div className="text-text-primary bg-green-secondary/20 mt-10 rounded-md p-10 text-center text-xl font-semibold shadow-md">
+                    Empty
+                </div>
+            ) : (
+                logs.map((log) => {
+                    const date = log.createdAt.toLocaleDateString("en-PH", {
+                        timeZone: "Asia/Manila",
+                    });
+                    const time = log.createdAt.toLocaleTimeString("en-PH", {
+                        timeZone: "Asia/Manila",
+                    });
+                    return (
+                        <div
+                            key={log._id.toString()}
+                            className="bg-green-secondary text-text-primary border-green-tertiary relative my-3 grow rounded-md border-2 px-5 py-3 shadow-md"
+                        >
+                            <p>
+                                Subject:{" "}
+                                <span className="text-yellow-primary">
+                                    {log.schedule.subject}
+                                </span>
+                            </p>
+                            <p>
+                                Venue:{" "}
+                                <span className="text-yellow-primary">
+                                    Venue: {log.schedule.room.building.name} -{" "}
+                                    {log.schedule.room.code}
+                                </span>
+                            </p>
+                            <p>
+                                Date:{" "}
+                                <span className="text-yellow-primary">
+                                    {date}
+                                </span>
+                            </p>
+                            <p>
+                                Time:{" "}
+                                <span className="text-yellow-primary">
+                                    {time}
+                                </span>
+                            </p>
+                            <div className="absolute inset-y-0 left-0 flex -translate-x-1/2 flex-col justify-evenly">
+                                <div className="bg-green-tertiary h-2 w-5 rounded-full" />
+                                <div className="bg-green-tertiary h-2 w-5 rounded-full" />
+                            </div>
+                            <span className="absolute inset-y-0 right-3 flex items-center">
+                                <History size={30} />
                             </span>
-                        </p>
-                        <p>
-                            Venue:{" "}
-                            <span className="text-yellow-primary">
-                                Venue: {log.schedule.room.building.name} -{" "}
-                                {log.schedule.room.code}
-                            </span>
-                        </p>
-                        <p>
-                            Date:{" "}
-                            <span className="text-yellow-primary">{date}</span>
-                        </p>
-                        <p>
-                            Time:{" "}
-                            <span className="text-yellow-primary">{time}</span>
-                        </p>
-                        <div className="absolute inset-y-0 left-0 flex -translate-x-1/2 flex-col justify-evenly">
-                            <div className="bg-green-tertiary h-2 w-5 rounded-full" />
-                            <div className="bg-green-tertiary h-2 w-5 rounded-full" />
                         </div>
-                        <span className="absolute inset-y-0 right-3 flex items-center">
-                            <History size={30} />
-                        </span>
-                    </div>
-                );
-            })}
+                    );
+                })
+            )}
         </>
     );
 }

@@ -88,6 +88,7 @@ async function ScheduleToday() {
                             "text-text-primary bg-green-secondary relative my-5 overflow-hidden rounded-md p-4 shadow-md",
                             slotToMinutes(now) >=
                                 slotToMinutes(sched.slot.end) && "opacity-60",
+                            done && "border-yellow-secondary border-l-2",
                         )}
                     >
                         <p className="font-poppins text-yellow-primary font-semibold">
@@ -101,13 +102,6 @@ async function ScheduleToday() {
                         <p className="font-poppins font-semibold">
                             {sched.room.building.name} - {sched.room.code}
                         </p>
-                        <div className="absolute top-3 right-3 my-auto h-fit w-fit rounded-md p-1">
-                            {done ? (
-                                <SquareCheckBig size={30} />
-                            ) : (
-                                <Square size={30} />
-                            )}
-                        </div>
                     </div>
                 );
             })}

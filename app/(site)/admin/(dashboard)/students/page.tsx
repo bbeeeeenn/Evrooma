@@ -63,10 +63,7 @@ async function StudentsList() {
 export default function AccountsPage() {
     return (
         <>
-            <h1 className="mt-6 mb-8 flex items-center gap-3 text-4xl font-bold text-green-100">
-                <span>
-                    <GraduationCap size={40} />
-                </span>
+            <h1 className="mt-6 mb-8 text-4xl font-bold text-green-100">
                 Students
             </h1>
             <Suspense fallback={<UserListSkeleton />}>

@@ -171,23 +171,19 @@ export function StudentInfoComponent() {
 
     return (
         <>
-            <div className="flex items-center gap-2 text-white/90">
-                <span>
-                    <GraduationCap size={40} />
-                </span>
+            <div className="flex w-full items-center gap-2 text-white/90">
                 <div>
-                    <p className="text-2xl font-bold sm:text-4xl">{`${fname} ${lname}`}</p>
-                    <p className="text-lg font-semibold sm:text-xl">{email}</p>
+                    <GraduationCap size={40} />
+                </div>
+                <div>
+                    <p className="text-2xl font-bold wrap-anywhere sm:text-4xl">{`${fname} ${lname}`}</p>
+                    <p className="text-lg font-semibold wrap-anywhere sm:text-xl">
+                        {email}
+                    </p>
                 </div>
             </div>
 
             <Divider text="Account" />
-            <Link
-                href={`${instructorId}/logs`}
-                className="font-poppins hover:bg-yellow-secondary bg-yellow-primary mt-5 mr-3 flex w-fit cursor-pointer items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-semibold shadow-md transition-colors sm:text-base"
-            >
-                <History size={20} /> Logs
-            </Link>
             <DeleteAccount />
         </>
     );
