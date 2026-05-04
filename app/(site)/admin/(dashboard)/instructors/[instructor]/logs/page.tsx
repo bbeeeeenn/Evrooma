@@ -49,6 +49,9 @@ async function Logs({ instructorId }: { instructorId: string }) {
                     const date = log.createdAt.toLocaleDateString("en-PH", {
                         timeZone: "Asia/Manila",
                     });
+                    const day = log.createdAt.toLocaleDateString("en-PH", {
+                        weekday: "long",
+                    });
                     const time = log.createdAt.toLocaleTimeString("en-PH", {
                         timeZone: "Asia/Manila",
                     });
@@ -66,14 +69,14 @@ async function Logs({ instructorId }: { instructorId: string }) {
                             <p>
                                 Venue:{" "}
                                 <span className="text-yellow-primary">
-                                    Venue: {log.schedule.room.building.name} -{" "}
+                                    {log.schedule.room.building.name} -{" "}
                                     {log.schedule.room.code}
                                 </span>
                             </p>
                             <p>
                                 Date:{" "}
                                 <span className="text-yellow-primary">
-                                    {date}
+                                    {date} - {day}
                                 </span>
                             </p>
                             <p>
