@@ -10,7 +10,7 @@ import {
     useClassroomInfo,
     useUpdateClassroomName,
 } from "@/app/contexts/ClassroomProvider";
-import { adminAccountsPage, adminRoomsPage } from "@/constants";
+import { adminInstructorsPage, adminRoomsPage } from "@/constants";
 import clsx from "clsx";
 import {
     BookText,
@@ -427,7 +427,7 @@ export function ScheduleCard({
                             <BookText size={20} />
                         </span>
                         <Link
-                            href={`${adminAccountsPage}/${instructorId}`}
+                            href={`${adminInstructorsPage}/${instructorId}`}
                             className="truncate hover:underline focus:underline active:underline"
                             onClick={() => dialog.current?.close()}
                         >

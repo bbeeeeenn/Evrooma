@@ -1,4 +1,4 @@
-import { adminAccountsPage, DaysOfWeek } from "@/constants";
+import { adminInstructorsPage, DaysOfWeek } from "@/constants";
 import { BackButton } from "@/app/components/BackButton";
 import { InstructorInfoComponent, ScheduleCard } from "./ClientComponents";
 import { CalendarDays } from "lucide-react";
@@ -99,11 +99,12 @@ export default async function InstructorInfoPage({
     const { instructor: instructorId } = await params;
     return (
         <>
-            <BackButton dest={adminAccountsPage} />
+            <BackButton dest={adminInstructorsPage} />
             <InstructorInfoComponent />
             <div className="mt-10 flex items-center gap-3 text-white/90">
-                <CalendarDays size={40} />
-                <h1 className="text-4xl font-bold">Schedules</h1>
+                <CalendarDays size={30} className="inline sm:hidden" />
+                <CalendarDays size={40} className="hidden sm:inline" />
+                <h1 className="text-3xl font-bold sm:text-4xl">Schedules</h1>
             </div>
             <Suspense fallback={<ScheduleCardSkeleton />}>
                 <GetSchedule instructorId={instructorId} />

@@ -1,7 +1,7 @@
 "use server";
 
 import {
-    adminAccountsPage,
+    adminInstructorsPage,
     adminRoomsPage,
     DaysOfWeek,
     instructorSchedulesPage,
@@ -295,7 +295,7 @@ export async function DeleteSchedule(
 
         await Schedule.findByIdAndDelete(sanitizedScheduleId);
 
-        revalidatePath(`${adminAccountsPage}/${schedule.instructor}`);
+        revalidatePath(`${adminInstructorsPage}/${schedule.instructor}`);
         revalidatePath(`${adminRoomsPage}/${schedule.room}`);
         revalidatePath(adminRoomsPage);
         revalidatePath(instructorSchedulesPage);

@@ -6,9 +6,10 @@ import { PlainUserDocument, User } from "@/app/mongoDb/models/user";
 import { encrypt } from "@/app/lib/bcrypt";
 import { AuthenticateAdmin } from "./AdminAuthActions";
 import { revalidatePath } from "next/cache";
-import { adminAccountsPage } from "@/constants";
+import { adminInstructorsPage } from "@/constants";
 import { isValidObjectId } from "mongoose";
 import { NormalizeName } from "../lib/utils";
+import { Schedule } from "../mongoDb/models/schedule";
 
 export type RawUserData = Omit<PlainUserDocument, "fullName" | "_id">;
 
@@ -92,7 +93,7 @@ export async function CreateUser(
             password: hashedPassword,
             type,
         });
-        revalidatePath(adminAccountsPage);
+        revalidatePath(adminInstructorsPage);
 
         return {
             status: "success",
@@ -144,7 +145,7 @@ export async function ChangeUserFirstName(
         }
         user.firstName = firstName;
         await user.save();
-        revalidatePath(adminAccountsPage);
+        revalidatePath(adminInstructorsPage);
 
         return {
             status: "success",
@@ -196,7 +197,7 @@ export async function ChangeUserLastName(
         }
         user.lastName = lastName;
         await user.save();
-        revalidatePath(adminAccountsPage);
+        revalidatePath(adminInstructorsPage);
 
         return {
             status: "success",
@@ -317,7 +318,7 @@ export async function ChangeUserEmail(
 
         user.email = normalizedEmail;
         await user.save();
-        revalidatePath(adminAccountsPage);
+        revalidatePath(adminInstructorsPage);
 
         return {
             status: "success",
@@ -350,8 +351,12 @@ export async function DeleteUser(
             };
         }
 
+        if (user.type === "instructor") {
+            await Schedule.deleteMany({ instructor: user._id });
+        }
+
         await user.deleteOne();
-        revalidatePath(adminAccountsPage);
+        revalidatePath(adminInstructorsPage);
 
         return {
             status: "success",

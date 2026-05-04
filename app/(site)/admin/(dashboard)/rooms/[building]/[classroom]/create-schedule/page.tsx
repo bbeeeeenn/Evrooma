@@ -1,4 +1,4 @@
-import { adminAccountsPage, adminRoomsPage } from "@/constants";
+import { adminInstructorsPage, adminRoomsPage } from "@/constants";
 import { CalendarDays, ChevronLeft, LoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { CreateScheduleForm } from "./ClientComponents";
@@ -39,7 +39,7 @@ async function CreateSchedule({
     }
 
     if (instructors.length === 0) {
-        redirect(adminAccountsPage);
+        redirect(adminInstructorsPage);
     }
     return (
         <NewScheduleProvider classroomId={roomId}>

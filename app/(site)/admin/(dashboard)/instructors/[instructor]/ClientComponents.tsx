@@ -1,12 +1,10 @@
 "use client";
-import {
-    useInstructorInfo,
-    useUpdateInstructorInfo,
-} from "@/app/contexts/InstructorProvider";
+import { useUserInfo } from "@/app/contexts/UserInfoProvider";
 import {
     BookText,
     Building2,
     DoorOpen,
+    History,
     LinkIcon,
     LoaderCircle,
     Mail,
@@ -21,7 +19,7 @@ import clsx from "clsx";
 import { toast } from "react-toastify";
 import { DeleteUser } from "@/app/actions/UserActions";
 import { useRouter } from "next/navigation";
-import { adminAccountsPage, adminRoomsPage } from "@/constants";
+import { adminInstructorsPage, adminRoomsPage } from "@/constants";
 import { DeleteSchedule } from "@/app/actions/ScheduleActions";
 import Link from "next/link";
 
@@ -40,7 +38,7 @@ function Row({
             <td className="text-white/80">
                 <p className="flex items-center gap-2 underline">
                     <span className="break-all">{content}</span>
-                    <button>
+                    <button onClick={onClick}>
                         <SquarePen size={20} className="cursor-pointer" />
                     </button>
                 </p>
@@ -52,7 +50,7 @@ function Row({
 function DeleteAccount() {
     const router = useRouter();
     const dialog = useRef<HTMLDialogElement>(null);
-    const { instructorId, email: instructorEmail } = useInstructorInfo();
+    const { userId: instructorId, email: instructorEmail } = useUserInfo();
 
     const onFormAction = async (
         _: {
@@ -94,7 +92,7 @@ function DeleteAccount() {
             autoClose: 3000,
             render: response.message,
         });
-        if (response.status === "success") router.replace(adminAccountsPage);
+        if (response.status === "success") router.replace(adminInstructorsPage);
 
         return { email: "", modalOpened: response.status === "error" };
     };
@@ -188,7 +186,7 @@ function DeleteAccount() {
                 </form>
             </dialog>
             <button
-                className="font-poppins hover:bg-yellow-secondary bg-yellow-primary mt-2 flex cursor-pointer items-center justify-center gap-2 rounded-md px-4 py-2 font-semibold shadow-md transition-colors"
+                className="font-poppins hover:bg-yellow-secondary bg-yellow-primary mt-5 flex cursor-pointer items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-semibold shadow-md transition-colors sm:text-base"
                 onClick={() => dialog.current?.showModal()}
             >
                 <Trash2 size={20} /> Delete Account
@@ -198,23 +196,27 @@ function DeleteAccount() {
 }
 
 export function InstructorInfoComponent() {
-    const { email, fname, lname } = useInstructorInfo();
-    const updateInstructorInfo = useUpdateInstructorInfo();
+    const { email, fname, lname, userId: instructorId } = useUserInfo();
 
     return (
         <>
-            <h1 className="flex items-center gap-2 text-4xl font-bold text-white/90">
-                <BookText size={40} /> {`${fname} ${lname}`}
-            </h1>
+            <div className="flex items-center gap-2 text-white/90">
+                <span>
+                    <BookText size={40} />
+                </span>
+                <div>
+                    <p className="text-2xl font-bold sm:text-4xl">{`${fname} ${lname}`}</p>
+                    <p className="text-lg font-semibold sm:text-xl">{email}</p>
+                </div>
+            </div>
+
             <Divider text="Account" />
-            <table className="font-poppins w-full border-separate border-spacing-2 font-semibold text-white/90 select-text">
-                <tbody>
-                    <Row label="First Name" content={fname} />
-                    <Row label="Last Name" content={lname} />
-                    <Row label="Email" content={email} />
-                    <Row label="Password" content={"•".repeat(15)} />
-                </tbody>
-            </table>
+            <Link
+                href={`${instructorId}/logs`}
+                className="font-poppins hover:bg-yellow-secondary bg-yellow-primary mt-5 mr-3 flex w-fit cursor-pointer items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-semibold shadow-md transition-colors sm:text-base"
+            >
+                <History size={20} /> Logs
+            </Link>
             <DeleteAccount />
         </>
     );
@@ -251,7 +253,7 @@ export function ScheduleCard({
 }) {
     const dialog = useRef<HTMLDialogElement>(null);
     const [isPending, setIsPending] = useState(false);
-    const { fname, lname } = useInstructorInfo();
+    const { fname, lname } = useUserInfo();
     const handleDelete = async () => {
         if (isPending) return;
         setIsPending(true);
@@ -354,12 +356,12 @@ export function ScheduleCard({
                 className="text-text-primary focus-visible:bg-green-tertiary active:bg-green-tertiary hover:bg-green-tertiary border-yellow-primary bg-green-secondary mt-5 block w-full rounded-md border-l-4 px-5 py-3 text-start shadow-md"
                 onClick={() => dialog.current?.showModal()}
             >
-                <p className="font-roboto-mono text-2xl font-bold">
+                <p className="font-roboto-mono text-xl font-bold sm:text-2xl">
                     {`${startHour}:${startMinute < 10 ? "0" + startMinute : startMinute}${startMeridiem}`}{" "}
                     -{" "}
                     {`${endHour}:${endMinute < 10 ? "0" + endMinute : endMinute}${endMeridiem}`}
                 </p>
-                <p className="font-poppins font-semibold">
+                <p className="font-poppins text-sm font-semibold sm:text-base">
                     <span className="text-yellow-primary">{building} - </span>
                     <span className="text-yellow-primary">{room}</span> -{" "}
                     {subject}

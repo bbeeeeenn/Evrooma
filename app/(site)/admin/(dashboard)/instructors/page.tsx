@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { BookText, Plus } from "lucide-react";
-import { adminAccountsPage, adminCreateAccountPage } from "@/constants";
+import { adminInstructorsPage, adminCreateInstructorPage } from "@/constants";
 import Link from "next/link";
 import { Suspense } from "react";
 import { User, PlainUserDocument } from "@/app/mongoDb/models/user";
@@ -41,16 +41,16 @@ async function InstructorsList() {
             {instructors.map((instructor) => (
                 <li key={instructor._id.toString()}>
                     <Link
-                        href={`${adminAccountsPage}/${instructor._id}`}
-                        className="bg-green-secondary border-yellow-primary block w-full rounded-md border-l-4 px-5 py-5 text-green-50 shadow-md"
+                        href={`${adminInstructorsPage}/${instructor._id}`}
+                        className="bg-green-secondary block w-full rounded-md px-5 py-5 text-green-50 shadow-md"
                     >
-                        <p className="flex items-center gap-1 text-2xl font-bold">
+                        <p className="flex items-center gap-2 text-2xl font-bold">
                             <span>
                                 <BookText />
-                            </span>{" "}
+                            </span>
                             {instructor.fullName}
                         </p>
-                        <p className="truncate font-semibold underline">
+                        <p className="truncate font-semibold">
                             {instructor.email}
                         </p>
                     </Link>
@@ -67,7 +67,7 @@ export default function AccountsPage() {
                 Instructors
             </h1>
             <Link
-                href={adminCreateAccountPage}
+                href={adminCreateInstructorPage}
                 className={clsx(
                     "bg-yellow-primary mt-10 mb-5 flex w-fit cursor-pointer items-center gap-1 rounded-md p-2 font-semibold text-black shadow-md",
                     "hover:bg-yellow-secondary transition-colors active:scale-105",

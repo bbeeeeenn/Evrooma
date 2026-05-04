@@ -1,15 +1,22 @@
 import { AuthenticateAdmin } from "@/app/actions/AdminAuthActions";
 import {
-    adminAccountsPage,
+    adminInstructorsPage,
     adminLoginPage,
     adminLogoutPage,
     adminRoomsPage,
+    adminStudentsPage,
 } from "@/constants";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { headers } from "next/headers";
 import { CoolSidebar } from "@/app/components/CoolSidebar";
-import { DoorClosed, LogOut, UsersRound } from "lucide-react";
+import {
+    BookText,
+    DoorClosed,
+    GraduationCap,
+    LogOut,
+    UsersRound,
+} from "lucide-react";
 
 async function Authenticate({
     children,
@@ -30,9 +37,14 @@ async function Authenticate({
                     href: adminRoomsPage,
                 },
                 {
-                    icon: <UsersRound size={30} />,
-                    text: "Accounts",
-                    href: adminAccountsPage,
+                    icon: <BookText size={30} />,
+                    text: "Instructors",
+                    href: adminInstructorsPage,
+                },
+                {
+                    icon: <GraduationCap size={30} />,
+                    text: "Students",
+                    href: adminStudentsPage,
                 },
                 {
                     icon: <LogOut size={30} />,

@@ -1,6 +1,6 @@
 "use client";
 import { CreateUser } from "@/app/actions/UserActions";
-import { adminAccountsPage, adminCreateAccountPage } from "@/constants";
+import { adminInstructorsPage, adminCreateInstructorPage } from "@/constants";
 import clsx from "clsx";
 import { CirclePlus, LoaderCircle, Lock, Mail, User } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
@@ -58,7 +58,7 @@ export function CreateInstructorForm(): React.ReactNode {
                 render: response.message,
                 autoClose: 3000,
             });
-            router.replace(`${adminAccountsPage}/${response.userId ?? ""}`);
+            router.replace(`${adminInstructorsPage}/${response.userId ?? ""}`);
         } else {
             toast.update(loadingToast, {
                 isLoading: false,
@@ -82,7 +82,7 @@ export function CreateInstructorForm(): React.ReactNode {
             action={formAction}
             className={clsx(
                 "font-poppins bg-green-secondary m-auto mt-10 max-w-sm rounded-lg px-2 text-white sm:max-w-lg sm:px-16 sm:py-10 sm:shadow-md",
-                pathname === adminCreateAccountPage && "accountform",
+                pathname === adminCreateInstructorPage && "accountform",
             )}
         >
             <p className="flex items-center gap-2 text-lg font-semibold">

@@ -1,8 +1,9 @@
 import Loading from "@/app/(site)/loading";
-import { InstructorInfoProvider } from "@/app/contexts/InstructorProvider";
+import ErrorFallback from "@/app/components/ErrorFallback";
+import { UserInfoProvider } from "@/app/contexts/UserInfoProvider";
 import { User, PlainUserDocument } from "@/app/mongoDb/models/user";
 import { connectDB } from "@/app/mongoDb/mongodb";
-import { adminAccountsPage } from "@/constants";
+import { adminInstructorsPage } from "@/constants";
 import { isValidObjectId } from "mongoose";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
@@ -14,8 +15,9 @@ async function VerifyInstructor({
     children: React.ReactNode;
     instructorId: string;
 }>) {
-    if (!isValidObjectId(instructorId)) redirect(adminAccountsPage);
+    if (!isValidObjectId(instructorId)) redirect(adminInstructorsPage);
     let instructor: PlainUserDocument;
+
     try {
         await connectDB();
         instructor = await User.findOne({
@@ -24,25 +26,25 @@ async function VerifyInstructor({
         }).lean({
             virtuals: true,
         });
-        if (!instructor) {
-            redirect(adminAccountsPage);
-        }
     } catch (e) {
-        if (!(e instanceof Error) || e.message !== "NEXT_REDIRECT")
-            console.error(e);
-        redirect(adminAccountsPage);
+        console.error(e);
+        return <ErrorFallback error={e} />;
+    }
+
+    if (!instructor) {
+        redirect(adminInstructorsPage);
     }
     return (
-        <InstructorInfoProvider
+        <UserInfoProvider
             data={{
-                instructorId: instructor._id.toString(),
+                userId: instructor._id.toString(),
                 email: instructor.email,
                 fname: instructor.firstName,
                 lname: instructor.lastName,
             }}
         >
             {children}
-        </InstructorInfoProvider>
+        </UserInfoProvider>
     );
 }
 

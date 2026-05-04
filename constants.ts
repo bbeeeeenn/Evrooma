@@ -5,27 +5,28 @@ export const resetPasswordPage = "/resetpassword";
 
 export const adminLoginPage = "/admin";
 export const adminRoomsPage = "/admin/rooms";
-export const adminAccountsPage = "/admin/accounts";
-export const adminCreateAccountPage = "/admin/accounts/create";
 export const adminLogoutPage = "/admin/logout";
+export const adminInstructorsPage = "/admin/instructors";
+export const adminCreateInstructorPage = "/admin/instructors/create";
+export const adminStudentsPage = "/admin/students";
 
 export const instructorLoginPage = "/instructor";
-export const instructorHomePage = "/instructor/home";
-export const instructorScanPage = "/instructor/home/scan";
-export const instructorSchedulesPage = "/instructor/home/schedules";
-export const instructorRoomsPage = "/instructor/home/rooms";
-export const instructorLogsPage = "/instructor/home/logs";
-export const instructorLogoutPage = "/instructor/home/logout";
-export const instructorSettingsPage = "/instructor/home/settings";
+export const instructorHomePage = "/instructor/dashboard";
+export const instructorScanPage = "/instructor/dashboard/scan";
+export const instructorSchedulesPage = "/instructor/dashboard/schedules";
+export const instructorRoomsPage = "/instructor/dashboard/rooms";
+export const instructorLogsPage = "/instructor/dashboard/logs";
+export const instructorLogoutPage = "/instructor/dashboard/logout";
+export const instructorSettingsPage = "/instructor/dashboard/settings";
 
 export const studentLoginPage = "/student";
 export const studentRegisterPage = "/student/register";
-export const studentHomePage = "/student/home";
-export const studentRoomsPage = "/student/home/rooms";
-export const studentLogsPage = "/student/home/logs";
-export const studentScanPage = "/student/home/scan";
-export const studentLogoutPage = "/student/home/logout";
-export const studentSettingsPage = "/student/home/settings";
+export const studentHomePage = "/student/dashboard";
+export const studentRoomsPage = "/student/dashboard/rooms";
+export const studentLogsPage = "/student/dashboard/logs";
+export const studentScanPage = "/student/dashboard/scan";
+export const studentLogoutPage = "/student/dashboard/logout";
+export const studentSettingsPage = "/student/dashboard/settings";
 
 export const ADMIN_SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || "";
 export const INSTRUCTOR_SESSION_SECRET =
