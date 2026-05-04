@@ -125,21 +125,24 @@ async function OngoingSchedule({ roomId }: { roomId: string }) {
                     {endMeridiem}
                 </p>
                 <p>{currentSession.instructor.fullName}</p>
-                {inUse ? (
-                    <p className="flex items-center gap-1 font-semibold text-green-300">
-                        <span>
-                            <Check size={20} />
-                        </span>
-                        Instructor is present
-                    </p>
-                ) : (
-                    <p className="flex items-center gap-1 font-semibold text-red-400">
-                        <span>
-                            <X size={20} />
-                        </span>
-                        Unverified
-                    </p>
-                )}
+                <p className="flex items-center gap-1 font-semibold text-green-300">
+                    {inUse ? (
+                        <>
+                            <span>
+                                <Check size={20} />
+                            </span>
+                            Instructor is present
+                        </>
+                    ) : (
+                        <>
+                            <span>
+                                <X size={20} />
+                            </span>
+                            Unverified
+                        </>
+                    )}
+                </p>
+                <p className="flex items-center gap-1 font-semibold text-red-400"></p>
             </div>
         </div>
     );
