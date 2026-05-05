@@ -37,7 +37,14 @@ export function UserListSkeleton() {
     );
 }
 
-export function LogCard({ log }: { log: PopulatePlainLogDocument }) {
+export function LogCard({
+    log,
+}: {
+    log: PopulatePlainLogDocument;
+}): React.ReactNode {
+    if (!log.schedule) {
+        return null;
+    }
     const date = log.createdAt.toLocaleDateString("en-PH", {
         timeZone: "Asia/Manila",
     });
