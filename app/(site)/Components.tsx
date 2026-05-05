@@ -89,7 +89,7 @@ async function ClassroomAvailability({ roomid }: { roomid: string }) {
     if (!activeSchedule)
         return (
             <>
-                <span className="size-3 rounded-full bg-green-400"></span>
+                <span className="size-2.5 rounded-full bg-green-400 text-xs"></span>
                 Available
             </>
         );
@@ -100,19 +100,15 @@ async function ClassroomAvailability({ roomid }: { roomid: string }) {
         attendanceDate: getAttendanceDateKey(now),
     }).lean();
 
-    if (!markedInUsed) {
-        return (
-            <>
-                <span className="size-3 rounded-full bg-green-400"></span>
-                Available
-            </>
-        );
-    }
-
     return (
         <>
-            <span className="size-3 rounded-full bg-red-500"></span>
-            In Use
+            <span
+                className={clsx(
+                    "size-2.5 rounded-full text-xs",
+                    markedInUsed ? "bg-red-500" : "bg-green-400",
+                )}
+            ></span>
+            {markedInUsed ? "In Use" : "Available"}
         </>
     );
 }
@@ -146,14 +142,14 @@ export async function Classrooms({
                     key={classroom._id.toString()}
                     className="group text-text-primary block w-full space-y-1"
                 >
-                    <div className="bg-green-secondary group-focus-visible:bg-green-tertiary group-active:bg-green-tertiary group-hover:bg-green-tertiary mt-4 w-full rounded-md px-5 py-3 shadow-md">
-                        <div className="flex items-center gap-1.5 text-4xl font-bold">
+                    <div className="bg-green-secondary group-focus-visible:bg-green-tertiary group-active:bg-green-tertiary group-hover:bg-green-tertiary mt-4 w-full rounded-md px-5 py-2 shadow-md">
+                        <div className="flex items-center gap-1.5 text-xl font-bold">
                             <span>
-                                <DoorOpen size={25} />
+                                <DoorOpen />
                             </span>
                             <p className="truncate">{classroom.code}</p>
                         </div>
-                        <p className="text-text-secondary text-start font-semibold">
+                        <p className="text-text-secondary text-start text-sm font-semibold">
                             {classroom.building.name}
                         </p>
                     </div>
