@@ -52,7 +52,7 @@ function ScheduleCard({
 async function Process({ roomid }: { roomid: string }) {
     const { status, message, schedule } = await ProcessStudentSchedule(roomid);
     return (
-        <div className="fixed inset-x-5 inset-y-0 m-auto h-fit max-w-5xl">
+        <div className="m-auto mt-20 h-fit max-w-5xl">
             {schedule && <ScheduleCard schedule={schedule} />}
             <div
                 className={clsx(
