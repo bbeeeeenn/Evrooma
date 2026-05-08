@@ -61,15 +61,19 @@ export default function LoginForm({
                   : await StudentAuth(formData);
         if (res.status === "success") {
             console.log("redirecting to dashboard");
-            router.replace(
-                redirectPath?.startsWith("/")
-                    ? redirectPath
-                    : formType === "admin"
-                      ? adminRoomsPage
-                      : formType === "instructor"
-                        ? instructorHomePage
-                        : studentHomePage,
-            );
+            const target = redirectPath?.startsWith("/")
+                ? redirectPath
+                : formType === "admin"
+                  ? adminRoomsPage
+                  : formType === "instructor"
+                    ? instructorHomePage
+                    : studentHomePage;
+            // Use full-page navigation to ensure the session cookie set by the
+            // server action is sent on the next request. This prevents a
+            // race where client-side `router.replace` navigates before the
+            // cookie is available, causing the server to treat the user as
+            // unauthenticated and redirect back to login.
+            window.location.replace(target);
             setShowPassword(false);
         }
         return res;

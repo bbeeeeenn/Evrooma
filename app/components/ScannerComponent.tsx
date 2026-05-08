@@ -3,21 +3,28 @@
 import { IDetectedBarcode, Scanner } from "@yudiel/react-qr-scanner";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export function QRScanner({ scanUrl }: { scanUrl: string }) {
     const router = useRouter();
     const [error, setError] = useState<string | null>(null);
-    const handleScan = (codes: IDetectedBarcode[]) =>
-        codes.forEach((code) => {
-            if (!code.rawValue.includes(window.location.origin)) return;
+    const processingRef = useRef(false);
 
-            const url = new URL(code.rawValue);
-            const roomId = url.searchParams.get("roomid");
-            if (roomId) {
-                router.replace(`${scanUrl}?roomid=${roomId}`);
-            }
-        });
+    const handleScan = (codes: IDetectedBarcode[]) => {
+        if (processingRef.current) return;
+
+        const code = codes.find((c) =>
+            c.rawValue?.includes(window.location.origin),
+        );
+        if (!code) return;
+
+        const url = new URL(code.rawValue);
+        const roomId = url.searchParams.get("roomid");
+        if (roomId) {
+            processingRef.current = true;
+            router.replace(`${scanUrl}?roomid=${roomId}`);
+        }
+    };
 
     const handleError = (err: unknown) => {
         if (err instanceof Error && err.name === "NotAllowedError") {
@@ -51,7 +58,7 @@ export function QRScanner({ scanUrl }: { scanUrl: string }) {
                 onScan={handleScan}
                 onError={handleError}
                 formats={["qr_code"]}
-                allowMultiple
+                allowMultiple={false}
                 scanDelay={5000}
             />
             <div className="bg-yellow-secondary font-poppins m-auto mt-5 max-w-md rounded-md p-3 shadow-md">

@@ -53,6 +53,9 @@ async function Process({ roomid }: { roomid: string }) {
     const { status, message, schedule } =
         await ProcessInstructorSchedule(roomid);
 
+    console.log("Processing");
+    console.log({ status, message, schedule });
+
     return (
         <div className="m-auto mt-20 h-fit max-w-5xl">
             {schedule && <ScheduleCard schedule={schedule} />}
