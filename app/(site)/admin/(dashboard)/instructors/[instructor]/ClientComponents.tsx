@@ -330,7 +330,7 @@ export function ScheduleCard({
                 </div>
             </dialog>
             <button
-                className="text-text-primary focus-visible:bg-green-tertiary active:bg-green-tertiary hover:bg-green-tertiary border-yellow-primary bg-green-secondary mt-3 block w-full rounded-md border-l-4 px-5 py-3 text-start shadow-md"
+                className="text-text-primary focus-visible:bg-green-tertiary active:bg-green-tertiary hover:bg-green-tertiary border-yellow-primary bg-green-secondary mt-3 block w-full rounded-md border-l-4 px-5 py-3 text-start shadow-md transition-all duration-200 hover:-translate-y-0.5"
                 onClick={() => dialog.current?.showModal()}
             >
                 <p className="font-roboto-mono text-xl font-bold sm:text-2xl">
