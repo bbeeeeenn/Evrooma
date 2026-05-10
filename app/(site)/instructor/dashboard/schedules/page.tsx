@@ -8,6 +8,7 @@ import {
 } from "@/app/mongoDb/models/schedule";
 import { connectDB } from "@/app/mongoDb/mongodb";
 import { DaysOfWeek } from "@/constants";
+import clsx from "clsx";
 import { CalendarDays } from "lucide-react";
 import React, { Suspense } from "react";
 
@@ -67,7 +68,11 @@ async function GetSchedule({ instructorId }: { instructorId: string }) {
                 return (
                     <React.Fragment key={sched._id.toString()}>
                         <Divide />
-                        <button className="text-text-primary focus-visible:bg-green-tertiary active:bg-green-tertiary hover:bg-green-tertiary border-yellow-primary bg-green-secondary mt-5 block w-full rounded-md border-l-4 px-5 py-3 text-start shadow-md">
+                        <div
+                            className={clsx(
+                                "text-text-primary border-yellow-primary bg-green-secondary/75 block w-full border-l-2 px-5 py-4 text-start",
+                            )}
+                        >
                             <p className="font-roboto-mono text-2xl font-bold">
                                 {`${startHour}:${startMinute < 10 ? "0" + startMinute : startMinute}${startMeridiem}`}{" "}
                                 -{" "}
@@ -82,7 +87,7 @@ async function GetSchedule({ instructorId }: { instructorId: string }) {
                                 </span>{" "}
                                 - {sched.subject}
                             </p>
-                        </button>
+                        </div>
                     </React.Fragment>
                 );
             })}

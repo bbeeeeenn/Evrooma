@@ -29,7 +29,7 @@ async function StudentsList() {
                         href={`${adminStudentsPage}/${student._id}`}
                         className={clsx(
                             "bg-green-secondary block w-full rounded-md px-5 py-5 text-green-50 shadow-md transition-all",
-                            "hover:bg-green-tertiary active:bg-green-tertiary hover:scale-101 active:scale-100",
+                            "hover:bg-green-tertiary focus-visible:bg-green-tertiary active:bg-green-tertiary hover:scale-101 focus-visible:scale-101 active:scale-100",
                         )}
                     >
                         <p className="flex items-center gap-2 text-xl font-bold">

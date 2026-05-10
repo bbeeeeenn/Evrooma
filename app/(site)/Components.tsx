@@ -150,7 +150,7 @@ export async function Classrooms({
                 <Link
                     href={`${roomsUrl}/${classroom._id.toString()}`}
                     key={classroom._id.toString()}
-                    className="group text-text-primary block w-full space-y-1"
+                    className="group text-text-primary block w-full space-y-1 transition-all hover:-translate-y-0.5 active:scale-101"
                 >
                     <div className="bg-green-secondary group-focus-visible:bg-green-tertiary group-active:bg-green-tertiary group-hover:bg-green-tertiary mt-4 w-full rounded-md px-5 py-2 shadow-md">
                         <div className="flex items-center gap-1.5 text-xl font-bold">

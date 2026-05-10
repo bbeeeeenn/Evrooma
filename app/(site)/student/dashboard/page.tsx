@@ -43,6 +43,7 @@ async function ClassesAttended({ student }: { student: PlainUserDocument }) {
             user: student._id,
             attendanceDate: getAttendanceDateKey(now),
         })
+            .sort({ createdAt: 1 })
             .populate({
                 path: "schedule",
                 populate: [
