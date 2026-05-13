@@ -50,7 +50,6 @@ export function CreateInstructorForm(): React.ReactNode {
             lastName,
             email,
             password,
-            type: "student",
         });
         if (response.status === "success") {
             toast.update(loadingToast, {
