@@ -156,6 +156,10 @@ export function CreateInstructorForm(): React.ReactNode {
                     Email
                 </label>
             </div>
+            <p className="text-text-primary/85 mt-3">
+                Note: Please ensure the instructor&apos;s email address is
+                accurate, as login credentials will be sent to this email.
+            </p>
             <button
                 type="submit"
                 disabled={isPending}
