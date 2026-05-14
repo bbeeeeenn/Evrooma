@@ -4,14 +4,7 @@ import { Divider } from "@/app/components/Divider";
 import { useUserInfo } from "@/app/contexts/UserInfoProvider";
 import { adminStudentsPage } from "@/constants";
 import clsx from "clsx";
-import {
-    GraduationCap,
-    LoaderCircle,
-    Mail,
-    Plus,
-    Trash2,
-    X,
-} from "lucide-react";
+import { GraduationCap, LoaderCircle, Trash2, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
