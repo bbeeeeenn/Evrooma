@@ -32,7 +32,7 @@ export async function AdminAuth(
         if (username !== adminUsername || password !== adminPassword) {
             return {
                 status: "error",
-                message: "Invalid username and password",
+                message: "Invalid username or password",
                 user: null,
                 formData,
             };

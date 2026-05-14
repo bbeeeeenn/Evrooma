@@ -48,7 +48,7 @@ export async function StudentAuth(
         if (!user || !(await compare(password, user.password))) {
             return {
                 status: "error",
-                message: "Invalid email and password",
+                message: "Invalid email or password",
                 user: null,
                 formData,
             };
