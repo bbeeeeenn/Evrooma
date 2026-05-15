@@ -4,7 +4,13 @@ import { Divider } from "@/app/components/Divider";
 import { useUserInfo } from "@/app/contexts/UserInfoProvider";
 import { adminStudentsPage } from "@/constants";
 import clsx from "clsx";
-import { GraduationCap, LoaderCircle, Trash2, X } from "lucide-react";
+import {
+    GraduationCap,
+    LoaderCircle,
+    Trash2,
+    TriangleAlert,
+    X,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
@@ -76,7 +82,7 @@ function DeleteAccount() {
         <>
             <dialog
                 ref={dialog}
-                className="bg-green-secondary text-text-primary border-green-quarternary m-auto w-[calc(100%-1.5rem)] max-w-md overflow-hidden rounded-md border-b-4 px-6 pt-10 pb-7 select-none backdrop:bg-black/30"
+                className="bg-green-secondary text-text-primary border-green-quarternary m-auto w-[calc(100%-1.5rem)] max-w-md overflow-hidden rounded-md border-b-4 px-6 pt-5 pb-7 select-none backdrop:bg-black/30"
                 onClick={(e) => {
                     if (!dialog.current) return;
                     const { top, bottom, left, right } =
@@ -90,6 +96,12 @@ function DeleteAccount() {
                         dialog.current.close();
                 }}
             >
+                <p className="mb-4 flex items-center justify-center gap-2 text-2xl font-semibold">
+                    <span>
+                        <TriangleAlert size={25} />
+                    </span>
+                    Delete User
+                </p>
                 <form action={formAction}>
                     <label
                         htmlFor="email"
