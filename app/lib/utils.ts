@@ -144,15 +144,20 @@ export async function IsInUseSchedule(
 }
 
 export function NormalizeName(name: string): string {
-    return name
+    if (!name) return "";
+    const cleaned = name
         .trim()
-        .replace(/\s+/, " ")
+        .replace(/[^a-zA-Z\s'-]/g, "")
+        .replace(/\s+/g, " ")
         .split(" ")
+        .filter(Boolean)
         .map(
             (word) =>
                 word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
         )
         .join(" ");
+
+    return cleaned;
 }
 
 export function generateSimplePassword(length = 8): string {

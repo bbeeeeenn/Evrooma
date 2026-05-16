@@ -23,6 +23,17 @@ export function CreateInstructorForm(): React.ReactNode {
         const lastName = (formData.get("lname") as string | null)?.trim() ?? "";
         const email = (formData.get("email") as string | null)?.trim() ?? "";
 
+        const nameRegex = /^[A-Za-z\s'-]+$/;
+
+        if (!firstName || !nameRegex.test(firstName)) {
+            toast.error("Please provide a valid first name (letters, spaces, hyphen, apostrophe only).");
+            return { fname: firstName, lname: lastName, email };
+        }
+        if (!lastName || !nameRegex.test(lastName)) {
+            toast.error("Please provide a valid last name (letters, spaces, hyphen, apostrophe only).");
+            return { fname: firstName, lname: lastName, email };
+        }
+
         const loadingToast = toast.loading("Waiting...");
         const response = await CreateInstructor({
             firstName,

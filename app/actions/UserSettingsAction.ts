@@ -132,6 +132,12 @@ export async function ChangeMyPassword(
             message: "Please provide a password.",
         };
     }
+    if (newPassword.length < 8) {
+        return {
+            status: "error",
+            message: "Password must be at least 8 characters long.",
+        };
+    }
 
     try {
         await connectDB();

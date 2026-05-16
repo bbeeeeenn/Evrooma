@@ -29,12 +29,19 @@ export function ChangeName({
     const [name, setName] = useState(oldName);
     const changed = originalName !== name.trim();
 
-    const onAction = async () => {
+    const onAction = async (_: unknown, formData: FormData) => {
+        const submittedName = (formData.get(type) as string | null)?.trim() ?? "";
+        const nameRegex = /^[A-Za-z\s'-]+$/;
+        if (!submittedName || !nameRegex.test(submittedName)) {
+            toast.error("Please provide a valid name (letters, spaces, hyphen, apostrophe only).");
+            return;
+        }
+
         const loadingToast = toast.loading("Waiting...");
         const res =
             type === "fname"
-                ? await ChangeMyFirstName(userType, name)
-                : await ChangeMyLastName(userType, name);
+                ? await ChangeMyFirstName(userType, submittedName)
+                : await ChangeMyLastName(userType, submittedName);
         toast.update(loadingToast, {
             isLoading: false,
             type: res.status as "success" | "error",
@@ -175,6 +182,10 @@ export function ChangePassword({
             errors.errConfirm = !confirmPassword
                 ? "Please re-enter your new password"
                 : "";
+        }
+
+        if (newPassword && newPassword.length < 8) {
+            errors.errNew = "Password must be at least 8 characters long";
         }
 
         if (newPassword !== confirmPassword) {

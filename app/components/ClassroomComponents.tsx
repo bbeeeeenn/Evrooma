@@ -69,7 +69,7 @@ export function FilterRooms({
         <div className="mt-3 flex flex-wrap gap-3">
             <div className="bg-green-secondary text-text-primary flex h-fit min-w-50 grow-2 items-center gap-2 rounded-md p-3 shadow-md">
                 <span className="opacity-90">
-                    <DoorOpen />
+                    <Search />
                 </span>
                 <form onSubmit={handleFormSubmit} className="grow">
                     <input
@@ -87,9 +87,6 @@ export function FilterRooms({
                         className="peer text-text-primary w-full min-w-0 text-xl font-semibold tracking-wide uppercase placeholder:capitalize"
                     />
                 </form>
-                <span className="opacity-90">
-                    <Search />
-                </span>
             </div>
             <div className="text-text-primary/80 relative max-w-2xs min-w-40 grow font-semibold">
                 <button

@@ -102,7 +102,7 @@ export function CoolSidebar({
                         inert={pathname === item.href}
                         href={item.href}
                         className={clsx(
-                            "hover:bg-green-quinary group active:bg-green-quinary focus-visible:bg-green-quinary h-fit w-full px-5 py-5 text-xl font-semibold",
+                            "hover:bg-green-quinary group active:bg-green-quinary focus-visible:bg-green-quinary h-fit w-full px-5 py-4 text-xl font-semibold",
                             pathname === item.href &&
                                 "bg-yellow-primary pointer-events-none text-black",
                             item.pushdown && "mt-auto",
@@ -145,7 +145,7 @@ export function CoolSidebar({
                             inert={pathname === item.href}
                             href={item.href}
                             className={clsx(
-                                "hover:bg-green-quinary group active:bg-green-quinary focus-visible:bg-green-quinary h-fit w-full px-5 py-5 text-xl font-semibold",
+                                "hover:bg-green-quinary group active:bg-green-quinary focus-visible:bg-green-quinary h-fit w-full px-5 py-4 text-xl font-semibold",
                                 pathname === item.href &&
                                     "bg-yellow-primary pointer-events-none text-black",
                                 item.pushdown && "mt-auto",
