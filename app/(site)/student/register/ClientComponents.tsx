@@ -39,6 +39,22 @@ export function CreateInstructorForm(): React.ReactNode {
         const password2 =
             (formData.get("password2") as string | null)?.trim() ?? "";
 
+        const nameRegex = /^[A-Za-z\s'-]+$/;
+
+        if (!firstName || !nameRegex.test(firstName)) {
+            toast.error("Please provide a valid first name (letters, spaces, hyphen, apostrophe only).");
+            return;
+        }
+        if (!lastName || !nameRegex.test(lastName)) {
+            toast.error("Please provide a valid last name (letters, spaces, hyphen, apostrophe only).");
+            return;
+        }
+
+        if (password.length < 8) {
+            toast.error("Password must be at least 8 characters long.");
+            return;
+        }
+
         if (password !== password2) {
             toast.error("Passwords doesn't match.");
             return;

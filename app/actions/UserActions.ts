@@ -52,7 +52,6 @@ export async function CreateStudent(
         .join(" ");
     const normalizedEmail = email.trim().toLowerCase();
     const normalizedPassword = password.trim();
-
     if (
         !normalizedFirstname ||
         !normalizedLastname ||
@@ -62,6 +61,13 @@ export async function CreateStudent(
         return {
             status: "error",
             message: "Please complete all required fields.",
+        };
+    }
+
+    if (normalizedPassword.length < 8) {
+        return {
+            status: "error",
+            message: "Password must be at least 8 characters long.",
         };
     }
 
@@ -350,6 +356,12 @@ export async function ChangeUserPassword(
         return {
             status: "error",
             message: "Please provide a password.",
+        };
+    }
+    if (normalizedPassword.length < 8) {
+        return {
+            status: "error",
+            message: "Password must be at least 8 characters long.",
         };
     }
 
