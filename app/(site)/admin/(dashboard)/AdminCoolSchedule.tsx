@@ -20,7 +20,7 @@ export function AdminCoolSchedules({
     return (
         <>
             <Divider text="Weekly Schedule" />
-            <div className="mb-4 flex flex-wrap gap-1.5">
+            <div className="mb-6 flex flex-wrap gap-1.5">
                 <SchedTabButton
                     index={1}
                     text="Mon"

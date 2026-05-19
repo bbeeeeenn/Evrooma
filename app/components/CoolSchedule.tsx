@@ -74,7 +74,7 @@ export function CoolSchedules({
                                 <p className="text-text-primary/60 text-xs sm:text-sm">
                                     {type === "instructor"
                                         ? sched.instructor.fullName
-                                        : sched.room.code}
+                                        : `${sched.room.code}-${sched.room.building.name}`}
                                 </p>
                             </div>
                         </div>
