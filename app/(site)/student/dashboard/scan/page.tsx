@@ -36,24 +36,22 @@ function ScheduleCard({
     const endMinute = schedule.slot.end.minute;
 
     return (
-        <>
-            <div className="bg-green-secondary font-dm-sans text-text-primary mt-4 rounded-xl border border-white/10 p-4 font-semibold">
-                <p className="text-yellow-primary">{schedule.subject}</p>
-                <p className="font-roboto-mono text-2xl">
-                    {startHour}:{startMinute === 0 && "0"}
-                    {startMinute}
-                    {startMeridiem} - {endHour}:{endMinute === 0 && "0"}
-                    {endMinute}
-                    {endMeridiem}
-                </p>
-                <p className="text-text-primary/80 flex items-center gap-2">
-                    <span>
-                        <User size={15} />
-                    </span>
-                    {schedule.instructor.fullName}
-                </p>
-            </div>
-        </>
+        <div className="bg-green-secondary font-dm-sans text-text-primary mt-4 rounded-lg border border-white/10 p-4 font-semibold">
+            <p className="text-yellow-primary">{schedule.subject}</p>
+            <p className="font-roboto-mono text-2xl">
+                {startHour}:{startMinute === 0 && "0"}
+                {startMinute}
+                {startMeridiem} - {endHour}:{endMinute === 0 && "0"}
+                {endMinute}
+                {endMeridiem}
+            </p>
+            <p className="text-text-primary/80 flex items-center gap-2">
+                <span>
+                    <User size={15} />
+                </span>
+                {schedule.instructor.fullName}
+            </p>
+        </div>
     );
 }
 
@@ -69,7 +67,7 @@ async function Process({ roomid }: { roomid: string }) {
         await ProcessStudentSchedule(roomid);
 
     return (
-        <div className="">
+        <div>
             {classroom && (
                 <div className="text-text-primary bg-green-secondary mt-2 flex items-center gap-3 rounded-lg border border-white/10 p-3">
                     <span className="rounded-md border border-white/10 bg-green-200/10 p-3 text-white">
@@ -88,7 +86,7 @@ async function Process({ roomid }: { roomid: string }) {
             {schedule && <ScheduleCard schedule={schedule} />}
             <div
                 className={clsx(
-                    "text-text-primary font-dm-sans m-auto my-5 flex items-center gap-3 rounded-md border p-4 text-sm font-semibold",
+                    "text-text-primary font-dm-sans m-auto my-4 flex items-center gap-3 rounded-lg border p-4 text-sm font-semibold",
                     status === "success"
                         ? "border-green-400/30 bg-green-400/20"
                         : "border-red-400/30 bg-red-400/20",
@@ -124,7 +122,7 @@ async function Process({ roomid }: { roomid: string }) {
             </div>
             <Link
                 href={studentScanPage}
-                className="text-text-primary border-text-primary/50 mx-auto mt-10 flex items-center justify-center gap-1 rounded-md border px-4 py-2 font-semibold"
+                className="text-text-primary border-text-primary/50 mx-auto mt-6 flex items-center justify-center gap-1 rounded-md border px-4 py-2 font-semibold focus-visible:bg-green-secondary"
             >
                 <span>
                     <ChevronLeft />

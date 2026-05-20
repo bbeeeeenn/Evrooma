@@ -197,7 +197,7 @@ export async function Classrooms({
                             key={classroom._id.toString()}
                             className={clsx(
                                 "text-text-primary/50 bg-green-secondary block w-full rounded-xl p-4 shadow-md",
-                                "transition-all hover:-translate-y-px hover:brightness-110",
+                                "transition-all hover:-translate-y-px hover:brightness-110 focus-visible:-translate-y-px focus-visible:brightness-110",
                                 status.classroomStatus === "absent" &&
                                     "border border-orange-300/30",
                                 status.classroomStatus === "occupied" &&
