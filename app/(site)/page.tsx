@@ -77,7 +77,7 @@ export default function Home() {
             >
                 <section className="bg-green-primary h-dvh translate-z-1.25 scale-50 scrollbar-thin overflow-y-auto p-7 pt-7.5 sm:p-10 sm:pt-10.5">
                     <p
-                        className="text-text-primary flex cursor-pointer items-center gap-2 text-3xl font-semibold sm:text-5xl"
+                        className="text-text-primary flex w-fit cursor-pointer items-center gap-2 text-3xl font-semibold sm:text-5xl"
                         onClick={() =>
                             landRef.current?.scrollIntoView({
                                 behavior: "smooth",

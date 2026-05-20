@@ -2,8 +2,17 @@ import { Divider } from "@/app/components/Divider";
 import { PopulatedPlainRoomDocument, Room } from "@/app/mongoDb/models/room";
 import { connectDB } from "@/app/mongoDb/mongodb";
 import { homePage, instructorScanPage, studentScanPage } from "@/constants";
-import { BookText, Building2, GraduationCap } from "lucide-react";
+import clsx from "clsx";
+import {
+    BookText,
+    Building2,
+    ChevronLeft,
+    ChevronRight,
+    DoorOpen,
+    GraduationCap,
+} from "lucide-react";
 import { isValidObjectId } from "mongoose";
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
@@ -32,35 +41,76 @@ async function Suspended({
     }
 
     return (
-        <div className="fixed inset-0 m-auto h-fit max-w-xs">
-            <p className="font-poppins text-text-primary text-md mb-1.5 flex items-center justify-center gap-1 font-semibold tracking-wider">
+        <div className="m-auto p-5 sm:p-10">
+            <Link
+                href={homePage}
+                className="text-text-primary group focus-visible:bg-green-secondary focus-visible:border-green-tertiary mb-10 flex w-fit items-center gap-2 rounded-md border border-transparent p-2 text-4xl font-semibold"
+            >
                 <span>
-                    <Building2 size={15} />
+                    <ChevronLeft />
                 </span>
-                {classroom.building.name}
-            </p>
-            <p className="text-text-primary bg-green-secondary rounded-md py-5 text-center text-4xl font-bold tracking-wider shadow-md">
-                {classroom.code}
-            </p>
+                <Image
+                    src={"/favicon_dark.svg"}
+                    alt=""
+                    height={40}
+                    width={40}
+                    className=""
+                />
+                <p className="group-focus-visible:hidden">EVROOMA</p>
+                <p className="hidden group-focus-visible:block">Home</p>
+            </Link>
+            <div className="text-text-primary flex items-center gap-3 rounded-lg border border-white/10 bg-green-200/5 p-5">
+                <span className="rounded-md border border-white/10 bg-green-200/15 p-3 text-white">
+                    <DoorOpen size={25} />
+                </span>
+                <div>
+                    <p className="text-text-secondary/90 text-sm">
+                        {classroom.building.name}
+                    </p>
+                    <p className="text-2xl font-semibold">{classroom.code}</p>
+                </div>
+            </div>
             <Divider text="Continue as" />
             <div className="space-y-6">
                 <Link
-                    href={`${studentScanPage}?roomid=${encodeURIComponent(roomid)}`}
-                    className="bg-yellow-primary flex items-center justify-center gap-2 rounded-md p-3 font-semibold shadow-md"
+                    href={`${instructorScanPage}?roomid=${encodeURIComponent(roomid)}`}
+                    className={clsx(
+                        "text-text-primary bg-green-secondary flex w-full items-center gap-2 rounded-md border border-white/10 p-4",
+                        "hover:border-yellow-primary/50 focus-visible:border-yellow-primary/50 transition",
+                    )}
                 >
-                    <span>
-                        <GraduationCap />
+                    <span className="rounded-md border border-green-200/10 bg-green-200/15 p-2">
+                        <BookText size={30} />
                     </span>
-                    Student
+                    <div className="grow">
+                        <p className="text-xl font-semibold">Instructor</p>
+                        <p className="text-text-primary/70 text-sm">
+                            Check in to your schedule.
+                        </p>
+                    </div>
+                    <span>
+                        <ChevronRight />
+                    </span>
                 </Link>
                 <Link
-                    href={`${instructorScanPage}?roomid=${encodeURIComponent(roomid)}`}
-                    className="bg-yellow-primary flex items-center justify-center gap-2 rounded-md p-3 font-semibold shadow-md"
+                    href={`${studentScanPage}?roomid=${encodeURIComponent(roomid)}`}
+                    className={clsx(
+                        "text-text-primary bg-green-secondary flex w-full items-center gap-2 rounded-md border border-white/10 p-4",
+                        "hover:border-yellow-primary/50 focus-visible:border-yellow-primary/50 transition",
+                    )}
                 >
-                    <span>
-                        <BookText />
+                    <span className="rounded-md border border-green-200/10 bg-green-200/15 p-2">
+                        <GraduationCap size={30} />
                     </span>
-                    Instructor
+                    <div className="grow">
+                        <p className="text-xl font-semibold">Student</p>
+                        <p className="text-text-primary/70 text-sm">
+                            Mark your attendance
+                        </p>
+                    </div>
+                    <span>
+                        <ChevronRight />
+                    </span>
                 </Link>
             </div>
         </div>
