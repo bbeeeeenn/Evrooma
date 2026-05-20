@@ -91,7 +91,7 @@ async function BuildingsList() {
 export async function ClassroomsSkeleton() {
     await connection();
     return (
-        <ul className="-z-50 space-y-3">
+        <ul className="-z-50 grid grid-cols-1 gap-3 space-y-3 xl:grid-cols-2">
             {Array.from({ length: 8 }).map((_, i) => (
                 <li
                     key={i}

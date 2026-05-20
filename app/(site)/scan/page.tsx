@@ -5,7 +5,6 @@ import { homePage, instructorScanPage, studentScanPage } from "@/constants";
 import clsx from "clsx";
 import {
     BookText,
-    Building2,
     ChevronLeft,
     ChevronRight,
     DoorOpen,

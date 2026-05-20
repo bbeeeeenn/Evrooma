@@ -415,15 +415,17 @@ export async function DeleteSchedule(
     }
 }
 
-export async function ProcessInstructorSchedule(
-    roomId: string,
-): Promise<
-    ServerActionResponse & { schedule?: PopulatedPlainScheduleDocument }
+export async function ProcessInstructorSchedule(roomId: string): Promise<
+    ServerActionResponse & {
+        schedule?: PopulatedPlainScheduleDocument;
+        statusMessage: string;
+    }
 > {
     const instructor = await GetInstructorAuthInfo();
     if (!instructor) {
         return {
             status: "error",
+            statusMessage: "Unauthenticated",
             message: "Please sign in to verify attendance.",
         };
     }
@@ -470,6 +472,7 @@ export async function ProcessInstructorSchedule(
         if (!schedule) {
             return {
                 status: "error",
+                statusMessage: "No Active Schedule",
                 message:
                     "You have no active schedule for this classroom right now.",
             };
@@ -484,6 +487,7 @@ export async function ProcessInstructorSchedule(
         if (existing) {
             return {
                 status: "error",
+                statusMessage: "Already checked in",
                 message:
                     "You’ve already marked attendance for this schedule today.",
                 schedule,
@@ -498,7 +502,9 @@ export async function ProcessInstructorSchedule(
         await log.save();
         return {
             status: "success",
-            message: "Attendance verified successfully.",
+            statusMessage: "Checked in successfully",
+            message:
+                "Your attendance has been recorded. The room is now marked as occupied.",
             schedule,
         };
     } catch (e) {
@@ -509,6 +515,7 @@ export async function ProcessInstructorSchedule(
         ) {
             return {
                 status: "error",
+                statusMessage: "Already checked in",
                 message:
                     "You’ve already marked attendance for this schedule today.",
             };
@@ -516,20 +523,23 @@ export async function ProcessInstructorSchedule(
         console.error(e);
         return {
             status: "error",
+            statusMessage: "Unexpected Error",
             message: "Unable to verify attendance. Please try again.",
         };
     }
 }
 
-export async function ProcessStudentSchedule(
-    roomId: string,
-): Promise<
-    ServerActionResponse & { schedule?: PopulatedPlainScheduleDocument }
+export async function ProcessStudentSchedule(roomId: string): Promise<
+    ServerActionResponse & {
+        schedule?: PopulatedPlainScheduleDocument;
+        statusMessage: string;
+    }
 > {
     const student = await GetStudentAuthInfo();
     if (!student) {
         return {
             status: "error",
+            statusMessage: "Unauthenticated",
             message: "Please sign in to verify attendance.",
         };
     }
@@ -575,8 +585,9 @@ export async function ProcessStudentSchedule(
         if (!schedule) {
             return {
                 status: "error",
+                statusMessage: "No active class",
                 message:
-                    "There's no active schedule for this classroom right now.",
+                    "There's no active class for this classroom right now.",
             };
         }
         const attendanceDate = formatPHDateKey();
@@ -589,8 +600,9 @@ export async function ProcessStudentSchedule(
         if (existing) {
             return {
                 status: "error",
+                statusMessage: "Already recorded",
                 message:
-                    "You’ve already marked attendance for this schedule today.",
+                    "You’ve already marked attendance for this class today.",
                 schedule,
             };
         }
@@ -603,6 +615,7 @@ export async function ProcessStudentSchedule(
         await log.save();
         return {
             status: "success",
+            statusMessage: "Attendance recorded",
             message: "Attendance verified successfully.",
             schedule,
         };
@@ -614,6 +627,7 @@ export async function ProcessStudentSchedule(
         ) {
             return {
                 status: "error",
+                statusMessage: "Already checked in",
                 message:
                     "You’ve already marked attendance for this schedule today.",
             };
@@ -621,6 +635,7 @@ export async function ProcessStudentSchedule(
         console.error(e);
         return {
             status: "error",
+            statusMessage: "Unexpected Error",
             message: "Unable to verify attendance. Please try again.",
         };
     }
