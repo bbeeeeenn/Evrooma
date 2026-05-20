@@ -13,7 +13,6 @@ import {
     Schedule,
 } from "@/app/mongoDb/models/schedule";
 import { User } from "@/app/mongoDb/models/user";
-import { revalidatePath } from "next/cache";
 import { isValidObjectId } from "mongoose";
 import { AuthenticateAdmin } from "./AdminAuthActions";
 import type { ServerActionResponse } from "./_";
@@ -29,6 +28,7 @@ import { formatPHDateKey } from "../lib/utils";
 import { getPHDateTime } from "../lib/clientUtils";
 import { GetStudentAuthInfo } from "./StudentAuthActions";
 import { GetActiveSchedule } from "../lib/utils";
+import { revalidatePath } from "next/cache";
 
 export type NewScheduleInput = Omit<NewSchedule, "day"> & {
     day: DayOfWeek[];
@@ -386,7 +386,7 @@ export async function DeleteSchedule(
     try {
         await connectDB();
 
-        const schedule = await Schedule.findById(sanitizedScheduleId).lean();
+        const schedule = await Schedule.findById(sanitizedScheduleId);
         if (!schedule) {
             return {
                 status: "error",
@@ -395,7 +395,7 @@ export async function DeleteSchedule(
         }
 
         await AttendanceLog.deleteMany({ schedule: schedule._id }); // Delete logs associated with the schedule
-        await Schedule.findByIdAndDelete(sanitizedScheduleId);
+        await schedule.deleteOne();
 
         revalidatePath(`${adminInstructorsPage}/${schedule.instructor}`);
         revalidatePath(`${adminRoomsPage}/${schedule.room}`);

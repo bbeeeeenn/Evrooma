@@ -28,19 +28,21 @@ async function InstructorsList() {
                     <Link
                         href={`${adminInstructorsPage}/${instructor._id}`}
                         className={clsx(
-                            "bg-green-secondary block w-full rounded-md px-5 py-5 text-green-50 shadow-md transition-all",
-                            "hover:bg-green-tertiary active:bg-green-tertiary focus-visible:bg-green-tertiary hover:scale-101 focus-visible:scale-101 active:scale-100",
+                            "bg-green-secondary flex w-full items-center gap-2 rounded-md p-4 text-green-50 shadow-md transition-all",
+                            "hover:scale-101 hover:brightness-120 focus-visible:scale-101 focus-visible:brightness-120 active:scale-100 active:brightness-120",
                         )}
                     >
-                        <p className="flex items-center gap-2 text-xl font-bold">
-                            <span>
-                                <BookText />
-                            </span>
-                            {instructor.fullName}
-                        </p>
-                        <p className="truncate text-sm font-semibold">
-                            {instructor.email}
-                        </p>
+                        <span className="rounded-lg border border-white/10 bg-white/5 p-2">
+                            <BookText size={30} />
+                        </span>
+                        <div>
+                            <p className="flex items-center gap-2 text-xl font-bold">
+                                {instructor.fullName}
+                            </p>
+                            <p className="text-text-secondary truncate text-sm font-semibold">
+                                {instructor.email}
+                            </p>
+                        </div>
                     </Link>
                 </li>
             ))}

@@ -486,7 +486,16 @@ export async function DeleteUser(
         }
 
         if (user.type === "instructor") {
-            await Schedule.deleteMany({ instructor: user._id });
+            const existingSchedule = await Schedule.findOne({
+                instructor: user._id,
+            }).lean();
+            if (existingSchedule) {
+                return {
+                    status: "error",
+                    message:
+                        "You must remove all scheduled classes from this instructor before removing it.",
+                };
+            }
         }
 
         await AttendanceLog.deleteMany({ user: user._id }); // Delete logs associated with the user

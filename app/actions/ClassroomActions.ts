@@ -8,6 +8,7 @@ import { Room } from "@/app/mongoDb/models/room";
 import { connectDB } from "@/app/mongoDb/mongodb";
 import { revalidatePath } from "next/cache";
 import { adminRoomsPage } from "@/constants";
+import { Schedule } from "../mongoDb/models/schedule";
 
 function escapeRegex(value: string): string {
     return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -124,6 +125,17 @@ export async function RemoveClassroom(
             return {
                 status: "error",
                 message: "Invalid classroom code.",
+            };
+        }
+
+        const existingSchedule = await Schedule.findOne({
+            room: classroom._id,
+        }).lean();
+        if (existingSchedule) {
+            return {
+                status: "error",
+                message:
+                    "You must remove all scheduled classes from this classroom before deleting it.",
             };
         }
 
