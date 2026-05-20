@@ -31,17 +31,13 @@ export function ClassroomCodeHeader() {
     const { classroomCode } = useClassroomInfo();
     const { buildingName } = useBuildingInfo();
     return (
-        <div className="text-text-primary flex items-end gap-2">
-            <span>
-                <DoorOpen size={35} />
+        <div className="text-text-primary mt-2 flex items-center gap-3">
+            <span className="rounded-md border border-white/10 bg-green-200/10 p-3 text-white">
+                <DoorOpen size={30} />
             </span>
             <div>
-                <p className="text-text-secondary text-md font-semibold">
-                    {buildingName}
-                </p>
-                <h1 className="text-3xl font-bold underline">
-                    {classroomCode}
-                </h1>
+                <p className="text-text-secondary/90">{buildingName}</p>
+                <p className="text-3xl font-bold">{classroomCode}</p>
             </div>
         </div>
     );

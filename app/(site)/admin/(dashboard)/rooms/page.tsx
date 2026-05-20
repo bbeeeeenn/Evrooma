@@ -36,7 +36,7 @@ async function ClassroomCount({
 function BuildingListSkeleton() {
     return (
         <ul className="my-5 flex flex-wrap gap-x-6 gap-y-4 opacity-50">
-            {Array.from({ length: 3 }).map((_, i) => (
+            {Array.from({ length: 2 }).map((_, i) => (
                 <li
                     key={i}
                     className="font-poppins bg-green-secondary border-green-secondary/50 min-w-3xs grow rounded-lg border-b-4 px-4 py-3 font-semibold shadow-md transition-transform sm:max-w-sm"
@@ -66,21 +66,23 @@ async function BuildingsList() {
     }
 
     return (
-        <ul className="text-text-primary flex flex-wrap gap-x-6 gap-y-4">
+        <ul className="text-text-primary flex flex-wrap gap-3">
             {buildings.map((b) => (
                 <li
                     key={b._id.toString()}
-                    className="font-poppins border-green-quarternary bg-green-secondary focus-within:bg-green-tertiary active:bg-green-tertiary hover:bg-green-tertiary min-w-3xs grow rounded-lg border-b-4 text-2xl font-semibold shadow-md transition-transform hover:-translate-y-0.5 sm:max-w-sm"
+                    className="font-poppins border-green-quarternary bg-green-secondary focus-within:bg-green-tertiary active:bg-green-tertiary hover:bg-green-tertiary grow rounded-lg border-b-4 font-semibold shadow-md transition-transform hover:-translate-y-0.5"
                 >
                     <Link
                         href={adminRoomsPage + "/" + b._id}
-                        className="block cursor-pointer px-4 py-3"
+                        className="flex items-center gap-2 px-4 py-3"
                     >
-                        <p className="flex items-center gap-1 truncate">
-                            <Building2 />
-                            {b.name}
-                        </p>
-                        <ClassroomCount buildingId={b._id.toString()} />
+                        <span className="text-yellow-primary border-yellow-primary/10 bg-yellow-primary/5 rounded-lg border p-2">
+                            <Building2 size={30} />
+                        </span>
+                        <div>
+                            <p className="truncate text-2xl">{b.name}</p>
+                            <ClassroomCount buildingId={b._id.toString()} />
+                        </div>
                     </Link>
                 </li>
             ))}
@@ -88,11 +90,11 @@ async function BuildingsList() {
     );
 }
 
-export async function ClassroomsSkeleton() {
+export async function ClassroomsSkeleton({ count = 8 }: { count?: number }) {
     await connection();
     return (
         <ul className="-z-50 grid grid-cols-1 gap-3 space-y-3 xl:grid-cols-2">
-            {Array.from({ length: 8 }).map((_, i) => (
+            {Array.from({ length: count }).map((_, i) => (
                 <li
                     key={i}
                     className="bg-green-secondary block space-y-2 rounded-md px-5 py-3 opacity-50 shadow-md"
@@ -124,7 +126,7 @@ async function Classrooms() {
     }
 
     return (
-        <ul className="space-y-3">
+        <ul className="grid grid-cols-1 gap-3 xl:grid-cols-2">
             {classrooms.map((classroom) => {
                 if (!classroom.building) {
                     return null;
@@ -134,21 +136,21 @@ async function Classrooms() {
                         <Link
                             href={`${adminRoomsPage}/${classroom.building._id}/${classroom._id}`}
                             className={clsx(
-                                "bg-green-secondary focus-visible:bg-green-tertiary active:bg-green-tertiary text-text-primary block rounded-md px-5 py-3 shadow-md transition-all",
+                                "bg-green-secondary focus-visible:bg-green-tertiary active:bg-green-tertiary text-text-primary flex items-center gap-2 rounded-md p-4 shadow-md transition-all",
                                 "hover:bg-green-tertiary active:bg-green-tertiary hover:scale-101 active:scale-100",
                             )}
                         >
-                            <div className="flex items-center gap-1">
-                                <span>
-                                    <DoorOpen />
-                                </span>
-                                <p className="items-center gap-2 truncate text-2xl font-bold">
+                            <span className="rounded-lg border border-white/10 bg-white/5 p-2">
+                                <DoorOpen size={30} />
+                            </span>
+                            <div>
+                                <p className="truncate text-xl font-bold">
                                     {classroom.code}
                                 </p>
+                                <p className="text-text-secondary truncate text-sm font-semibold">
+                                    {classroom.building.name}
+                                </p>
                             </div>
-                            <p className="text-text-secondary text-sm font-semibold">
-                                {classroom.building.name}
-                            </p>
                         </Link>
                     </li>
                 );

@@ -21,6 +21,7 @@ import { adminInstructorsPage, adminRoomsPage, Months } from "@/constants";
 import { DeleteSchedule } from "@/app/actions/ScheduleActions";
 import Link from "next/link";
 import { getPHDateTime } from "@/app/lib/clientUtils";
+import { usePathname } from "next/navigation";
 
 function DeleteAccount() {
     const router = useRouter();
@@ -98,8 +99,9 @@ function DeleteAccount() {
                         e.clientX > right ||
                         e.clientY < top ||
                         e.clientY > bottom
-                    )
+                    ) {
                         dialog.current.close();
+                    }
                 }}
             >
                 <p className="mb-4 flex items-center justify-center gap-2 text-2xl font-semibold">
@@ -178,13 +180,14 @@ export function InstructorInfoComponent() {
         userId: instructorId,
         createdAt,
     } = useUserInfo();
+    const pathname = usePathname();
 
     const dateCreated = getPHDateTime(createdAt ?? new Date());
 
     return (
         <>
             <div className="flex w-full items-center gap-2 text-white/90">
-                <div className="rounded-md border border-white/15 bg-white/10 p-2">
+                <div className="rounded-md border border-white/10 bg-white/5 p-2">
                     <BookText size={30} />
                 </div>
                 <div>
@@ -210,7 +213,7 @@ export function InstructorInfoComponent() {
                 >
                     <History size={20} /> Logs
                 </Link>
-                <DeleteAccount />
+                <DeleteAccount key={pathname} />
             </div>
         </>
     );

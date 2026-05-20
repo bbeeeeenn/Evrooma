@@ -173,7 +173,7 @@ export function StudentInfoComponent() {
     return (
         <>
             <div className="flex w-full items-center gap-2 text-white/90">
-                <div className="rounded-md border border-white/15 bg-white/10 p-2">
+                <div className="rounded-md border border-white/10 bg-white/5 p-2">
                     <GraduationCap size={30} />
                 </div>
                 <div>

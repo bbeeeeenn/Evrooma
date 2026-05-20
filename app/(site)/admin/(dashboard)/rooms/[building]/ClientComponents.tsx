@@ -25,8 +25,8 @@ export function BuildingNameHeader() {
     const { buildingName } = useBuildingInfo();
     return (
         <h1 className="text-text-primary flex items-center gap-2 text-3xl font-bold">
-            <span>
-                <Building2 size={25} />
+            <span className="text-yellow-primary rounded-lg border border-white/10 bg-white/5 p-2">
+                <Building2 size={30} />
             </span>
             {buildingName}
         </h1>
